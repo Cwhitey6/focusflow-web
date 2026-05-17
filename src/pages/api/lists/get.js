@@ -1,3 +1,4 @@
+// get.js
 const sql = require('../../../lib/db.js');
 const { getUserFromRequest } = require('../../../lib/auth.js');
 
