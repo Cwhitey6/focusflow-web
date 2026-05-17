@@ -1,3 +1,4 @@
+// KanbanCard v2
 import { Calendar } from 'lucide-react';
 import { Task } from '../types';
 import { PRIORITIES } from '../types';
