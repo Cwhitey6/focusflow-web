@@ -1,7 +1,3 @@
-    // themeStore.ts — Manages dark/light mode.
-// Persists the preference in localStorage and applies
-// the 'dark' class to the <html> element.
-
 import { create } from 'zustand';
 
 type Theme = 'dark' | 'light';
@@ -12,10 +8,19 @@ interface ThemeState {
   setTheme: (theme: Theme) => void;
 }
 
-const THEME_KEY = 'focusflow_theme';
+// Safe localStorage helper — won't crash on server
+function getStorage(key: string): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem(key);
+}
 
-// Apply theme to DOM immediately
+function setStorage(key: string, value: string) {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(key, value);
+}
+
 function applyTheme(theme: Theme) {
+  if (typeof window === 'undefined') return;
   const html = document.documentElement;
   if (theme === 'dark') {
     html.classList.add('dark');
@@ -26,28 +31,32 @@ function applyTheme(theme: Theme) {
   }
 }
 
-// Load saved theme or default to dark
 function loadTheme(): Theme {
-  const saved = localStorage.getItem(THEME_KEY) as Theme;
+  const saved = getStorage('focusflow_theme');
   return saved === 'light' ? 'light' : 'dark';
 }
 
-// Apply on startup
-applyTheme(loadTheme());
-
 export const useThemeStore = create<ThemeState>((set, get) => ({
-  theme: loadTheme(),
+  theme: 'dark',
 
   toggleTheme: () => {
     const next = get().theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem(THEME_KEY, next);
+    setStorage('focusflow_theme', next);
     applyTheme(next);
     set({ theme: next });
   },
 
   setTheme: (theme: Theme) => {
-    localStorage.setItem(THEME_KEY, theme);
+    setStorage('focusflow_theme', theme);
     applyTheme(theme);
     set({ theme });
   },
 }));
+
+// Call this on the client side only
+export function initTheme() {
+  if (typeof window === 'undefined') return;
+  const theme = loadTheme();
+  applyTheme(theme);
+  useThemeStore.setState({ theme });
+}

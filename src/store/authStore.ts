@@ -25,6 +25,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   setLoading: (loading: boolean) => set({ isLoading: loading }),
 
   checkSession: async () => {
+    if (typeof window === 'undefined') {
+      set({ isLoading: false });
+      return;
+    }
     try {
       const res = await api.auth.me();
       if (res.success && res.data) {
