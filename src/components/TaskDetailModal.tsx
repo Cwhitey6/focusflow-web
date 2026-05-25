@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { X, Calendar, Flag } from 'lucide-react';
 import { Task } from '../types';
 import { PRIORITIES } from '../types';
@@ -20,17 +20,22 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  const handleSave = async () => {
-    if (!title.trim()) return;
+  const handleSave = async (
+    t = title,
+    d = description,
+    dd = dueDate,
+    p = priority
+  ) => {
+    if (!t.trim()) return;
     setIsSaving(true);
 
     try {
       const res = await api.tasks.update({
         id: task.id,
-        title: title.trim(),
-        description,
-        dueDate: dueDate ? new Date(dueDate).toISOString() : null,
-        priority,
+        title: t.trim(),
+        description: d,
+        dueDate: dd ? new Date(dd).toISOString() : null,
+        priority: p,
       });
 
       if (res.success) {
@@ -38,10 +43,10 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
         setTimeout(() => setSaved(false), 1500);
         onUpdate({
           ...task,
-          title: title.trim(),
-          description,
-          due_date: dueDate ? new Date(dueDate).toISOString() : null,
-          priority,
+          title: t.trim(),
+          description: d,
+          due_date: dd ? new Date(dd).toISOString() : null,
+          priority: p,
         });
       }
     } catch (err) {
@@ -50,14 +55,6 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
       setIsSaving(false);
     }
   };
-
-  // Auto-save when fields change (after a short delay)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      handleSave();
-    }, 800);
-    return () => clearTimeout(timer);
-  }, [title, description, dueDate, priority]);
 
   return (
     <div
@@ -162,6 +159,17 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
               )}
             </div>
           </div>
+
+          {/* Save button */}
+          <button
+            onClick={() => handleSave()}
+            disabled={isSaving}
+            className="w-full bg-brand hover:bg-brand-hover disabled:opacity-50
+                       text-white font-semibold py-2.5 rounded-lg
+                       transition-colors text-sm"
+          >
+            {isSaving ? 'Saving...' : saved ? '✓ Saved' : 'Save Changes'}
+          </button>
 
           {/* Metadata */}
           <div className="text-xs text-gray-600 space-y-1 pt-2 border-t border-surface-border">
