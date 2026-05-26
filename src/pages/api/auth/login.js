@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
-const sql = require('../../../lib/db.js');
-const { createToken, setSessionCookie } = require('../../../lib/auth.js');
+const sql = require('../../lib/db.js');
+const { createToken, setSessionCookie } = require('../../lib/auth.js');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
