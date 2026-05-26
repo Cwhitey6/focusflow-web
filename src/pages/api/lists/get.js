@@ -1,6 +1,6 @@
 // get.js
-const sql = require('../../lib/db.js');
-const { getUserFromRequest } = require('../../lib/auth.js');
+const sql = require('../../../lib/db.js');
+const { getUserFromRequest } = require('../../../lib/auth.js');
 
 module.exports = async function handler(req, res) {
   const user = getUserFromRequest(req);
