@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import Head from 'next/head';
 import { useAuthStore } from '../store/authStore';
 import LoginPage from '../pages/LoginPage';
 import DashboardPage from '../pages/DashboardPage';
@@ -21,5 +22,12 @@ export default function Home() {
     );
   }
 
-  return user ? <DashboardPage /> : <LoginPage />;
+  return (
+    <>
+      <Head>
+        <title>FocusFlow</title>
+      </Head>
+      {user ? <DashboardPage /> : <LoginPage />}
+    </>
+  );
 }
