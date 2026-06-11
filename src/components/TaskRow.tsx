@@ -1,3 +1,13 @@
+/**
+ * TaskRow.tsx
+ *
+ * A single task row in the list view
+ * Shows a completion checkbox priority dot title status badge due date and delete button
+ * The status badge is a dropdown that lets the user move the task between lists
+ * The delete button only appears when the row is hovered
+ * Clicking the title opens the task detail drawer
+ */
+
 import { useState } from 'react';
 import { Trash2, Calendar, ChevronDown } from 'lucide-react';
 import { Task, List } from '../types';
@@ -5,22 +15,23 @@ import { PRIORITIES } from '../types';
 
 interface Props {
   task: Task;
-  lists: List[];
-  onToggle: (id: string, completed: boolean) => void;
-  onDelete: (id: string) => void;
-  onClick: (task: Task) => void;
-  onMove: (taskId: string, newListId: string) => void;
+  lists: List[];                                        // all lists in the project for the status dropdown
+  onToggle: (id: string, completed: boolean) => void;  // marks the task complete or incomplete
+  onDelete: (id: string) => void;                      // removes the task
+  onClick: (task: Task) => void;                       // opens the detail drawer
+  onMove: (taskId: string, newListId: string) => void; // moves the task to a different list
 }
 
 export default function TaskRow({
   task, lists, onToggle, onDelete, onClick, onMove
 }: Props) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [showStatusMenu, setShowStatusMenu] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);       // controls delete button visibility
+  const [showStatusMenu, setShowStatusMenu] = useState(false); // controls the status dropdown
 
   const priority = PRIORITIES[task.priority] ?? PRIORITIES.normal;
   const currentList = lists.find((l) => l.id === task.list_id);
 
+  // returns a short human readable string for the due date
   const formatDueDate = (dateStr: string) => {
     const date = new Date(dateStr);
     const today = new Date();
@@ -31,15 +42,16 @@ export default function TaskRow({
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
+  // a task is overdue if it has a past due date and is not yet complete
   const isOverdue = task.due_date
     && !task.completed
     && new Date(task.due_date) < new Date();
 
-  // Color for each list status
+  // returns a color for each list name so the status badge is visually distinct
   const getListColor = (listName: string) => {
-    if (listName === 'To Do')       return '#6b7280';
+    if (listName === 'To Do') return '#6b7280';
     if (listName === 'In Progress') return '#f97316';
-    if (listName === 'Done')        return '#22c55e';
+    if (listName === 'Done') return '#22c55e';
     return '#7c6af7';
   };
 
@@ -48,16 +60,16 @@ export default function TaskRow({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
-        setShowStatusMenu(false);
+        setShowStatusMenu(false); // close the dropdown if the user moves away
       }}
       className={`flex items-center gap-3 px-4 py-2.5 rounded-lg
                   transition-colors duration-100 group relative
                   ${isHovered ? 'bg-surface-raised' : ''}`}
     >
-      {/* Checkbox */}
+      {/* circular checkbox that fills with brand color when complete */}
       <button
         onClick={() => onToggle(task.id, !task.completed)}
-        className={`w-4 h-4 rounded-full border-2 flex-shrink-0
+        className={`w-4 h-4 rounded-full border-2 shrink-0
                     flex items-center justify-center transition-colors
                     ${task.completed
                       ? 'bg-brand border-brand'
@@ -73,14 +85,14 @@ export default function TaskRow({
         )}
       </button>
 
-      {/* Priority dot */}
+      {/* small colored dot showing the priority level */}
       <span
-        className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+        className="w-1.5 h-1.5 rounded-full shrink-0"
         style={{ backgroundColor: priority.color }}
         title={priority.label}
       />
 
-      {/* Title */}
+      {/* task title - clicking opens the detail drawer */}
       <button
         onClick={() => onClick(task)}
         className={`flex-1 text-left text-sm transition-colors
@@ -92,9 +104,11 @@ export default function TaskRow({
         {task.title}
       </button>
 
-      {/* Status badge — clickable dropdown */}
+      {/* status badge only shows on incomplete tasks since completed ones cant be moved */}
       {!task.completed && currentList && (
-        <div className="relative flex-shrink-0">
+        <div className="relative shrink-0">
+
+          {/* clicking the badge opens the dropdown */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -112,7 +126,7 @@ export default function TaskRow({
             <ChevronDown size={10} />
           </button>
 
-          {/* Dropdown menu */}
+          {/* dropdown lists all available lists to move the task into */}
           {showStatusMenu && (
             <div className="absolute right-0 top-full mt-1 bg-surface-raised
                             border border-surface-border rounded-xl shadow-2xl
@@ -123,7 +137,7 @@ export default function TaskRow({
                   onClick={(e) => {
                     e.stopPropagation();
                     if (list.id !== task.list_id) {
-                      onMove(task.id, list.id);
+                      onMove(task.id, list.id); // only move if its a different list
                     }
                     setShowStatusMenu(false);
                   }}
@@ -135,10 +149,12 @@ export default function TaskRow({
                               }`}
                 >
                   <span
-                    className="w-2 h-2 rounded-full flex-shrink-0"
+                    className="w-2 h-2 rounded-full shrink-0"
                     style={{ backgroundColor: getListColor(list.name) }}
                   />
                   <span className="text-gray-200">{list.name}</span>
+
+                  {/* label to show which list the task currently lives in */}
                   {list.id === task.list_id && (
                     <span className="ml-auto text-xs text-gray-600">current</span>
                   )}
@@ -149,23 +165,24 @@ export default function TaskRow({
         </div>
       )}
 
-      {/* Due date */}
+      {/* due date turns red if the task is past its deadline */}
       {task.due_date && (
-        <div className={`flex items-center gap-1 text-xs flex-shrink-0
+        <div className={`flex items-center gap-1 text-xs shrink-0
                          ${isOverdue ? 'text-red-400' : 'text-gray-500'}`}>
           <Calendar size={11} />
           <span>{formatDueDate(task.due_date)}</span>
         </div>
       )}
 
-      {/* Delete button */}
+      {/* delete button fades in on hover */}
       <button
         onClick={() => onDelete(task.id)}
-        className={`text-gray-600 hover:text-red-400 transition-all flex-shrink-0
+        className={`text-gray-600 hover:text-red-400 transition-all shrink-0
                     ${isHovered ? 'opacity-100' : 'opacity-0'}`}
       >
         <Trash2 size={14} />
       </button>
+
     </div>
   );
 }

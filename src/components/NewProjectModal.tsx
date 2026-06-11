@@ -1,3 +1,12 @@
+/**
+ * NewProjectModal.tsx
+ *
+ * Modal dialog for creating a brand new project
+ * The user picks a name color and emoji icon then hits Create
+ * On success the project is added to the global store so it
+ * appears in the sidebar immediately without a page reload
+ */
+
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
@@ -5,11 +14,13 @@ import { useAppStore } from '../store/appStore';
 import { Project } from '../types';
 import { api } from '../lib/api';
 
+// preset color swatches the user can choose from
 const COLORS = [
   '#7c6af7', '#3b82f6', '#22c55e', '#f97316',
   '#ef4444', '#ec4899', '#a855f7', '#14b8a6',
 ];
 
+// preset emoji icons the user can choose from
 const ICONS = ['📋', '🚀', '💡', '🎯', '📚', '🛠️', '🎨', '💼', '🌟', '🔥'];
 
 interface Props {
@@ -18,8 +29,8 @@ interface Props {
 
 export default function NewProjectModal({ onClose }: Props) {
   const [name, setName] = useState('');
-  const [color, setColor] = useState(COLORS[0]);
-  const [icon, setIcon] = useState(ICONS[0]);
+  const [color, setColor] = useState(COLORS[0]);  // default to purple
+  const [icon, setIcon] = useState(ICONS[0]);      // default to clipboard
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -39,6 +50,7 @@ export default function NewProjectModal({ onClose }: Props) {
       const res = await api.projects.create(name.trim(), color, icon);
 
       if (res.success && res.data) {
+        // build the full project object so it can be added to local state right away
         const newProject: Project = {
           id: res.data as string,
           user_id: user!.id,
@@ -48,12 +60,14 @@ export default function NewProjectModal({ onClose }: Props) {
           created_at: new Date().toISOString(),
           archived: false,
         };
+
+        // push to the store so the sidebar updates without a reload
         addProject(newProject);
         onClose();
       } else {
         setError(res.error || 'Failed to create project');
       }
-    } catch (err) {
+    } catch {
       setError('Something went wrong');
     } finally {
       setIsLoading(false);
@@ -61,6 +75,7 @@ export default function NewProjectModal({ onClose }: Props) {
   };
 
   return (
+    // clicking the backdrop closes the modal
     <div
       className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center
                  justify-center z-50 p-4"
@@ -69,7 +84,7 @@ export default function NewProjectModal({ onClose }: Props) {
       <div className="bg-surface-raised border border-surface-border rounded-2xl
                       w-full max-w-md shadow-2xl animate-slide-in-up">
 
-        {/* Header */}
+        {/* header with title and close button */}
         <div className="flex items-center justify-between px-6 py-4
                         border-b border-surface-border">
           <h3 className="text-white font-semibold">New Project</h3>
@@ -81,10 +96,10 @@ export default function NewProjectModal({ onClose }: Props) {
           </button>
         </div>
 
-        {/* Body */}
+        {/* form body */}
         <div className="p-6 space-y-5">
 
-          {/* Project name */}
+          {/* project name input - autofocused when the modal opens */}
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Project Name
@@ -103,7 +118,7 @@ export default function NewProjectModal({ onClose }: Props) {
             />
           </div>
 
-          {/* Color picker */}
+          {/* color swatch picker - selected swatch gets a white ring */}
           <div className="space-y-2">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Color
@@ -114,14 +129,17 @@ export default function NewProjectModal({ onClose }: Props) {
                   key={c}
                   onClick={() => setColor(c)}
                   className={`w-7 h-7 rounded-full transition-transform
-                              ${color === c ? 'ring-2 ring-white ring-offset-2 ring-offset-surface-raised scale-110' : 'hover:scale-110'}`}
+                              ${color === c
+                                ? 'ring-2 ring-white ring-offset-2 ring-offset-surface-raised scale-110'
+                                : 'hover:scale-110'
+                              }`}
                   style={{ backgroundColor: c }}
                 />
               ))}
             </div>
           </div>
 
-          {/* Icon picker */}
+          {/* emoji icon picker - selected icon gets a brand colored ring */}
           <div className="space-y-2">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Icon
@@ -144,10 +162,10 @@ export default function NewProjectModal({ onClose }: Props) {
             </div>
           </div>
 
-          {/* Preview */}
+          {/* live preview of how the project will appear in the sidebar */}
           <div className="flex items-center gap-3 bg-surface-base rounded-lg px-4 py-3">
             <span
-              className="w-3 h-3 rounded-full flex-shrink-0"
+              className="w-3 h-3 rounded-full shrink-0"
               style={{ backgroundColor: color }}
             />
             <span className="text-white text-sm font-medium">
@@ -155,12 +173,14 @@ export default function NewProjectModal({ onClose }: Props) {
             </span>
           </div>
 
+          {/* error message shown if the api call fails */}
           {error && (
             <p className="text-red-400 text-sm">{error}</p>
           )}
+
         </div>
 
-        {/* Footer */}
+        {/* footer with cancel and create buttons */}
         <div className="flex gap-3 px-6 py-4 border-t border-surface-border">
           <button
             onClick={onClose}

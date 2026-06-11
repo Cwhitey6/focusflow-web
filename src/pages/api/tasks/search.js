@@ -1,11 +1,22 @@
-const sql = require('../../../lib/db.js');
-const { getUserFromRequest } = require('../../../lib/auth.js');
+/**
+ * tasks/search.js
+ *
+ * Searches tasks by title and description using a text query
+ * Converts both the query and stored values to lowercase for case insensitive matching
+ * Incomplete tasks are shown before completed ones in the results
+ * Results are capped at 50 to keep the response fast
+ */
 
-module.exports = async function handler(req, res) {
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
   const user = getUserFromRequest(req);
   if (!user) return res.json({ success: false, error: 'Not authenticated' });
 
   const { query } = req.query;
+
+  // wrap the query in wildcards so it matches anywhere in the title or description
   const pattern = `%${query.toLowerCase()}%`;
 
   const rows = await sql`
@@ -19,4 +30,4 @@ module.exports = async function handler(req, res) {
   `;
 
   res.json({ success: true, data: rows });
-};
+}

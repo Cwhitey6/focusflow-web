@@ -1,4 +1,12 @@
-// TopBar.tsx — Top bar with live search input.
+/**
+ * TopBar.tsx
+ *
+ * Sticky header bar that sits above the main content area
+ * Shows the current page title on the left and a search input on the right
+ * Pressing Ctrl+K or Cmd+K from anywhere on the page focuses the search
+ * Pressing Escape clears the search and removes focus
+ * Typing anything triggers the global search page via the search store
+ */
 
 import { useRef, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
@@ -10,13 +18,15 @@ export default function TopBar() {
   const { query, setQuery, clearSearch } = useSearchStore();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Keyboard shortcut: Ctrl+K or Cmd+K to focus search
+  // register global keyboard shortcuts for search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Ctrl+K or Cmd+K focuses the search bar from anywhere on the page
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         inputRef.current?.focus();
       }
+      // Escape clears the search if there is an active query
       if (e.key === 'Escape' && query) {
         clearSearch();
         inputRef.current?.blur();
@@ -24,8 +34,9 @@ export default function TopBar() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [query]);
+  }, [query, clearSearch]);
 
+  // builds the page title based on what is currently active in the sidebar
   const getTitle = () => {
     if (activeView === 'my-day') return 'My Day';
     if (activeView === 'inbox') return 'Inbox';
@@ -38,16 +49,16 @@ export default function TopBar() {
 
   return (
     <header className="h-14 border-b border-surface-border flex items-center
-                       justify-between px-6 bg-surface-base flex-shrink-0">
+                       justify-between px-6 bg-surface-base shrink-0">
 
-      {/* Page title */}
+      {/* current page title driven by the active view */}
       <h2 className="text-white font-semibold text-base">{getTitle()}</h2>
 
-      {/* Search bar */}
+      {/* search input - border turns brand color when focused */}
       <div className="flex items-center gap-2 bg-surface-raised border
                       border-surface-border rounded-lg px-3 py-1.5 w-72
                       focus-within:border-brand transition-colors group">
-        <Search size={14} className="text-gray-500 flex-shrink-0" />
+        <Search size={14} className="text-gray-500 shrink-0" />
 
         <input
           ref={inputRef}
@@ -59,14 +70,14 @@ export default function TopBar() {
                      outline-none w-full"
         />
 
-        {/* Clear button — only shown when typing */}
+        {/* clear button only appears once the user has typed something */}
         {query && (
           <button
             onClick={() => {
               clearSearch();
-              inputRef.current?.focus();
+              inputRef.current?.focus(); // keep focus so the user can type a new query
             }}
-            className="text-gray-500 hover:text-white transition-colors flex-shrink-0"
+            className="text-gray-500 hover:text-white transition-colors shrink-0"
           >
             <X size={14} />
           </button>

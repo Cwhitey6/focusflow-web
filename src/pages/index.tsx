@@ -1,3 +1,12 @@
+/**
+ * index.tsx
+ *
+ * App entry point that decides whether to show the login screen or the dashboard
+ * On first load it checks for an existing session cookie via checkSession
+ * While that check is running a centered spinner is shown to prevent a flash
+ * of the wrong screen before the session status is known
+ */
+
 import { useEffect } from 'react';
 import Head from 'next/head';
 import { useAuthStore } from '../store/authStore';
@@ -9,10 +18,15 @@ export default function Home() {
   const isLoading = useAuthStore((state) => state.isLoading);
   const checkSession = useAuthStore((state) => state.checkSession);
 
+  // check for an existing session cookie when the app first loads
   useEffect(() => {
-    checkSession();
-  }, []);
+    async function check() {
+      await checkSession();
+    }
+    check();
+  }, [checkSession]);
 
+  // show a spinner while the session check is in progress
   if (isLoading) {
     return (
       <div className="min-h-screen bg-surface-base flex items-center justify-center">
@@ -27,6 +41,7 @@ export default function Home() {
       <Head>
         <title>FocusFlow</title>
       </Head>
+      {/* show the dashboard if logged in otherwise show the login screen */}
       {user ? <DashboardPage /> : <LoginPage />}
     </>
   );

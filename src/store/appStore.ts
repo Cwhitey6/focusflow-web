@@ -1,3 +1,12 @@
+/**
+ * appStore.ts
+ *
+ * Global store for app navigation and project list state
+ * Tracks which view is active in the sidebar and which project is selected
+ * Also holds the full list of projects so the sidebar and pages share the same data
+ * All project mutations update the list in place so the sidebar stays in sync
+ */
+
 import { create } from 'zustand';
 import { Project } from '../types';
 
@@ -16,19 +25,24 @@ interface AppState {
 }
 
 export const useAppStore = create<AppState>((set) => ({
-  activeView: 'my-day',
-  activeProjectId: null,
-  projects: [],
+  activeView: 'my-day',    // default landing view after login
+  activeProjectId: null,   // null means no project is selected
+  projects: [],            // populated by DashboardPage on mount
 
+  // switching views always clears the active project
   setActiveView: (view) => set({ activeView: view, activeProjectId: null }),
 
+  // switching to a project sets the view to project and stores the id
   setActiveProject: (id) => set({ activeView: 'project', activeProjectId: id }),
 
+  // replaces the full project list used on initial load
   setProjects: (projects) => set({ projects }),
 
+  // appends a newly created project to the end of the list
   addProject: (project) =>
     set((state) => ({ projects: [...state.projects, project] })),
 
+  // updates the name color and icon of a specific project in place
   updateProject: (id, name, color, icon) =>
     set((state) => ({
       projects: state.projects.map((p) =>
@@ -36,6 +50,7 @@ export const useAppStore = create<AppState>((set) => ({
       ),
     })),
 
+  // removes the project and navigates away if it was currently active
   removeProject: (id) =>
     set((state) => ({
       projects: state.projects.filter((p) => p.id !== id),

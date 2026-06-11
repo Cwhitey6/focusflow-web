@@ -1,3 +1,12 @@
+/**
+ * LoginPage.tsx
+ *
+ * Handles both login and registration in a single screen
+ * Toggling between the two modes swaps the form fields and button text
+ * On successful login or registration the user object is stored in the auth store
+ * which causes the app to redirect to the dashboard automatically
+ */
+
 import { useState } from 'react';
 import { useAuthStore } from '../store/authStore';
 import { api } from '../lib/api';
@@ -8,10 +17,10 @@ interface LoginResult {
 }
 
 export default function LoginPage() {
-  const [isRegister, setIsRegister] = useState(false);
+  const [isRegister, setIsRegister] = useState(false); // toggles between login and register mode
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState(''); // only used in register mode
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -20,6 +29,7 @@ export default function LoginPage() {
   const handleSubmit = async () => {
     setError('');
 
+    // basic validation before hitting the API
     if (!username.trim() || !password.trim()) {
       setError('Please fill in all fields');
       return;
@@ -39,6 +49,7 @@ export default function LoginPage() {
 
     try {
       if (isRegister) {
+        // register creates the account and logs in immediately on success
         const createRes = await api.auth.register(username.trim(), password);
 
         if (!createRes.success) {
@@ -50,6 +61,7 @@ export default function LoginPage() {
           login(createRes.data as LoginResult);
         }
       } else {
+        // login verifies credentials and sets the session cookie
         const res = await api.auth.login(username.trim(), password);
 
         if (res.success && res.data) {
@@ -66,6 +78,7 @@ export default function LoginPage() {
     }
   };
 
+  // allow submitting the form with the Enter key
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') handleSubmit();
   };
@@ -74,7 +87,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-surface-base flex items-center justify-center font-sans p-4">
       <div className="w-full max-w-sm space-y-6 animate-fade-in">
 
-        {/* Logo + Title */}
+        {/* app logo and title */}
         <div className="text-center space-y-3">
           <div className="w-14 h-14 bg-brand rounded-2xl mx-auto flex items-center justify-center">
             <span className="text-white text-2xl font-bold">F</span>
@@ -87,9 +100,10 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Form Card */}
+        {/* form card */}
         <div className="bg-surface-raised border border-surface-border rounded-2xl p-6 space-y-4">
 
+          {/* username field */}
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Username
@@ -108,6 +122,7 @@ export default function LoginPage() {
             />
           </div>
 
+          {/* password field */}
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Password
@@ -126,6 +141,7 @@ export default function LoginPage() {
             />
           </div>
 
+          {/* confirm password only shown in register mode */}
           {isRegister && (
             <div className="space-y-1.5">
               <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -146,12 +162,14 @@ export default function LoginPage() {
             </div>
           )}
 
+          {/* error message shown below the fields */}
           {error && (
             <div className="bg-red-500/10 border border-red-500/20 rounded-lg px-3.5 py-2.5">
               <p className="text-red-400 text-sm">{error}</p>
             </div>
           )}
 
+          {/* submit button text changes based on mode and loading state */}
           <button
             onClick={handleSubmit}
             disabled={isLoading}
@@ -167,12 +185,13 @@ export default function LoginPage() {
 
         </div>
 
+        {/* toggle between login and register modes */}
         <p className="text-center text-sm text-gray-500">
           {isRegister ? 'Already have an account?' : "Don't have an account?"}{' '}
           <button
             onClick={() => {
               setIsRegister(!isRegister);
-              setError('');
+              setError('');           // clear errors when switching modes
               setPassword('');
               setConfirmPassword('');
             }}

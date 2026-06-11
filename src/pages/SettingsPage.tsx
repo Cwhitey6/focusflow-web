@@ -1,3 +1,13 @@
+/**
+ * SettingsPage.tsx
+ *
+ * App settings page with three sections: appearance account and data
+ * Appearance has a dark/light mode toggle
+ * Account lets the user change their username or password
+ * Data lets the user export all their tasks as a JSON file
+ * Feedback messages auto clear after 3 seconds so the UI stays clean
+ */
+
 import { useState } from 'react';
 import { Moon, Sun, User, Lock, Download, Check } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
@@ -9,15 +19,20 @@ export default function SettingsPage() {
   const { user, login } = useAuthStore();
   const { theme, toggleTheme } = useThemeStore();
 
+  // username change form
   const [newUsername, setNewUsername] = useState('');
+  const [usernameMsg, setUsernameMsg] = useState<{type: 'ok'|'err', text: string} | null>(null);
+
+  // password change form
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-
-  const [usernameMsg, setUsernameMsg] = useState<{type: 'ok'|'err', text: string} | null>(null);
   const [passwordMsg, setPasswordMsg] = useState<{type: 'ok'|'err', text: string} | null>(null);
+
+  // export feedback
   const [exportMsg, setExportMsg] = useState('');
 
+  // updates the username and refreshes the auth store so the sidebar reflects the change
   const handleUpdateUsername = async () => {
     if (!newUsername.trim()) return;
     try {
@@ -32,11 +47,14 @@ export default function SettingsPage() {
     } catch {
       setUsernameMsg({ type: 'err', text: 'Something went wrong' });
     }
+    // auto clear the message after 3 seconds
     setTimeout(() => setUsernameMsg(null), 3000);
   };
 
+  // verifies the current password then saves the new one
   const handleUpdatePassword = async () => {
     if (!currentPassword || !newPassword) return;
+
     if (newPassword !== confirmNewPassword) {
       setPasswordMsg({ type: 'err', text: 'New passwords do not match' });
       return;
@@ -45,10 +63,12 @@ export default function SettingsPage() {
       setPasswordMsg({ type: 'err', text: 'Password must be at least 6 characters' });
       return;
     }
+
     try {
       const res = await api.auth.updatePassword(currentPassword, newPassword);
       if (res.success) {
         setPasswordMsg({ type: 'ok', text: 'Password updated!' });
+        // clear all three fields on success
         setCurrentPassword('');
         setNewPassword('');
         setConfirmNewPassword('');
@@ -61,11 +81,14 @@ export default function SettingsPage() {
     setTimeout(() => setPasswordMsg(null), 3000);
   };
 
+  // fetches all tasks and triggers a browser download as a JSON file
   const handleExport = async () => {
     try {
       const res = await api.tasks.export();
       if (res.success && res.data) {
         const tasks = res.data as Task[];
+
+        // create a blob and trigger a download without needing a server route
         const blob = new Blob(
           [JSON.stringify(tasks, null, 2)],
           { type: 'application/json' }
@@ -76,6 +99,7 @@ export default function SettingsPage() {
         a.download = `focusflow-export-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         URL.revokeObjectURL(url);
+
         setExportMsg(`Exported ${tasks.length} tasks`);
         setTimeout(() => setExportMsg(''), 3000);
       }
@@ -87,14 +111,13 @@ export default function SettingsPage() {
   return (
     <div className="flex-1 max-w-xl mx-auto w-full px-6 py-8 space-y-8 animate-fade-in">
 
+      {/* page header */}
       <div>
         <h2 className="text-2xl font-bold text-white">Settings</h2>
-        <p className="text-gray-500 text-sm mt-1">
-          Manage your preferences and account
-        </p>
+        <p className="text-gray-500 text-sm mt-1">Manage your preferences and account</p>
       </div>
 
-      {/* Appearance */}
+      {/* appearance section */}
       <SettingsSection title="Appearance" icon={<Sun size={16} />}>
         <div className="flex items-center justify-between">
           <div>
@@ -103,6 +126,8 @@ export default function SettingsPage() {
               {theme === 'dark' ? 'Dark mode is on' : 'Light mode is on'}
             </p>
           </div>
+
+          {/* toggle switch slides the knob and changes color based on theme */}
           <button
             onClick={toggleTheme}
             className={`relative w-12 h-6 rounded-full transition-colors duration-200
@@ -123,8 +148,10 @@ export default function SettingsPage() {
         </div>
       </SettingsSection>
 
-      {/* Account */}
+      {/* account section */}
       <SettingsSection title="Account" icon={<User size={16} />}>
+
+        {/* current user info row */}
         <div className="flex items-center gap-3 pb-4 border-b border-surface-border">
           <div className="w-10 h-10 bg-brand rounded-full flex items-center justify-center">
             <span className="text-white font-semibold">
@@ -137,6 +164,7 @@ export default function SettingsPage() {
           </div>
         </div>
 
+        {/* change username form */}
         <div className="space-y-2">
           <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
             Change Username
@@ -170,6 +198,7 @@ export default function SettingsPage() {
           )}
         </div>
 
+        {/* change password form */}
         <div className="space-y-2 pt-4 border-t border-surface-border">
           <label className="text-xs font-medium text-gray-400 uppercase tracking-wider
                              flex items-center gap-1.5">
@@ -219,9 +248,10 @@ export default function SettingsPage() {
             </p>
           )}
         </div>
+
       </SettingsSection>
 
-      {/* Data */}
+      {/* data export section */}
       <SettingsSection title="Data" icon={<Download size={16} />}>
         <div className="flex items-center justify-between">
           <div>
@@ -245,6 +275,7 @@ export default function SettingsPage() {
         )}
       </SettingsSection>
 
+      {/* app version info */}
       <div className="text-center py-4 space-y-1">
         <p className="text-xs text-gray-700">FocusFlow v0.1.0</p>
         <p className="text-xs text-gray-700">Built with Next.js + React + PostgreSQL</p>
@@ -254,6 +285,7 @@ export default function SettingsPage() {
   );
 }
 
+// reusable card wrapper used for each settings section
 function SettingsSection({
   title, icon, children
 }: {

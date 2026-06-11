@@ -1,3 +1,12 @@
+/**
+ * InboxPage.tsx
+ *
+ * Quick task capture page for tasks that dont belong to a specific project
+ * Loads the special Inbox project that is auto created when the user registers
+ * Active tasks are shown at the top and completed tasks are shown below at reduced opacity
+ * If the inbox project is missing for some reason an error message is shown instead
+ */
+
 import { useState, useEffect } from 'react';
 import { Inbox } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
@@ -11,13 +20,14 @@ export default function InboxPage() {
   const user = useAuthStore((state) => state.user);
 
   const [inboxProject, setInboxProject] = useState<Project | null>(null);
-  const [inboxList, setInboxList] = useState<List | null>(null);
-  const [lists, setLists] = useState<List[]>([]);
+  const [inboxList, setInboxList] = useState<List | null>(null);   // the single list inside the inbox project
+  const [lists, setLists] = useState<List[]>([]);                  // passed to TaskRow for the status dropdown
   const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const loadInbox = async () => {
+  useEffect(() => {
+  async function load() {
     setIsLoading(true);
     try {
       const projectRes = await api.projects.inbox();
@@ -42,12 +52,11 @@ export default function InboxPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }
+  load();
+}, []);
 
-  useEffect(() => {
-    loadInbox();
-  }, []);
-
+  // adds a new task to the inbox list and updates local state immediately
   const handleAddTask = async (title: string) => {
     if (!inboxList || !inboxProject) return;
     try {
@@ -81,6 +90,7 @@ export default function InboxPage() {
     }
   };
 
+  // toggles completion and sets or clears the completed_at timestamp
   const handleToggle = async (id: string, completed: boolean) => {
     try {
       await api.tasks.toggle(id, completed);
@@ -96,6 +106,7 @@ export default function InboxPage() {
     }
   };
 
+  // removes the task and closes the detail drawer if it was open
   const handleDelete = async (id: string) => {
     try {
       await api.tasks.delete(id);
@@ -106,6 +117,7 @@ export default function InboxPage() {
     }
   };
 
+  // moves a task to a different list and updates local state
   const handleMove = async (taskId: string, newListId: string) => {
     try {
       await api.tasks.move(taskId, newListId);
@@ -117,6 +129,7 @@ export default function InboxPage() {
     }
   };
 
+  // syncs the updated task back into the list after saving in the detail drawer
   const handleUpdate = (updated: Task) => {
     setTasks((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
     setSelectedTask(updated);
@@ -138,16 +151,16 @@ export default function InboxPage() {
     <>
       <div className="flex-1 max-w-2xl mx-auto w-full px-6 py-8 space-y-6">
 
+        {/* page header */}
         <div className="flex items-center gap-3">
           <Inbox size={22} className="text-gray-400" />
           <div>
             <h2 className="text-2xl font-bold text-white">Inbox</h2>
-            <p className="text-gray-500 text-sm">
-              Quick capture — tasks without a project
-            </p>
+            <p className="text-gray-500 text-sm">Quick capture - tasks without a project</p>
           </div>
         </div>
 
+        {/* add task input or error if inbox is missing */}
         {inboxList ? (
           <div className="bg-surface-raised border border-surface-border rounded-xl p-3">
             <AddTaskBar
@@ -163,6 +176,7 @@ export default function InboxPage() {
           </div>
         )}
 
+        {/* active task list */}
         {activeTasks.length > 0 && (
           <div className="space-y-0.5">
             {activeTasks.map((task) => (
@@ -179,16 +193,16 @@ export default function InboxPage() {
           </div>
         )}
 
+        {/* empty state shown when there are no active tasks */}
         {activeTasks.length === 0 && (
           <div className="text-center py-12 space-y-2">
             <p className="text-4xl">📥</p>
             <p className="text-gray-400 font-medium">Inbox is empty</p>
-            <p className="text-gray-600 text-sm">
-              Add tasks above to capture them quickly
-            </p>
+            <p className="text-gray-600 text-sm">Add tasks above to capture them quickly</p>
           </div>
         )}
 
+        {/* completed tasks shown at reduced opacity below the active ones */}
         {completedTasks.length > 0 && (
           <div className="space-y-0.5 opacity-60">
             <p className="text-xs text-gray-600 uppercase tracking-wider px-4 mb-2">
@@ -210,6 +224,7 @@ export default function InboxPage() {
 
       </div>
 
+      {/* task detail drawer rendered outside the scroll container */}
       {selectedTask && (
         <TaskDetailModal
           task={selectedTask}

@@ -1,29 +1,41 @@
+/**
+ * EditProjectModal.tsx
+ *
+ * Modal dialog for editing an existing project's name color and icon
+ * Opens when the user clicks the pencil icon next to a project in the sidebar
+ * Saves changes to the database and updates the global store on success
+ */
+
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useAppStore } from '../store/appStore';
 import { Project } from '../types';
 import { api } from '../lib/api';
 
+// preset color swatches the user can pick from
 const COLORS = [
   '#7c6af7', '#3b82f6', '#22c55e', '#f97316',
   '#ef4444', '#ec4899', '#a855f7', '#14b8a6',
   '#6b7280', '#eab308',
 ];
 
+// preset emoji icons the user can pick from
 const ICONS = ['📋', '🚀', '💡', '🎯', '📚', '🛠️', '🎨', '💼', '🌟', '🔥', '📥', '🗂️'];
 
 interface Props {
-  project: Project;
+  project: Project;  // the project being edited
   onClose: () => void;
 }
 
 export default function EditProjectModal({ project, onClose }: Props) {
+  // pre-fill fields with the project's current values
   const [name, setName] = useState(project.name);
   const [color, setColor] = useState(project.color);
   const [icon, setIcon] = useState(project.icon);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // pull the update action from the global store so the sidebar reflects changes instantly
   const updateProject = useAppStore((state) => state.updateProject);
 
   const handleSave = async () => {
@@ -31,6 +43,7 @@ export default function EditProjectModal({ project, onClose }: Props) {
       setError('Please enter a project name');
       return;
     }
+
     setIsLoading(true);
     setError('');
 
@@ -38,12 +51,13 @@ export default function EditProjectModal({ project, onClose }: Props) {
       const res = await api.projects.update(project.id, name.trim(), color, icon);
 
       if (res.success) {
+        // update the sidebar immediately without needing a page reload
         updateProject(project.id, name.trim(), color, icon);
         onClose();
       } else {
         setError(res.error || 'Failed to update project');
       }
-    } catch (err) {
+    } catch {
       setError('Something went wrong');
     } finally {
       setIsLoading(false);
@@ -51,6 +65,7 @@ export default function EditProjectModal({ project, onClose }: Props) {
   };
 
   return (
+    // clicking the backdrop closes the modal
     <div
       className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center
                  justify-center z-50 p-4"
@@ -59,7 +74,7 @@ export default function EditProjectModal({ project, onClose }: Props) {
       <div className="bg-surface-raised border border-surface-border rounded-2xl
                       w-full max-w-md shadow-2xl animate-slide-in-up">
 
-        {/* Header */}
+        {/* header with title and close button */}
         <div className="flex items-center justify-between px-6 py-4
                         border-b border-surface-border">
           <h3 className="text-white font-semibold">Edit Project</h3>
@@ -71,10 +86,10 @@ export default function EditProjectModal({ project, onClose }: Props) {
           </button>
         </div>
 
-        {/* Body */}
+        {/* form body */}
         <div className="p-6 space-y-5">
 
-          {/* Project name */}
+          {/* project name input - autofocused when modal opens */}
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Project Name
@@ -92,7 +107,7 @@ export default function EditProjectModal({ project, onClose }: Props) {
             />
           </div>
 
-          {/* Color picker */}
+          {/* color swatch picker - selected swatch gets a white ring */}
           <div className="space-y-2">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Color
@@ -113,7 +128,7 @@ export default function EditProjectModal({ project, onClose }: Props) {
             </div>
           </div>
 
-          {/* Icon picker */}
+          {/* emoji icon picker - selected icon gets a brand colored ring */}
           <div className="space-y-2">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Icon
@@ -136,10 +151,10 @@ export default function EditProjectModal({ project, onClose }: Props) {
             </div>
           </div>
 
-          {/* Preview */}
+          {/* live preview of what the project will look like in the sidebar */}
           <div className="flex items-center gap-3 bg-surface-base rounded-lg px-4 py-3">
             <span
-              className="w-3 h-3 rounded-full flex-shrink-0"
+              className="w-3 h-3 rounded-full shrink-0"
               style={{ backgroundColor: color }}
             />
             <span className="text-white text-sm font-medium">
@@ -147,10 +162,12 @@ export default function EditProjectModal({ project, onClose }: Props) {
             </span>
           </div>
 
+          {/* error message shown if the save fails */}
           {error && <p className="text-red-400 text-sm">{error}</p>}
+
         </div>
 
-        {/* Footer */}
+        {/* footer with cancel and save buttons */}
         <div className="flex gap-3 px-6 py-4 border-t border-surface-border">
           <button
             onClick={onClose}

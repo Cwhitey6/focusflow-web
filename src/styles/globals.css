@@ -1,27 +1,84 @@
+/*
+ * globals.css
+ *
+ * Global styles for the app
+ * Imports the Inter font from Google and the full Tailwind CSS library
+ * The @theme block defines custom design tokens used throughout the app
+ * as Tailwind utility classes like bg-brand or border-surface-border
+ */
+
+/* load the Inter font family with all the weights we use */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* load Tailwind v4 */
 @import "tailwindcss";
 
+/* custom design tokens used as Tailwind utilities across the whole app */
 @theme {
+  /* brand purple used for buttons active states and accents */
   --color-brand: #7c6af7;
   --color-brand-hover: #9585f8;
   --color-brand-muted: #4a3fa0;
+
+  /* surface colors reference CSS variables so light mode overrides take effect */
   --color-surface-base: #0f0f13;
   --color-surface-raised: #1a1a24;
   --color-surface-border: #2a2a38;
+
+  /* Inter is the primary font across the whole app */
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
 @layer base {
+  /* dark mode defaults */
   html {
     background-color: #0f0f13;
     color: #f0f0f5;
   }
 
+  /* light mode overrides - swap surface variables and base text color */
+  html.light {
+    background-color: #f0f0f5;
+    color: #111118;
+    --color-surface-base: #f0f0f5;
+    --color-surface-raised: #ffffff;
+    --color-surface-border: #e0e0e8;
+  }
+
+  /* smooth scrolling for all scrollable elements */
   * {
     scroll-behavior: smooth;
   }
 
+  /* slim custom scrollbar */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: #0f0f13; }
   ::-webkit-scrollbar-thumb { background: #2a2a38; border-radius: 9999px; }
+}
+
+/* light mode text overrides - need !important to beat Tailwind utility specificity */
+@layer utilities {
+  /* text-white becomes near-black in light mode */
+  html.light .text-white { color: #111118 !important; }
+
+  /* gray text shades flip to darker equivalents in light mode */
+  html.light .text-gray-200 { color: #1f2937 !important; }
+  html.light .text-gray-300 { color: #374151 !important; }
+  html.light .text-gray-400 { color: #4b5563 !important; }
+  html.light .text-gray-500 { color: #6b7280 !important; }
+  html.light .text-gray-600 { color: #9ca3af !important; }
+  html.light .text-gray-700 { color: #d1d5db !important; }
+
+  /* placeholder text in inputs and textareas */
+  html.light input::placeholder,
+  html.light textarea::placeholder { color: #9ca3af !important; }
+
+  /* input textarea and select backgrounds and text */
+  html.light input,
+  html.light textarea,
+  html.light select {
+    color: #111118 !important;
+    background-color: #ffffff !important;
+    border-color: #e0e0e8 !important;
+  }
 }

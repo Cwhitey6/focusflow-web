@@ -1,11 +1,25 @@
-const { neon } = require('@neondatabase/serverless');
-require('dotenv').config({ path: '.env.local' });
+/**
+ * migrate.js
+ *
+ * One time script that creates all the database tables
+ * Runs with npm run migrate to set up a fresh database
+ * Uses IF NOT EXISTS so it is safe to run multiple times without wiping data
+ * Tables are created in order so foreign key references are always valid
+ */
+
+import { neon } from '@neondatabase/serverless';
+import dotenv from 'dotenv';
+
+// load the local env file so POSTGRES_URL is available when running the script directly
+dotenv.config({ path: '.env.local' });
 
 const sql = neon(process.env.POSTGRES_URL);
 
 async function migrate() {
   console.log('Connecting to database...');
   try {
+
+    // users table stores login credentials and preferences
     await sql`
       CREATE TABLE IF NOT EXISTS users (
         id            TEXT PRIMARY KEY,
@@ -15,6 +29,8 @@ async function migrate() {
         settings      JSONB NOT NULL DEFAULT '{}'
       )
     `;
+
+    // projects are the top level workspaces that contain lists and tasks
     await sql`
       CREATE TABLE IF NOT EXISTS projects (
         id         TEXT PRIMARY KEY,
@@ -26,6 +42,8 @@ async function migrate() {
         archived   BOOLEAN NOT NULL DEFAULT FALSE
       )
     `;
+
+    // lists are the kanban columns inside a project
     await sql`
       CREATE TABLE IF NOT EXISTS lists (
         id         TEXT PRIMARY KEY,
@@ -34,6 +52,8 @@ async function migrate() {
         position   INTEGER NOT NULL DEFAULT 0
       )
     `;
+
+    // tasks are the individual items inside a list
     await sql`
       CREATE TABLE IF NOT EXISTS tasks (
         id           TEXT PRIMARY KEY,
@@ -50,6 +70,8 @@ async function migrate() {
         created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )
     `;
+
+    // tags are reusable labels the user can create and attach to tasks
     await sql`
       CREATE TABLE IF NOT EXISTS tags (
         id      TEXT PRIMARY KEY,
@@ -58,6 +80,8 @@ async function migrate() {
         color   TEXT NOT NULL DEFAULT '#7c6af7'
       )
     `;
+
+    // join table connecting tasks to tags since one task can have many tags
     await sql`
       CREATE TABLE IF NOT EXISTS task_tags (
         task_id TEXT NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
@@ -65,6 +89,8 @@ async function migrate() {
         PRIMARY KEY (task_id, tag_id)
       )
     `;
+
+    // notes are freeform comments attached to a task
     await sql`
       CREATE TABLE IF NOT EXISTS notes (
         id         TEXT PRIMARY KEY,
@@ -73,6 +99,7 @@ async function migrate() {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )
     `;
+
     console.log('✅ Database tables created successfully');
   } catch (err) {
     console.error('❌ Migration failed:', err.message);

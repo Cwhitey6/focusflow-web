@@ -1,9 +1,19 @@
-const { v4: uuid } = require('uuid');
-const sql = require('../../../lib/db.js');
-const { getUserFromRequest } = require('../../../lib/auth.js');
+/**
+ * tasks/create.js
+ *
+ * Creates a new task inside a specific list and project
+ * Description defaults to empty string and priority defaults to normal
+ * if not provided so the caller only needs to pass a title at minimum
+ * Returns the new task id so the client can build the local task object
+ */
 
-module.exports = async function handler(req, res) {
+import { v4 as uuid } from 'uuid';
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
+
   const user = getUserFromRequest(req);
   if (!user) return res.json({ success: false, error: 'Not authenticated' });
 
@@ -19,5 +29,6 @@ module.exports = async function handler(req, res) {
     )
   `;
 
+  // return the new id so the client can add the task to local state immediately
   res.json({ success: true, data: id });
-};
+}
