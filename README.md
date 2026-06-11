@@ -1,5 +1,5 @@
 # FocusFlow PWA
-The FocusFlow app is accessible from any browser and installable on mobile as a progressive web app. It manages tasks projects and kanban boards with full cloud sync across devices.
+FocusFlow is a personal task manager that runs in the browser and installs on your phone like a native app. Create projects organize tasks into kanban boards set due dates and priorities while everything syncs across devices automatically.
 
 ## Tech Stack Summary
 ```
@@ -9,7 +9,7 @@ Styling:      Tailwind CSS v4
 State:        Zustand
 Database:     Neon PostgreSQL (serverless)
 Auth:         bcrypt + JWT HTTP-only cookies
-Hosting:      Vercel (free hobby plan)
+Hosting:      Vercel 
 PWA:          Web App Manifest + meta tags
 Mobile:       Responsive sidebar + installable PWA
 ```
