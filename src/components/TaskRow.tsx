@@ -104,6 +104,16 @@ export default function TaskRow({
         {task.title}
       </button>
 
+      {/* note indicator - only shown when the task has a description */}
+      {task.description && (
+        <span
+          title={task.description}
+          className="text-gray-600 hover:text-gray-400 transition-colors shrink-0 text-xs"
+        >
+          📝
+        </span>
+      )}      
+
       {/* status badge only shows on incomplete tasks since completed ones cant be moved */}
       {!task.completed && currentList && (
         <div className="relative shrink-0">
