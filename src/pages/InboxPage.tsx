@@ -205,9 +205,21 @@ export default function InboxPage() {
         {/* completed tasks shown at reduced opacity below the active ones */}
         {completedTasks.length > 0 && (
           <div className="space-y-0.5 opacity-60">
-            <p className="text-xs text-gray-600 uppercase tracking-wider px-4 mb-2">
-              Completed ({completedTasks.length})
-            </p>
+            <div className="flex items-center justify-between px-4 mb-2">
+              <p className="text-xs text-gray-600 uppercase tracking-wider">
+                Completed ({completedTasks.length})
+              </p>
+              <button
+                onClick={async () => {
+                  if (!inboxProject) return;
+                  await api.tasks.deleteCompleted(inboxProject.id);
+                  setTasks((prev) => prev.filter((t) => !t.completed));
+                }}
+                className="text-xs text-red-400 hover:text-red-300 transition-colors"
+              >
+                Clear all
+              </button>
+            </div>
             {completedTasks.map((task) => (
               <TaskRow
                 key={task.id}

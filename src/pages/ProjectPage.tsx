@@ -247,18 +247,33 @@ export default function ProjectPage({ projectId }: Props) {
               {/* completed tasks section collapsed by default */}
               {completedTasks.length > 0 && (
                 <section>
-                  <button
-                    onClick={() => setShowCompleted(!showCompleted)}
-                    className="flex items-center gap-2 text-xs font-semibold
-                               text-gray-500 uppercase tracking-wider mb-3
-                               hover:text-gray-300 transition-colors"
-                  >
-                    <CheckSquare size={13} />
-                    Completed ({completedTasks.length})
-                    <span className="text-gray-700 normal-case font-normal tracking-normal">
-                      {showCompleted ? '▲ hide' : '▼ show'}
-                    </span>
-                  </button>
+                  <div className="flex items-center justify-between mb-3">
+                    <button
+                      onClick={() => setShowCompleted(!showCompleted)}
+                      className="flex items-center gap-2 text-xs font-semibold
+                                text-gray-500 uppercase tracking-wider
+                                hover:text-gray-300 transition-colors"
+                    >
+                      <CheckSquare size={13} />
+                      Completed ({completedTasks.length})
+                      <span className="text-gray-700 normal-case font-normal tracking-normal">
+                        {showCompleted ? '▲ hide' : '▼ show'}
+                      </span>
+                    </button>
+
+                    {/* clear all button only shown when completed section is open */}
+                    {showCompleted && (
+                      <button
+                        onClick={async () => {
+                          await api.tasks.deleteCompleted(projectId);
+                          setTasks((prev) => prev.filter((t) => !t.completed));
+                        }}
+                        className="text-xs text-red-400 hover:text-red-300 transition-colors"
+                      >
+                        Clear all
+                      </button>
+                    )}
+                  </div>
 
                   {showCompleted && (
                     <div className="space-y-0.5 opacity-60">

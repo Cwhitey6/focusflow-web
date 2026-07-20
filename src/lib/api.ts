@@ -160,5 +160,12 @@ export const api = {
 
     // returns all tasks for the user as a JSON export
     export: () => request('/api/tasks/export'),
+
+    // deletes all completed tasks in a project at once
+    deleteCompleted: (projectId: string) =>
+      request('/api/tasks/delete-completed', {
+        method: 'POST',
+        body: JSON.stringify({ projectId }),
+      }),
   },
 };
