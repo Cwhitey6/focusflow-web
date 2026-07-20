@@ -85,12 +85,21 @@ export default function TaskRow({
         )}
       </button>
 
-      {/* small colored dot showing the priority level */}
-      <span
-        className="w-1.5 h-1.5 rounded-full shrink-0"
-        style={{ backgroundColor: priority.color }}
-        title={priority.label}
-      />
+      {/* priority dot with label on hover */}
+      <div className="flex items-center gap-1 shrink-0 group/priority">
+        <span
+          className="w-1.5 h-1.5 rounded-full shrink-0"
+          style={{ backgroundColor: priority.color }}
+        />
+        <span
+          className="text-xs font-medium max-w-0 overflow-hidden opacity-0
+                    group-hover/priority:max-w-xs group-hover/priority:opacity-100
+                    transition-all duration-200"
+          style={{ color: priority.color }}
+        >
+          {priority.label}
+        </span>
+      </div>
 
       {/* task title - clicking opens the detail drawer */}
       <button

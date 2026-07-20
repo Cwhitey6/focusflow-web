@@ -1,0 +1,5418 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+public/
+  android-chrome-192x192.png
+  android-chrome-512x512.png
+  favicon-16x16.png
+  favicon-32x32.png
+  favicon.ico
+  file.svg
+  globe.svg
+  manifest.json
+  next.svg
+  vercel.svg
+  window.svg
+src/
+  components/
+    AddTaskBar.tsx
+    EditProjectModal.tsx
+    KanbanBoard.tsx
+    KanbanCard.tsx
+    NewProjectModal.tsx
+    Sidebar.tsx
+    TaskDetailModal.tsx
+    TaskRow.tsx
+    TopBar.tsx
+  lib/
+    api.ts
+    auth.js
+    db.js
+    migrate.js
+  pages/
+    api/
+      auth/
+        login.js
+        logout.js
+        me.js
+        register.js
+        update-password.js
+        update-username.js
+      lists/
+        get.js
+      projects/
+        create.js
+        delete.js
+        get.js
+        inbox.js
+        update.js
+      tasks/
+        create.js
+        delete.js
+        export.js
+        get.js
+        move.js
+        search.js
+        today.js
+        toggle.js
+        update.js
+    _app.tsx
+    _document.tsx
+    DashboardPage.tsx
+    InboxPage.tsx
+    index.tsx
+    LoginPage.tsx
+    MyDayPage.tsx
+    ProjectPage.tsx
+    SearchPage.tsx
+    SettingsPage.tsx
+  store/
+    appStore.ts
+    authStore.ts
+    searchStore.ts
+    themeStore.ts
+  styles/
+    globals.css
+  types.ts
+.gitignore
+eslint.config.mjs
+next.config.ts
+package.json
+postcss.config.mjs
+README.md
+tailwind.config.ts
+tsconfig.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="public/file.svg">
+<svg fill="none" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14.5 13.5V5.41a1 1 0 0 0-.3-.7L9.8.29A1 1 0 0 0 9.08 0H1.5v13.5A2.5 2.5 0 0 0 4 16h8a2.5 2.5 0 0 0 2.5-2.5m-1.5 0v-7H8v-5H3v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1M9.5 5V2.12L12.38 5zM5.13 5h-.62v1.25h2.12V5zm-.62 3h7.12v1.25H4.5zm.62 3h-.62v1.25h7.12V11z" clip-rule="evenodd" fill="#666" fill-rule="evenodd"/></svg>
+</file>
+
+<file path="public/globe.svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g clip-path="url(#a)"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.27 14.1a6.5 6.5 0 0 0 3.67-3.45q-1.24.21-2.7.34-.31 1.83-.97 3.1M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.48-1.52a7 7 0 0 1-.96 0H7.5a4 4 0 0 1-.84-1.32q-.38-.89-.63-2.08a40 40 0 0 0 3.92 0q-.25 1.2-.63 2.08a4 4 0 0 1-.84 1.31zm2.94-4.76q1.66-.15 2.95-.43a7 7 0 0 0 0-2.58q-1.3-.27-2.95-.43a18 18 0 0 1 0 3.44m-1.27-3.54a17 17 0 0 1 0 3.64 39 39 0 0 1-4.3 0 17 17 0 0 1 0-3.64 39 39 0 0 1 4.3 0m1.1-1.17q1.45.13 2.69.34a6.5 6.5 0 0 0-3.67-3.44q.65 1.26.98 3.1M8.48 1.5l.01.02q.41.37.84 1.31.38.89.63 2.08a40 40 0 0 0-3.92 0q.25-1.2.63-2.08a4 4 0 0 1 .85-1.32 7 7 0 0 1 .96 0m-2.75.4a6.5 6.5 0 0 0-3.67 3.44 29 29 0 0 1 2.7-.34q.31-1.83.97-3.1M4.58 6.28q-1.66.16-2.95.43a7 7 0 0 0 0 2.58q1.3.27 2.95.43a18 18 0 0 1 0-3.44m.17 4.71q-1.45-.12-2.69-.34a6.5 6.5 0 0 0 3.67 3.44q-.65-1.27-.98-3.1" fill="#666"/></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h16v16H0z"/></clipPath></defs></svg>
+</file>
+
+<file path="public/manifest.json">
+{
+  "name": "FocusFlow",
+  "short_name": "FocusFlow",
+  "description": "Your personal project command center",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f13",
+  "theme_color": "#7c6af7",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+</file>
+
+<file path="public/next.svg">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 394 80"><path fill="#000" d="M262 0h68.5v12.7h-27.2v66.6h-13.6V12.7H262V0ZM149 0v12.7H94v20.4h44.3v12.6H94v21h55v12.6H80.5V0h68.7zm34.3 0h-17.8l63.8 79.4h17.9l-32-39.7 32-39.6h-17.9l-23 28.6-23-28.6zm18.3 56.7-9-11-27.1 33.7h17.8l18.3-22.7z"/><path fill="#000" d="M81 79.3 17 0H0v79.3h13.6V17l50.2 62.3H81Zm252.6-.4c-1 0-1.8-.4-2.5-1s-1.1-1.6-1.1-2.6.3-1.8 1-2.5 1.6-1 2.6-1 1.8.3 2.5 1a3.4 3.4 0 0 1 .6 4.3 3.7 3.7 0 0 1-3 1.8zm23.2-33.5h6v23.3c0 2.1-.4 4-1.3 5.5a9.1 9.1 0 0 1-3.8 3.5c-1.6.8-3.5 1.3-5.7 1.3-2 0-3.7-.4-5.3-1s-2.8-1.8-3.7-3.2c-.9-1.3-1.4-3-1.4-5h6c.1.8.3 1.6.7 2.2s1 1.2 1.6 1.5c.7.4 1.5.5 2.4.5 1 0 1.8-.2 2.4-.6a4 4 0 0 0 1.6-1.8c.3-.8.5-1.8.5-3V45.5zm30.9 9.1a4.4 4.4 0 0 0-2-3.3 7.5 7.5 0 0 0-4.3-1.1c-1.3 0-2.4.2-3.3.5-.9.4-1.6 1-2 1.6a3.5 3.5 0 0 0-.3 4c.3.5.7.9 1.3 1.2l1.8 1 2 .5 3.2.8c1.3.3 2.5.7 3.7 1.2a13 13 0 0 1 3.2 1.8 8.1 8.1 0 0 1 3 6.5c0 2-.5 3.7-1.5 5.1a10 10 0 0 1-4.4 3.5c-1.8.8-4.1 1.2-6.8 1.2-2.6 0-4.9-.4-6.8-1.2-2-.8-3.4-2-4.5-3.5a10 10 0 0 1-1.7-5.6h6a5 5 0 0 0 3.5 4.6c1 .4 2.2.6 3.4.6 1.3 0 2.5-.2 3.5-.6 1-.4 1.8-1 2.4-1.7a4 4 0 0 0 .8-2.4c0-.9-.2-1.6-.7-2.2a11 11 0 0 0-2.1-1.4l-3.2-1-3.8-1c-2.8-.7-5-1.7-6.6-3.2a7.2 7.2 0 0 1-2.4-5.7 8 8 0 0 1 1.7-5 10 10 0 0 1 4.3-3.5c2-.8 4-1.2 6.4-1.2 2.3 0 4.4.4 6.2 1.2 1.8.8 3.2 2 4.3 3.4 1 1.4 1.5 3 1.5 5h-5.8z"/></svg>
+</file>
+
+<file path="public/vercel.svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1155 1000"><path d="m577.3 0 577.4 1000H0z" fill="#fff"/></svg>
+</file>
+
+<file path="public/window.svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 2.5h13v10a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1zM0 1h16v11.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 0 12.5zm3.75 4.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5M7 4.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m1.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5" fill="#666"/></svg>
+</file>
+
+<file path="next.config.ts">
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+export default nextConfig;
+</file>
+
+<file path="postcss.config.mjs">
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+
+export default config;
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}
+</file>
+
+<file path="src/components/AddTaskBar.tsx">
+/**
+ * AddTaskBar.tsx
+ *
+ * Quick task creation input shown at the bottom of each list
+ * Typing a title and pressing 'Enter' or clicking 'Add' fires the onAdd callback
+ * Pressing 'Escape' clears the input and removes focus
+ */
+
+import { useState } from 'react';
+import { Plus } from 'lucide-react';
+
+interface Props {
+  onAdd: (title: string) => void;   // called with the new task title when submitted
+  placeholder?: string;              // optional custom placeholder text
+}
+
+export default function AddTaskBar({ onAdd, placeholder = 'Add a task...' }: Props) {
+  const [title, setTitle] = useState('');       // current value of the input field
+  const [focused, setFocused] = useState(false); // tracks whether the input is active
+
+  // trim whitespace and fire the callback then reset the field
+  const handleAdd = () => {
+    if (!title.trim()) return; // do nothing if the input is empty or just spaces
+    onAdd(title.trim());
+    setTitle('');
+  };
+
+  return (
+    // wrapper changes border and background when the input is focused
+    <div className={`flex items-center gap-2 px-4 py-2 rounded-lg
+                     border transition-colors duration-150
+                     ${focused
+                       ? 'border-brand bg-surface-raised'
+                       : 'border-transparent hover:border-surface-border'
+                     }`}>
+
+      {/* plus icon turns brand color when the input is active */}
+      <Plus
+        size={16}
+        className={focused ? 'text-brand' : 'text-gray-600'}
+      />
+
+      {/* main text input where the user types the task title */}
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        onFocus={() => setFocused(true)}   // mark as focused so styles update
+        onBlur={() => setFocused(false)}   // mark as unfocused when user clicks away
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') handleAdd();  // submit on Enter
+          if (e.key === 'Escape') {
+            setTitle('');        // clear whatever was typed
+            setFocused(false);   // dismiss the focused state
+          }
+        }}
+        placeholder={placeholder}
+        className="flex-1 bg-transparent text-sm text-gray-300
+                   placeholder-gray-600 outline-none"
+      />
+
+      {/* add button only renders once the user has typed something */}
+      {title.trim() && (
+        <button
+          onMouseDown={(e) => {
+            e.preventDefault(); // stop the input losing focus before the click fires
+            handleAdd();
+          }}
+          className="text-xs bg-brand hover:bg-brand-hover text-white
+                     px-2.5 py-1 rounded-md transition-colors"
+        >
+          Add
+        </button>
+      )}
+
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/EditProjectModal.tsx">
+/**
+ * EditProjectModal.tsx
+ *
+ * Modal dialog for editing an existing project's name color and icon
+ * Opens when the user clicks the pencil icon next to a project in the sidebar
+ * Saves changes to the database and updates the global store on success
+ */
+
+import { useState } from 'react';
+import { X } from 'lucide-react';
+import { useAppStore } from '../store/appStore';
+import { Project } from '../types';
+import { api } from '../lib/api';
+
+// preset color swatches the user can pick from
+const COLORS = [
+  '#7c6af7', '#3b82f6', '#22c55e', '#f97316',
+  '#ef4444', '#ec4899', '#a855f7', '#14b8a6',
+  '#6b7280', '#eab308',
+];
+
+// preset emoji icons the user can pick from
+const ICONS = ['📋', '🚀', '💡', '🎯', '📚', '🛠️', '🎨', '💼', '🌟', '🔥', '📥', '🗂️'];
+
+interface Props {
+  project: Project;  // the project being edited
+  onClose: () => void;
+}
+
+export default function EditProjectModal({ project, onClose }: Props) {
+  // pre-fill fields with the project's current values
+  const [name, setName] = useState(project.name);
+  const [color, setColor] = useState(project.color);
+  const [icon, setIcon] = useState(project.icon);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // pull the update action from the global store so the sidebar reflects changes instantly
+  const updateProject = useAppStore((state) => state.updateProject);
+
+  const handleSave = async () => {
+    if (!name.trim()) {
+      setError('Please enter a project name');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const res = await api.projects.update(project.id, name.trim(), color, icon);
+
+      if (res.success) {
+        // update the sidebar immediately without needing a page reload
+        updateProject(project.id, name.trim(), color, icon);
+        onClose();
+      } else {
+        setError(res.error || 'Failed to update project');
+      }
+    } catch {
+      setError('Something went wrong');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    // clicking the backdrop closes the modal
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center
+                 justify-center z-50 p-4"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div className="bg-surface-raised border border-surface-border rounded-2xl
+                      w-full max-w-md shadow-2xl animate-slide-in-up">
+
+        {/* header with title and close button */}
+        <div className="flex items-center justify-between px-6 py-4
+                        border-b border-surface-border">
+          <h3 className="text-white font-semibold">Edit Project</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-white transition-colors"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        {/* form body */}
+        <div className="p-6 space-y-5">
+
+          {/* project name input - autofocused when modal opens */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Project Name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSave()}
+              autoFocus
+              className="w-full bg-surface-base border border-surface-border rounded-lg
+                         px-3.5 py-2.5 text-white placeholder-gray-600 text-sm
+                         focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand
+                         transition-colors"
+            />
+          </div>
+
+          {/* color swatch picker - selected swatch gets a white ring */}
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Color
+            </label>
+            <div className="flex gap-2 flex-wrap">
+              {COLORS.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setColor(c)}
+                  className={`w-7 h-7 rounded-full transition-transform
+                              ${color === c
+                                ? 'ring-2 ring-white ring-offset-2 ring-offset-surface-raised scale-110'
+                                : 'hover:scale-110'
+                              }`}
+                  style={{ backgroundColor: c }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* emoji icon picker - selected icon gets a brand colored ring */}
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Icon
+            </label>
+            <div className="flex gap-2 flex-wrap">
+              {ICONS.map((i) => (
+                <button
+                  key={i}
+                  onClick={() => setIcon(i)}
+                  className={`w-9 h-9 rounded-lg text-lg flex items-center justify-center
+                              transition-colors
+                              ${icon === i
+                                ? 'bg-brand/30 ring-1 ring-brand'
+                                : 'bg-surface-base hover:bg-surface-border'
+                              }`}
+                >
+                  {i}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* live preview of what the project will look like in the sidebar */}
+          <div className="flex items-center gap-3 bg-surface-base rounded-lg px-4 py-3">
+            <span
+              className="w-3 h-3 rounded-full shrink-0"
+              style={{ backgroundColor: color }}
+            />
+            <span className="text-white text-sm font-medium">
+              {icon} {name || 'Project Name'}
+            </span>
+          </div>
+
+          {/* error message shown if the save fails */}
+          {error && <p className="text-red-400 text-sm">{error}</p>}
+
+        </div>
+
+        {/* footer with cancel and save buttons */}
+        <div className="flex gap-3 px-6 py-4 border-t border-surface-border">
+          <button
+            onClick={onClose}
+            className="flex-1 bg-surface-base hover:bg-surface-border border
+                       border-surface-border text-gray-300 font-medium py-2.5
+                       rounded-lg transition-colors text-sm"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={isLoading}
+            className="flex-1 bg-brand hover:bg-brand-hover disabled:opacity-50
+                       text-white font-semibold py-2.5 rounded-lg
+                       transition-colors text-sm"
+          >
+            {isLoading ? 'Saving...' : 'Save Changes'}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/KanbanBoard.tsx">
+/**
+ * KanbanBoard.tsx
+ *
+ * Renders a horizontal set of columns where each column maps to a list
+ * Cards can be dragged between columns and the change is saved to the database
+ * A counter ref is used on drag enter and leave to prevent flickering when
+ * the user drags over child elements inside a column
+ */
+
+import { useState, useRef } from 'react';
+import { Task, List } from '../types';
+import KanbanCard from './KanbanCard';
+import AddTaskBar from './AddTaskBar';
+import { api } from '../lib/api';
+
+interface Props {
+  lists: List[];                                        // the columns to render
+  tasks: Task[];                                        // all tasks across all columns
+  onTaskClick: (task: Task) => void;                   // opens the task detail drawer
+  onTaskMove: (taskId: string, newListId: string) => void; // updates local state after a move
+  onTaskAdd: (listId: string, title: string) => void;  // creates a new task in a column
+}
+
+export default function KanbanBoard({
+  lists, tasks, onTaskClick, onTaskMove, onTaskAdd
+}: Props) {
+  const [draggingTaskId, setDraggingTaskId] = useState<string | null>(null); // which card is being dragged
+  const [dragOverListId, setDragOverListId] = useState<string | null>(null); // which column is highlighted
+
+  // tracks how many times dragenter has fired per column
+  // this prevents the highlight from flickering when hovering over child elements
+  const dragCounter = useRef<Record<string, number>>({});
+
+  const handleDragStart = (taskId: string) => {
+    setDraggingTaskId(taskId);
+  };
+
+  // reset all drag state when the drag ends regardless of where it was dropped
+  const handleDragEnd = () => {
+    setDraggingTaskId(null);
+    setDragOverListId(null);
+    dragCounter.current = {};
+  };
+
+  // increment the counter and highlight the column the user is dragging over
+  const handleDragEnter = (e: React.DragEvent, listId: string) => {
+    e.preventDefault();
+    dragCounter.current[listId] = (dragCounter.current[listId] || 0) + 1;
+    setDragOverListId(listId);
+  };
+
+  // decrement the counter and only remove the highlight when fully leaving the column
+  const handleDragLeave = (e: React.DragEvent, listId: string) => {
+    e.preventDefault();
+    dragCounter.current[listId] = (dragCounter.current[listId] || 0) - 1;
+    if (dragCounter.current[listId] <= 0) {
+      dragCounter.current[listId] = 0;
+      setDragOverListId((prev) => (prev === listId ? null : prev));
+    }
+  };
+
+  // required to allow dropping - also sets the cursor to a move icon
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleDrop = async (e: React.DragEvent, listId: string) => {
+    e.preventDefault();
+    dragCounter.current[listId] = 0;
+    setDragOverListId(null);
+
+    // get the task id from state or fall back to the dataTransfer payload
+    const taskId = draggingTaskId || e.dataTransfer.getData('text/plain');
+    if (!taskId) return;
+
+    const task = tasks.find((t) => t.id === taskId);
+
+    // do nothing if the task was dropped back into the same column
+    if (!task || task.list_id === listId) {
+      setDraggingTaskId(null);
+      return;
+    }
+
+    try {
+      // save the new column to the database then update local state
+      await api.tasks.move(taskId, listId);
+      onTaskMove(taskId, listId);
+    } catch (err) {
+      console.error('Failed to move task:', err);
+    } finally {
+      setDraggingTaskId(null);
+    }
+  };
+
+  return (
+    // horizontal scrolling container so columns dont wrap on smaller screens
+    <div className="flex gap-4 h-full overflow-x-auto pb-6 px-6 pt-4">
+      {lists.map((list) => {
+
+        // only show incomplete tasks in the board view
+        const listTasks = tasks.filter(
+          (t) => t.list_id === list.id && !t.completed
+        );
+        const isDragOver = dragOverListId === list.id;
+
+        return (
+          <div
+            key={list.id}
+            onDragEnter={(e) => handleDragEnter(e, list.id)}
+            onDragLeave={(e) => handleDragLeave(e, list.id)}
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(e, list.id)}
+            className={`flex flex-col w-72 min-w-72 rounded-2xl border
+                        transition-all duration-150
+                        ${isDragOver
+                          ? 'border-brand bg-brand/5 shadow-lg shadow-brand/10'
+                          : 'border-surface-border bg-surface-raised'
+                        }`}
+          >
+            {/* column header shows the list name and task count */}
+            <div className="flex items-center justify-between px-4 py-3
+                            border-b border-surface-border shrink-0">
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-gray-300">
+                  {list.name}
+                </h3>
+                <span className="text-xs text-gray-600 bg-surface-base
+                                 px-1.5 py-0.5 rounded-full">
+                  {listTasks.length}
+                </span>
+              </div>
+            </div>
+
+            {/* scrollable card area - tints blue when a card is dragged over */}
+            <div className={`flex-1 overflow-y-auto p-3 space-y-2.5 min-h-24
+                             transition-colors duration-150
+                             ${isDragOver ? 'bg-brand/5' : ''}`}
+            >
+              {listTasks.map((task) => (
+                <KanbanCard
+                  key={task.id}
+                  task={task}
+                  onClick={onTaskClick}
+                  onDragStart={handleDragStart}
+                  onDragEnd={handleDragEnd}
+                  isDragging={draggingTaskId === task.id}
+                />
+              ))}
+
+              {/* dashed drop target shown when dragging over an empty column */}
+              {isDragOver && listTasks.length === 0 && (
+                <div className="border-2 border-dashed border-brand/40
+                                rounded-xl h-20 flex items-center justify-center
+                                transition-all">
+                  <p className="text-xs text-brand/60 font-medium">Drop here</p>
+                </div>
+              )}
+
+              {/* spacer keeps the column a consistent height when empty */}
+              {!isDragOver && listTasks.length === 0 && (
+                <div className="h-8" />
+              )}
+            </div>
+
+            {/* add task input pinned to the bottom of each column */}
+            <div className="p-3 border-t border-surface-border shrink-0">
+              <AddTaskBar
+                onAdd={(title) => onTaskAdd(list.id, title)}
+                placeholder="Add card..."
+              />
+            </div>
+
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/NewProjectModal.tsx">
+/**
+ * NewProjectModal.tsx
+ *
+ * Modal dialog for creating a brand new project
+ * The user picks a name color and emoji icon then hits Create
+ * On success the project is added to the global store so it
+ * appears in the sidebar immediately without a page reload
+ */
+
+import { useState } from 'react';
+import { X } from 'lucide-react';
+import { useAuthStore } from '../store/authStore';
+import { useAppStore } from '../store/appStore';
+import { Project } from '../types';
+import { api } from '../lib/api';
+
+// preset color swatches the user can choose from
+const COLORS = [
+  '#7c6af7', '#3b82f6', '#22c55e', '#f97316',
+  '#ef4444', '#ec4899', '#a855f7', '#14b8a6',
+];
+
+// preset emoji icons the user can choose from
+const ICONS = ['📋', '🚀', '💡', '🎯', '📚', '🛠️', '🎨', '💼', '🌟', '🔥'];
+
+interface Props {
+  onClose: () => void;
+}
+
+export default function NewProjectModal({ onClose }: Props) {
+  const [name, setName] = useState('');
+  const [color, setColor] = useState(COLORS[0]);  // default to purple
+  const [icon, setIcon] = useState(ICONS[0]);      // default to clipboard
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const user = useAuthStore((state) => state.user);
+  const addProject = useAppStore((state) => state.addProject);
+
+  const handleCreate = async () => {
+    if (!name.trim()) {
+      setError('Please enter a project name');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const res = await api.projects.create(name.trim(), color, icon);
+
+      if (res.success && res.data) {
+        // build the full project object so it can be added to local state right away
+        const newProject: Project = {
+          id: res.data as string,
+          user_id: user!.id,
+          name: name.trim(),
+          color,
+          icon,
+          created_at: new Date().toISOString(),
+          archived: false,
+        };
+
+        // push to the store so the sidebar updates without a reload
+        addProject(newProject);
+        onClose();
+      } else {
+        setError(res.error || 'Failed to create project');
+      }
+    } catch {
+      setError('Something went wrong');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    // clicking the backdrop closes the modal
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center
+                 justify-center z-50 p-4"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div className="bg-surface-raised border border-surface-border rounded-2xl
+                      w-full max-w-md shadow-2xl animate-slide-in-up">
+
+        {/* header with title and close button */}
+        <div className="flex items-center justify-between px-6 py-4
+                        border-b border-surface-border">
+          <h3 className="text-white font-semibold">New Project</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-white transition-colors"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        {/* form body */}
+        <div className="p-6 space-y-5">
+
+          {/* project name input - autofocused when the modal opens */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Project Name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+              placeholder="e.g. Work Tasks, Personal Goals..."
+              autoFocus
+              className="w-full bg-surface-base border border-surface-border rounded-lg
+                         px-3.5 py-2.5 text-white placeholder-gray-600 text-sm
+                         focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand
+                         transition-colors"
+            />
+          </div>
+
+          {/* color swatch picker - selected swatch gets a white ring */}
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Color
+            </label>
+            <div className="flex gap-2 flex-wrap">
+              {COLORS.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setColor(c)}
+                  className={`w-7 h-7 rounded-full transition-transform
+                              ${color === c
+                                ? 'ring-2 ring-white ring-offset-2 ring-offset-surface-raised scale-110'
+                                : 'hover:scale-110'
+                              }`}
+                  style={{ backgroundColor: c }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* emoji icon picker - selected icon gets a brand colored ring */}
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Icon
+            </label>
+            <div className="flex gap-2 flex-wrap">
+              {ICONS.map((i) => (
+                <button
+                  key={i}
+                  onClick={() => setIcon(i)}
+                  className={`w-9 h-9 rounded-lg text-lg flex items-center justify-center
+                              transition-colors
+                              ${icon === i
+                                ? 'bg-brand/30 ring-1 ring-brand'
+                                : 'bg-surface-base hover:bg-surface-border'
+                              }`}
+                >
+                  {i}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* live preview of how the project will appear in the sidebar */}
+          <div className="flex items-center gap-3 bg-surface-base rounded-lg px-4 py-3">
+            <span
+              className="w-3 h-3 rounded-full shrink-0"
+              style={{ backgroundColor: color }}
+            />
+            <span className="text-white text-sm font-medium">
+              {icon} {name || 'Project Name'}
+            </span>
+          </div>
+
+          {/* error message shown if the api call fails */}
+          {error && (
+            <p className="text-red-400 text-sm">{error}</p>
+          )}
+
+        </div>
+
+        {/* footer with cancel and create buttons */}
+        <div className="flex gap-3 px-6 py-4 border-t border-surface-border">
+          <button
+            onClick={onClose}
+            className="flex-1 bg-surface-base hover:bg-surface-border border
+                       border-surface-border text-gray-300 font-medium py-2.5
+                       rounded-lg transition-colors text-sm"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleCreate}
+            disabled={isLoading}
+            className="flex-1 bg-brand hover:bg-brand-hover disabled:opacity-50
+                       text-white font-semibold py-2.5 rounded-lg
+                       transition-colors text-sm"
+          >
+            {isLoading ? 'Creating...' : 'Create Project'}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/TopBar.tsx">
+/**
+ * TopBar.tsx
+ *
+ * Sticky header bar that sits above the main content area
+ * Shows the current page title on the left and a search input on the right
+ * Pressing Ctrl+K or Cmd+K from anywhere on the page focuses the search
+ * Pressing Escape clears the search and removes focus
+ * Typing anything triggers the global search page via the search store
+ */
+
+import { useRef, useEffect } from 'react';
+import { Search, X } from 'lucide-react';
+import { useAppStore } from '../store/appStore';
+import { useSearchStore } from '../store/searchStore';
+
+export default function TopBar() {
+  const { activeView, activeProjectId, projects } = useAppStore();
+  const { query, setQuery, clearSearch } = useSearchStore();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // register global keyboard shortcuts for search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ctrl+K or Cmd+K focuses the search bar from anywhere on the page
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+      // Escape clears the search if there is an active query
+      if (e.key === 'Escape' && query) {
+        clearSearch();
+        inputRef.current?.blur();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [query, clearSearch]);
+
+  // builds the page title based on what is currently active in the sidebar
+  const getTitle = () => {
+    if (activeView === 'my-day') return 'My Day';
+    if (activeView === 'inbox') return 'Inbox';
+    if (activeProjectId) {
+      const project = projects.find((p) => p.id === activeProjectId);
+      return project ? `${project.icon} ${project.name}` : 'Project';
+    }
+    return 'FocusFlow';
+  };
+
+  return (
+    <header className="h-14 border-b border-surface-border flex items-center
+                       justify-between px-6 bg-surface-base shrink-0">
+
+      {/* current page title driven by the active view */}
+      <h2 className="text-white font-semibold text-base">{getTitle()}</h2>
+
+      {/* search input - border turns brand color when focused */}
+      <div className="flex items-center gap-2 bg-surface-raised border
+                      border-surface-border rounded-lg px-3 py-1.5 w-72
+                      focus-within:border-brand transition-colors group">
+        <Search size={14} className="text-gray-500 shrink-0" />
+
+        <input
+          ref={inputRef}
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search tasks..."
+          className="bg-transparent text-sm text-white placeholder-gray-600
+                     outline-none w-full"
+        />
+
+        {/* clear button only appears once the user has typed something */}
+        {query && (
+          <button
+            onClick={() => {
+              clearSearch();
+              inputRef.current?.focus(); // keep focus so the user can type a new query
+            }}
+            className="text-gray-500 hover:text-white transition-colors shrink-0"
+          >
+            <X size={14} />
+          </button>
+        )}
+      </div>
+
+    </header>
+  );
+}
+</file>
+
+<file path="src/lib/api.ts">
+/**
+ * api.ts
+ *
+ * Central API client for the entire app
+ * Every function here maps to one serverless API route in pages/api
+ * All requests go through the shared request helper which handles
+ * headers and JSON parsing in one place
+ * Auth is handled via HTTP only cookies so no tokens are passed manually
+ */
+
+// shared fetch wrapper used by every API call
+// returns a consistent shape so every caller can check res.success
+async function request<T>(
+  url: string,
+  options?: RequestInit
+): Promise<{ success: boolean; data: T | null; error: string | null }> {
+  const res = await fetch(url, {
+    headers: { 'Content-Type': 'application/json' },
+    ...options,
+  });
+  return res.json();
+}
+
+export const api = {
+
+  // auth routes handle login registration and session management
+  auth: {
+    // creates a new account and logs the user in immediately
+    register: (username: string, password: string) =>
+      request('/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+      }),
+
+    // verifies credentials and sets the session cookie
+    login: (username: string, password: string) =>
+      request('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+      }),
+
+    // clears the session cookie
+    logout: () => request('/api/auth/logout', { method: 'POST' }),
+
+    // checks if the current session cookie is valid and returns the user
+    me: () => request('/api/auth/me'),
+
+    // updates the username in the database
+    updateUsername: (newUsername: string) =>
+      request('/api/auth/update-username', {
+        method: 'POST',
+        body: JSON.stringify({ newUsername }),
+      }),
+
+    // verifies the current password before saving the new one
+    updatePassword: (currentPassword: string, newPassword: string) =>
+      request('/api/auth/update-password', {
+        method: 'POST',
+        body: JSON.stringify({ currentPassword, newPassword }),
+      }),
+  },
+
+  // project routes manage the users workspaces
+  projects: {
+    // returns all non-archived projects for the logged in user
+    get: () => request('/api/projects/get'),
+
+    // creates a new project and auto-generates three kanban columns
+    create: (name: string, color: string, icon: string) =>
+      request('/api/projects/create', {
+        method: 'POST',
+        body: JSON.stringify({ name, color, icon }),
+      }),
+
+    // updates the name color and icon of an existing project
+    update: (projectId: string, name: string, color: string, icon: string) =>
+      request('/api/projects/update', {
+        method: 'POST',
+        body: JSON.stringify({ projectId, name, color, icon }),
+      }),
+
+    // deletes the project and all its lists and tasks via cascade
+    delete: (projectId: string) =>
+      request('/api/projects/delete', {
+        method: 'POST',
+        body: JSON.stringify({ projectId }),
+      }),
+
+    // returns the special inbox project that is auto-created on registration
+    inbox: () => request('/api/projects/inbox'),
+  },
+
+  // list routes manage the kanban columns inside a project
+  lists: {
+    // returns all lists for a project ordered by position
+    get: (projectId: string) =>
+      request(`/api/lists/get?projectId=${projectId}`),
+  },
+
+  // task routes handle all task crud and movement
+  tasks: {
+    // returns all tasks for a project ordered by position
+    get: (projectId: string) =>
+      request(`/api/tasks/get?projectId=${projectId}`),
+
+    // creates a new task in a specific list
+    create: (data: {
+      listId: string;
+      projectId: string;
+      title: string;
+      description: string;
+      dueDate: string | null;
+      priority: string;
+    }) =>
+      request('/api/tasks/create', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+
+    // updates the title description due date and priority of a task
+    update: (data: {
+      id: string;
+      title: string;
+      description: string;
+      dueDate: string | null;
+      priority: string;
+    }) =>
+      request('/api/tasks/update', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+
+    // marks a task complete or incomplete and sets the completed_at timestamp
+    toggle: (id: string, completed: boolean) =>
+      request('/api/tasks/toggle', {
+        method: 'POST',
+        body: JSON.stringify({ id, completed }),
+      }),
+
+    // permanently removes a task
+    delete: (id: string) =>
+      request('/api/tasks/delete', {
+        method: 'POST',
+        body: JSON.stringify({ id }),
+      }),
+
+    // moves a task to a different list (kanban column)
+    move: (taskId: string, newListId: string) =>
+      request('/api/tasks/move', {
+        method: 'POST',
+        body: JSON.stringify({ taskId, newListId }),
+      }),
+
+    // searches task titles and descriptions using a text query
+    search: (query: string) =>
+      request(`/api/tasks/search?query=${encodeURIComponent(query)}`),
+
+    // returns all incomplete tasks due today across all projects
+    today: () => request('/api/tasks/today'),
+
+    // returns all tasks for the user as a JSON export
+    export: () => request('/api/tasks/export'),
+  },
+};
+</file>
+
+<file path="src/lib/auth.js">
+/**
+ * auth.js
+ *
+ * Handles JWT session management for the app
+ * After a successful login a signed token is stored in an HTTP only cookie
+ * HTTP only means JavaScript on the client cannot read it which prevents XSS attacks
+ * The token expires after 30 days and is verified on every API request
+ */
+
+import jwt from 'jsonwebtoken';
+import { serialize, parse } from 'cookie';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'focusflow-secret';
+const COOKIE_NAME = 'focusflow_session';
+
+// creates a signed JWT containing the users id and username
+export function createToken(user) {
+  return jwt.sign(
+    { id: user.id, username: user.username },
+    JWT_SECRET,
+    { expiresIn: '30d' }
+  );
+}
+
+// verifies a token and returns the payload or null if invalid or expired
+export function verifyToken(token) {
+  try {
+    return jwt.verify(token, JWT_SECRET);
+  } catch {
+    return null;
+  }
+}
+
+// sets the session cookie on the response
+// secure flag is only true in production so local dev still works over http
+export function setSessionCookie(res, token) {
+  res.setHeader('Set-Cookie', serialize(COOKIE_NAME, token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 60 * 60 * 24 * 30, // 30 days in seconds
+    path: '/',
+  }));
+}
+
+// overwrites the cookie with an empty value and zero max age to clear it
+export function clearSessionCookie(res) {
+  res.setHeader('Set-Cookie', serialize(COOKIE_NAME, '', {
+    httpOnly: true,
+    maxAge: 0,
+    path: '/',
+  }));
+}
+
+// reads the session cookie from the request and returns the decoded user or null
+export function getUserFromRequest(req) {
+  const cookies = parse(req.headers.cookie || '');
+  const token = cookies[COOKIE_NAME];
+  if (!token) return null;
+  return verifyToken(token);
+}
+</file>
+
+<file path="src/lib/db.js">
+/**
+ * db.js
+ *
+ * Creates and exports the Neon database connection
+ * The neon function returns a tagged template literal query client
+ * meaning queries are written as sql`SELECT * FROM table` instead of sql.query()
+ * The connection string is pulled from the POSTGRES_URL environment variable
+ */
+
+import { neon } from '@neondatabase/serverless';
+
+const sql = neon(process.env.POSTGRES_URL);
+
+export default sql;
+</file>
+
+<file path="src/lib/migrate.js">
+/**
+ * migrate.js
+ *
+ * One time script that creates all the database tables
+ * Runs with npm run migrate to set up a fresh database
+ * Uses IF NOT EXISTS so it is safe to run multiple times without wiping data
+ * Tables are created in order so foreign key references are always valid
+ */
+
+import { neon } from '@neondatabase/serverless';
+import dotenv from 'dotenv';
+
+// load the local env file so POSTGRES_URL is available when running the script directly
+dotenv.config({ path: '.env.local' });
+
+const sql = neon(process.env.POSTGRES_URL);
+
+async function migrate() {
+  console.log('Connecting to database...');
+  try {
+
+    // users table stores login credentials and preferences
+    await sql`
+      CREATE TABLE IF NOT EXISTS users (
+        id            TEXT PRIMARY KEY,
+        username      TEXT NOT NULL UNIQUE,
+        password_hash TEXT NOT NULL,
+        created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        settings      JSONB NOT NULL DEFAULT '{}'
+      )
+    `;
+
+    // projects are the top level workspaces that contain lists and tasks
+    await sql`
+      CREATE TABLE IF NOT EXISTS projects (
+        id         TEXT PRIMARY KEY,
+        user_id    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        name       TEXT NOT NULL,
+        color      TEXT NOT NULL DEFAULT '#7c6af7',
+        icon       TEXT NOT NULL DEFAULT '📋',
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        archived   BOOLEAN NOT NULL DEFAULT FALSE
+      )
+    `;
+
+    // lists are the kanban columns inside a project
+    await sql`
+      CREATE TABLE IF NOT EXISTS lists (
+        id         TEXT PRIMARY KEY,
+        project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+        name       TEXT NOT NULL,
+        position   INTEGER NOT NULL DEFAULT 0
+      )
+    `;
+
+    // tasks are the individual items inside a list
+    await sql`
+      CREATE TABLE IF NOT EXISTS tasks (
+        id           TEXT PRIMARY KEY,
+        list_id      TEXT NOT NULL REFERENCES lists(id) ON DELETE CASCADE,
+        project_id   TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+        user_id      TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        title        TEXT NOT NULL,
+        description  TEXT NOT NULL DEFAULT '',
+        due_date     TIMESTAMPTZ,
+        priority     TEXT NOT NULL DEFAULT 'normal',
+        completed    BOOLEAN NOT NULL DEFAULT FALSE,
+        completed_at TIMESTAMPTZ,
+        position     INTEGER NOT NULL DEFAULT 0,
+        created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `;
+
+    // tags are reusable labels the user can create and attach to tasks
+    await sql`
+      CREATE TABLE IF NOT EXISTS tags (
+        id      TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        name    TEXT NOT NULL,
+        color   TEXT NOT NULL DEFAULT '#7c6af7'
+      )
+    `;
+
+    // join table connecting tasks to tags since one task can have many tags
+    await sql`
+      CREATE TABLE IF NOT EXISTS task_tags (
+        task_id TEXT NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+        tag_id  TEXT NOT NULL REFERENCES tags(id) ON DELETE CASCADE,
+        PRIMARY KEY (task_id, tag_id)
+      )
+    `;
+
+    // notes are freeform comments attached to a task
+    await sql`
+      CREATE TABLE IF NOT EXISTS notes (
+        id         TEXT PRIMARY KEY,
+        task_id    TEXT NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+        content    TEXT NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `;
+
+    console.log('✅ Database tables created successfully');
+  } catch (err) {
+    console.error('❌ Migration failed:', err.message);
+  }
+}
+
+migrate();
+</file>
+
+<file path="src/pages/_app.tsx">
+/**
+ * _app.tsx
+ *
+ * Root Next.js app wrapper that wraps every page
+ * Imports global styles including Tailwind so they apply everywhere
+ * Calls initTheme on mount to restore the saved dark/light preference
+ */
+
+import { useEffect } from 'react';
+import type { AppProps } from 'next/app';
+import '../styles/globals.css';
+import { initTheme } from '../store/themeStore';
+
+export default function App({ Component, pageProps }: AppProps) {
+  // restore the saved theme from localStorage on first load
+  useEffect(() => {
+    initTheme();
+  }, []);
+
+  return <Component {...pageProps} />;
+}
+</file>
+
+<file path="src/pages/InboxPage.tsx">
+/**
+ * InboxPage.tsx
+ *
+ * Quick task capture page for tasks that dont belong to a specific project
+ * Loads the special Inbox project that is auto created when the user registers
+ * Active tasks are shown at the top and completed tasks are shown below at reduced opacity
+ * If the inbox project is missing for some reason an error message is shown instead
+ */
+
+import { useState, useEffect } from 'react';
+import { Inbox } from 'lucide-react';
+import { useAuthStore } from '../store/authStore';
+import { Task, Project, List } from '../types';
+import { api } from '../lib/api';
+import TaskRow from '../components/TaskRow';
+import AddTaskBar from '../components/AddTaskBar';
+import TaskDetailModal from '../components/TaskDetailModal';
+
+export default function InboxPage() {
+  const user = useAuthStore((state) => state.user);
+
+  const [inboxProject, setInboxProject] = useState<Project | null>(null);
+  const [inboxList, setInboxList] = useState<List | null>(null);   // the single list inside the inbox project
+  const [lists, setLists] = useState<List[]>([]);                  // passed to TaskRow for the status dropdown
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+  async function load() {
+    setIsLoading(true);
+    try {
+      const projectRes = await api.projects.inbox();
+
+      if (projectRes.success && projectRes.data) {
+        const project = projectRes.data as Project;
+        setInboxProject(project);
+
+        const listsRes = await api.lists.get(project.id);
+        const listsData = (listsRes.data ?? []) as List[];
+
+        if (listsData.length > 0) {
+          setLists(listsData);
+          setInboxList(listsData[0]);
+
+          const tasksRes = await api.tasks.get(project.id);
+          setTasks((tasksRes.data ?? []) as Task[]);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to load inbox:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  load();
+}, []);
+
+  // adds a new task to the inbox list and updates local state immediately
+  const handleAddTask = async (title: string) => {
+    if (!inboxList || !inboxProject) return;
+    try {
+      const res = await api.tasks.create({
+        listId: inboxList.id,
+        projectId: inboxProject.id,
+        title,
+        description: '',
+        dueDate: null,
+        priority: 'normal',
+      });
+      if (res.success && res.data) {
+        const newTask: Task = {
+          id: res.data as string,
+          list_id: inboxList.id,
+          project_id: inboxProject.id,
+          user_id: user!.id,
+          title,
+          description: '',
+          due_date: null,
+          priority: 'normal',
+          completed: false,
+          completed_at: null,
+          position: 0,
+          created_at: new Date().toISOString(),
+        };
+        setTasks((prev) => [...prev, newTask]);
+      }
+    } catch (err) {
+      console.error('Failed to add task:', err);
+    }
+  };
+
+  // toggles completion and sets or clears the completed_at timestamp
+  const handleToggle = async (id: string, completed: boolean) => {
+    try {
+      await api.tasks.toggle(id, completed);
+      setTasks((prev) =>
+        prev.map((t) =>
+          t.id === id
+            ? { ...t, completed, completed_at: completed ? new Date().toISOString() : null }
+            : t
+        )
+      );
+    } catch (err) {
+      console.error('Failed to toggle task:', err);
+    }
+  };
+
+  // removes the task and closes the detail drawer if it was open
+  const handleDelete = async (id: string) => {
+    try {
+      await api.tasks.delete(id);
+      setTasks((prev) => prev.filter((t) => t.id !== id));
+      if (selectedTask?.id === id) setSelectedTask(null);
+    } catch (err) {
+      console.error('Failed to delete task:', err);
+    }
+  };
+
+  // moves a task to a different list and updates local state
+  const handleMove = async (taskId: string, newListId: string) => {
+    try {
+      await api.tasks.move(taskId, newListId);
+      setTasks((prev) =>
+        prev.map((t) => (t.id === taskId ? { ...t, list_id: newListId } : t))
+      );
+    } catch (err) {
+      console.error('Failed to move task:', err);
+    }
+  };
+
+  // syncs the updated task back into the list after saving in the detail drawer
+  const handleUpdate = (updated: Task) => {
+    setTasks((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
+    setSelectedTask(updated);
+  };
+
+  const activeTasks = tasks.filter((t) => !t.completed);
+  const completedTasks = tasks.filter((t) => t.completed);
+
+  if (isLoading) {
+    return (
+      <div className="flex-1 flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-brand border-t-transparent
+                        rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="flex-1 max-w-2xl mx-auto w-full px-6 py-8 space-y-6">
+
+        {/* page header */}
+        <div className="flex items-center gap-3">
+          <Inbox size={22} className="text-gray-400" />
+          <div>
+            <h2 className="text-2xl font-bold text-white">Inbox</h2>
+            <p className="text-gray-500 text-sm">Quick capture - tasks without a project</p>
+          </div>
+        </div>
+
+        {/* add task input or error if inbox is missing */}
+        {inboxList ? (
+          <div className="bg-surface-raised border border-surface-border rounded-xl p-3">
+            <AddTaskBar
+              onAdd={handleAddTask}
+              placeholder="Capture a task quickly..."
+            />
+          </div>
+        ) : (
+          <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+            <p className="text-red-400 text-sm">
+              Inbox not found. Try signing out and back in to recreate it.
+            </p>
+          </div>
+        )}
+
+        {/* active task list */}
+        {activeTasks.length > 0 && (
+          <div className="space-y-0.5">
+            {activeTasks.map((task) => (
+              <TaskRow
+                key={task.id}
+                task={task}
+                lists={lists}
+                onToggle={handleToggle}
+                onDelete={handleDelete}
+                onClick={setSelectedTask}
+                onMove={handleMove}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* empty state shown when there are no active tasks */}
+        {activeTasks.length === 0 && (
+          <div className="text-center py-12 space-y-2">
+            <p className="text-4xl">📥</p>
+            <p className="text-gray-400 font-medium">Inbox is empty</p>
+            <p className="text-gray-600 text-sm">Add tasks above to capture them quickly</p>
+          </div>
+        )}
+
+        {/* completed tasks shown at reduced opacity below the active ones */}
+        {completedTasks.length > 0 && (
+          <div className="space-y-0.5 opacity-60">
+            <p className="text-xs text-gray-600 uppercase tracking-wider px-4 mb-2">
+              Completed ({completedTasks.length})
+            </p>
+            {completedTasks.map((task) => (
+              <TaskRow
+                key={task.id}
+                task={task}
+                lists={lists}
+                onToggle={handleToggle}
+                onDelete={handleDelete}
+                onClick={setSelectedTask}
+                onMove={handleMove}
+              />
+            ))}
+          </div>
+        )}
+
+      </div>
+
+      {/* task detail drawer rendered outside the scroll container */}
+      {selectedTask && (
+        <TaskDetailModal
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onUpdate={handleUpdate}
+        />
+      )}
+    </>
+  );
+}
+</file>
+
+<file path="src/pages/LoginPage.tsx">
+/**
+ * LoginPage.tsx
+ *
+ * Handles both login and registration in a single screen
+ * Toggling between the two modes swaps the form fields and button text
+ * On successful login or registration the user object is stored in the auth store
+ * which causes the app to redirect to the dashboard automatically
+ */
+
+import { useState } from 'react';
+import { useAuthStore } from '../store/authStore';
+import { api } from '../lib/api';
+
+interface LoginResult {
+  id: string;
+  username: string;
+}
+
+export default function LoginPage() {
+  const [isRegister, setIsRegister] = useState(false); // toggles between login and register mode
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState(''); // only used in register mode
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const login = useAuthStore((state) => state.login);
+
+  const handleSubmit = async () => {
+    setError('');
+
+    // basic validation before hitting the API
+    if (!username.trim() || !password.trim()) {
+      setError('Please fill in all fields');
+      return;
+    }
+
+    if (isRegister && password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    if (isRegister && password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      if (isRegister) {
+        // register creates the account and logs in immediately on success
+        const createRes = await api.auth.register(username.trim(), password);
+
+        if (!createRes.success) {
+          setError(createRes.error || 'Registration failed');
+          return;
+        }
+
+        if (createRes.success && createRes.data) {
+          login(createRes.data as LoginResult);
+        }
+      } else {
+        // login verifies credentials and sets the session cookie
+        const res = await api.auth.login(username.trim(), password);
+
+        if (res.success && res.data) {
+          login(res.data as LoginResult);
+        } else {
+          setError(res.error || 'Login failed');
+        }
+      }
+    } catch (err) {
+      setError('Something went wrong. Please try again.');
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // allow submitting the form with the Enter key
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') handleSubmit();
+  };
+
+  return (
+    <div className="min-h-screen bg-surface-base flex items-center justify-center font-sans p-4">
+      <div className="w-full max-w-sm space-y-6 animate-fade-in">
+
+        {/* app logo and title */}
+        <div className="text-center space-y-3">
+          <div className="w-14 h-14 bg-brand rounded-2xl mx-auto flex items-center justify-center">
+            <span className="text-white text-2xl font-bold">F</span>
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-white">FocusFlow</h1>
+            <p className="text-gray-500 text-sm mt-1">
+              {isRegister ? 'Create your account' : 'Welcome back'}
+            </p>
+          </div>
+        </div>
+
+        {/* form card */}
+        <div className="bg-surface-raised border border-surface-border rounded-2xl p-6 space-y-4">
+
+          {/* username field */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Username
+            </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Enter your username"
+              autoComplete="username"
+              className="w-full bg-surface-base border border-surface-border rounded-lg
+                         px-3.5 py-2.5 text-white placeholder-gray-600 text-sm
+                         focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand
+                         transition-colors duration-150"
+            />
+          </div>
+
+          {/* password field */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Enter your password"
+              autoComplete={isRegister ? 'new-password' : 'current-password'}
+              className="w-full bg-surface-base border border-surface-border rounded-lg
+                         px-3.5 py-2.5 text-white placeholder-gray-600 text-sm
+                         focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand
+                         transition-colors duration-150"
+            />
+          </div>
+
+          {/* confirm password only shown in register mode */}
+          {isRegister && (
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Confirm your password"
+                autoComplete="new-password"
+                className="w-full bg-surface-base border border-surface-border rounded-lg
+                           px-3.5 py-2.5 text-white placeholder-gray-600 text-sm
+                           focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand
+                           transition-colors duration-150"
+              />
+            </div>
+          )}
+
+          {/* error message shown below the fields */}
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/20 rounded-lg px-3.5 py-2.5">
+              <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          )}
+
+          {/* submit button text changes based on mode and loading state */}
+          <button
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className="w-full bg-brand hover:bg-brand-hover disabled:opacity-50
+                       disabled:cursor-not-allowed text-white font-semibold
+                       py-2.5 rounded-lg transition-colors duration-150 text-sm"
+          >
+            {isLoading
+              ? (isRegister ? 'Creating account...' : 'Signing in...')
+              : (isRegister ? 'Create Account' : 'Sign In')
+            }
+          </button>
+
+        </div>
+
+        {/* toggle between login and register modes */}
+        <p className="text-center text-sm text-gray-500">
+          {isRegister ? 'Already have an account?' : "Don't have an account?"}{' '}
+          <button
+            onClick={() => {
+              setIsRegister(!isRegister);
+              setError('');           // clear errors when switching modes
+              setPassword('');
+              setConfirmPassword('');
+            }}
+            className="text-brand hover:text-brand-hover font-medium transition-colors"
+          >
+            {isRegister ? 'Sign in' : 'Create one'}
+          </button>
+        </p>
+
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/MyDayPage.tsx">
+/**
+ * MyDayPage.tsx
+ *
+ * Shows all incomplete tasks due today across every project
+ * Each card shows the task title its project and its priority level
+ * Clicking a project name navigates to that project in the sidebar
+ * Clicking anywhere on the card opens the task detail drawer
+ */
+
+import { useState, useEffect } from 'react';
+import { Calendar } from 'lucide-react';
+import { useAppStore } from '../store/appStore';
+import { Task } from '../types';
+import { PRIORITIES } from '../types';
+import { api } from '../lib/api';
+import TaskDetailModal from '../components/TaskDetailModal';
+
+export default function MyDayPage() {
+  const { projects, setActiveProject } = useAppStore();
+
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+
+  useEffect(() => {
+    async function load() {
+      setIsLoading(true);
+      try {
+        const res = await api.tasks.today();
+        if (res.success && res.data) setTasks(res.data as Task[]);
+      } catch (err) {
+        console.error('Failed to load today tasks:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    load();
+  }, []);
+
+  // looks up the project name and icon for a given task
+  const getProjectName = (task: Task) => {
+    const project = projects.find((p) => p.id === task.project_id);
+    return project ? `${project.icon} ${project.name}` : '';
+  };
+
+  // syncs the updated task back into the list after saving in the detail drawer
+  const handleUpdate = (updated: Task) => {
+    setTasks((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
+    setSelectedTask(updated);
+  };
+
+  // formatted date string shown below the page title
+  const today = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric'
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex-1 flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-brand border-t-transparent
+                        rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="flex-1 max-w-2xl mx-auto w-full px-6 py-8 space-y-6">
+
+        {/* page header with current date */}
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-white">My Day</h2>
+          <p className="text-gray-500 text-sm mt-1">{today}</p>
+        </div>
+
+        {/* task count shown when there are tasks due today */}
+        {tasks.length > 0 && (
+          <p className="text-sm text-gray-500">
+            {tasks.length} task{tasks.length !== 1 ? 's' : ''} due today
+          </p>
+        )}
+
+        {/* empty state when nothing is due today */}
+        {tasks.length === 0 ? (
+          <div className="text-center py-16 space-y-3">
+            <p className="text-5xl">☀️</p>
+            <p className="text-white font-semibold">You&apos;re all caught up!</p>
+            <p className="text-gray-500 text-sm">
+              No tasks due today. Enjoy your day or plan ahead.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {tasks.map((task) => {
+              const priority = PRIORITIES[task.priority] ?? PRIORITIES.normal;
+
+              return (
+                <div
+                  key={task.id}
+                  onClick={() => setSelectedTask(task)}
+                  className="bg-surface-raised border border-surface-border
+                             rounded-xl p-4 hover:border-brand/40
+                             transition-all cursor-pointer"
+                >
+                  <div className="flex items-start gap-3">
+
+                    {/* priority dot */}
+                    <span
+                      className="w-2 h-2 rounded-full shrink-0 mt-1.5"
+                      style={{ backgroundColor: priority.color }}
+                    />
+
+                    <div className="flex-1 min-w-0">
+                      {/* task title */}
+                      <p className="text-sm font-medium text-gray-200">
+                        {task.title}
+                      </p>
+
+                      {/* project link and priority badge */}
+                      <div className="flex items-center gap-3 mt-1.5">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation(); // prevent opening the detail drawer
+                            setActiveProject(task.project_id);
+                          }}
+                          className="text-xs text-brand hover:text-brand-hover transition-colors"
+                        >
+                          {getProjectName(task)}
+                        </button>
+                        <span
+                          className="text-xs px-1.5 py-0.5 rounded-md"
+                          style={{
+                            backgroundColor: priority.color + '20',
+                            color: priority.color,
+                          }}
+                        >
+                          {priority.label}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* due date badge always shows Today on this page */}
+                    <div className="flex items-center gap-1 text-xs text-red-400 shrink-0">
+                      <Calendar size={11} />
+                      <span>Today</span>
+                    </div>
+
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+      </div>
+
+      {/* task detail drawer rendered outside the scroll container */}
+      {selectedTask && (
+        <TaskDetailModal
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onUpdate={handleUpdate}
+        />
+      )}
+    </>
+  );
+}
+</file>
+
+<file path="src/pages/ProjectPage.tsx">
+/**
+ * ProjectPage.tsx
+ *
+ * Shows all tasks for a single project in either list view or board view
+ * List view groups tasks by their kanban column with an add task bar under each
+ * Board view renders the full drag and drop kanban board
+ * Completed tasks are hidden by default and can be revealed with a toggle
+ * Reloads whenever the projectId prop changes so switching projects works correctly
+ */
+
+import { useState, useEffect } from 'react';
+import { List, LayoutGrid, CheckSquare } from 'lucide-react';
+import { useAuthStore } from '../store/authStore';
+import { Task, List as ListType } from '../types';
+import { api } from '../lib/api';
+import TaskRow from '../components/TaskRow';
+import AddTaskBar from '../components/AddTaskBar';
+import TaskDetailModal from '../components/TaskDetailModal';
+import KanbanBoard from '../components/KanbanBoard';
+
+interface Props {
+  projectId: string;
+}
+
+type ViewMode = 'list' | 'board';
+
+export default function ProjectPage({ projectId }: Props) {
+  const user = useAuthStore((state) => state.user);
+
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [lists, setLists] = useState<ListType[]>([]);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [showCompleted, setShowCompleted] = useState(false); // controls the completed section visibility
+  const [isLoading, setIsLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
+
+  // reload tasks and lists whenever the active project changes
+  useEffect(() => {
+    async function load() {
+      setIsLoading(true);
+      try {
+        // fetch tasks and lists in parallel to save time
+        const [tasksRes, listsRes] = await Promise.all([
+          api.tasks.get(projectId),
+          api.lists.get(projectId),
+        ]);
+        if (tasksRes.success && tasksRes.data) setTasks(tasksRes.data as Task[]);
+        if (listsRes.success && listsRes.data) setLists(listsRes.data as ListType[]);
+      } catch (err) {
+        console.error('Failed to load project data:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    load();
+  }, [projectId]);
+
+  // creates a new task in the given list and adds it to local state immediately
+  const handleAddTask = async (listId: string, title: string) => {
+    try {
+      const res = await api.tasks.create({
+        listId,
+        projectId,
+        title,
+        description: '',
+        dueDate: null,
+        priority: 'normal',
+      });
+      if (res.success && res.data) {
+        const newTask: Task = {
+          id: res.data as string,
+          list_id: listId,
+          project_id: projectId,
+          user_id: user!.id,
+          title,
+          description: '',
+          due_date: null,
+          priority: 'normal',
+          completed: false,
+          completed_at: null,
+          position: 0,
+          created_at: new Date().toISOString(),
+        };
+        setTasks((prev) => [...prev, newTask]);
+      }
+    } catch (err) {
+      console.error('Failed to create task:', err);
+    }
+  };
+
+  // toggles completion and sets or clears the completed_at timestamp
+  const handleToggle = async (id: string, completed: boolean) => {
+    try {
+      await api.tasks.toggle(id, completed);
+      setTasks((prev) =>
+        prev.map((t) =>
+          t.id === id
+            ? { ...t, completed, completed_at: completed ? new Date().toISOString() : null }
+            : t
+        )
+      );
+    } catch (err) {
+      console.error('Failed to toggle task:', err);
+    }
+  };
+
+  // removes the task and closes the detail drawer if it was open
+  const handleDelete = async (id: string) => {
+    try {
+      await api.tasks.delete(id);
+      setTasks((prev) => prev.filter((t) => t.id !== id));
+      if (selectedTask?.id === id) setSelectedTask(null);
+    } catch (err) {
+      console.error('Failed to delete task:', err);
+    }
+  };
+
+  // syncs the updated task back into the list after saving in the detail drawer
+  const handleUpdate = (updated: Task) => {
+    setTasks((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
+    setSelectedTask(updated);
+  };
+
+  // moves a task to a different list and updates local state
+  const handleTaskMove = async (taskId: string, newListId: string) => {
+    try {
+      await api.tasks.move(taskId, newListId);
+      setTasks((prev) =>
+        prev.map((t) => (t.id === taskId ? { ...t, list_id: newListId } : t))
+      );
+    } catch (err) {
+      console.error('Failed to move task:', err);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex-1 flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-brand border-t-transparent
+                        rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  const activeTasks = tasks.filter((t) => !t.completed);
+  const completedTasks = tasks.filter((t) => t.completed);
+
+  return (
+    <>
+      <div className="flex flex-col flex-1 min-h-0">
+
+        {/* list/board view toggle buttons */}
+        <div className="flex items-center gap-1 px-6 pt-6 pb-2">
+          <div className="flex items-center gap-1 bg-surface-raised
+                          border border-surface-border rounded-lg p-1">
+            <button
+              onClick={() => setViewMode('list')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md
+                          text-xs font-medium transition-colors
+                          ${viewMode === 'list'
+                            ? 'bg-brand text-white'
+                            : 'text-gray-500 hover:text-gray-300'
+                          }`}
+            >
+              <List size={13} />
+              List
+            </button>
+
+            <button
+              onClick={() => setViewMode('board')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md
+                          text-xs font-medium transition-colors
+                          ${viewMode === 'board'
+                            ? 'bg-brand text-white'
+                            : 'text-gray-500 hover:text-gray-300'
+                          }`}
+            >
+              <LayoutGrid size={13} />
+              Board
+            </button>
+          </div>
+        </div>
+
+        {/* board view with drag and drop */}
+        {viewMode === 'board' && (
+          <div className="flex-1 min-h-0 overflow-hidden">
+            <KanbanBoard
+              lists={lists}
+              tasks={tasks}
+              onTaskClick={setSelectedTask}
+              onTaskMove={handleTaskMove}
+              onTaskAdd={handleAddTask}
+            />
+          </div>
+        )}
+
+        {/* list view grouped by kanban column */}
+        {viewMode === 'list' && (
+          <div className="flex-1 overflow-y-auto">
+            <div className="max-w-2xl mx-auto w-full px-6 py-4 space-y-8">
+
+              {lists.map((list) => {
+                // only show incomplete tasks in each section
+                const listTasks = activeTasks.filter((t) => t.list_id === list.id);
+
+                return (
+                  <section key={list.id}>
+
+                    {/* section header with list name and task count */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        {list.name}
+                      </h3>
+                      <span className="text-xs text-gray-700 bg-surface-raised px-1.5 py-0.5 rounded-full">
+                        {listTasks.length}
+                      </span>
+                    </div>
+
+                    <div className="space-y-0.5">
+                      {listTasks.length === 0 ? (
+                        <p className="text-xs text-gray-700 px-4 py-2">No tasks yet</p>
+                      ) : (
+                        listTasks.map((task) => (
+                          <TaskRow
+                            key={task.id}
+                            task={task}
+                            lists={lists}
+                            onToggle={handleToggle}
+                            onDelete={handleDelete}
+                            onClick={setSelectedTask}
+                            onMove={handleTaskMove}
+                          />
+                        ))
+                      )}
+
+                      {/* add task bar pinned to the bottom of each section */}
+                      <AddTaskBar
+                        onAdd={(title) => handleAddTask(list.id, title)}
+                        placeholder={`Add to ${list.name}...`}
+                      />
+                    </div>
+
+                  </section>
+                );
+              })}
+
+              {/* completed tasks section collapsed by default */}
+              {completedTasks.length > 0 && (
+                <section>
+                  <button
+                    onClick={() => setShowCompleted(!showCompleted)}
+                    className="flex items-center gap-2 text-xs font-semibold
+                               text-gray-500 uppercase tracking-wider mb-3
+                               hover:text-gray-300 transition-colors"
+                  >
+                    <CheckSquare size={13} />
+                    Completed ({completedTasks.length})
+                    <span className="text-gray-700 normal-case font-normal tracking-normal">
+                      {showCompleted ? '▲ hide' : '▼ show'}
+                    </span>
+                  </button>
+
+                  {showCompleted && (
+                    <div className="space-y-0.5 opacity-60">
+                      {completedTasks.map((task) => (
+                        <TaskRow
+                          key={task.id}
+                          task={task}
+                          lists={lists}
+                          onToggle={handleToggle}
+                          onDelete={handleDelete}
+                          onClick={setSelectedTask}
+                          onMove={handleTaskMove}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </section>
+              )}
+
+            </div>
+          </div>
+        )}
+
+      </div>
+
+      {/* task detail drawer rendered outside the scroll container */}
+      {selectedTask && (
+        <TaskDetailModal
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onUpdate={handleUpdate}
+        />
+      )}
+    </>
+  );
+}
+</file>
+
+<file path="src/pages/SearchPage.tsx">
+/**
+ * SearchPage.tsx
+ *
+ * Displays live search results as the user types in the top bar
+ * Results are debounced by 300ms so we dont fire a request on every keystroke
+ * Three filter dropdowns let the user narrow results by priority status and due date
+ * Clicking a result opens the task detail drawer
+ * Clicking a project name navigates to that project and closes the search
+ */
+
+import { useState, useEffect, useCallback } from 'react';
+import { Search, Calendar, Flag } from 'lucide-react';
+import { useAppStore } from '../store/appStore';
+import { useSearchStore } from '../store/searchStore';
+import { Task } from '../types';
+import { PRIORITIES } from '../types';
+import { api } from '../lib/api';
+import TaskDetailModal from '../components/TaskDetailModal';
+
+type PriorityFilter = 'all' | 'urgent' | 'high' | 'normal' | 'low';
+type StatusFilter = 'all' | 'active' | 'completed';
+type DueDateFilter = 'all' | 'overdue' | 'today' | 'upcoming';
+
+export default function SearchPage() {
+  const { projects, setActiveProject } = useAppStore();
+  const { query, clearSearch } = useSearchStore();
+
+  const [results, setResults] = useState<Task[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+
+  // filter state for the three dropdowns
+  const [priorityFilter, setPriorityFilter] = useState<PriorityFilter>('all');
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
+  const [dueDateFilter, setDueDateFilter] = useState<DueDateFilter>('all');
+
+  // wrapped in useCallback so it can be listed as a useEffect dependency safely
+  const search = useCallback(async (q: string) => {
+    if (!q.trim()) {
+      setResults([]);
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const res = await api.tasks.search(q);
+      if (res.success && res.data) setResults(res.data as Task[]);
+    } catch (err) {
+      console.error('Search failed:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  // debounce the search so it only fires 300ms after the user stops typing
+  useEffect(() => {
+    const timer = setTimeout(() => search(query), 300);
+    return () => clearTimeout(timer);
+  }, [query, search]);
+
+  // apply all three filters to the raw results on the client side
+  const filteredResults = results.filter((task) => {
+    if (priorityFilter !== 'all' && task.priority !== priorityFilter) return false;
+    if (statusFilter === 'active' && task.completed) return false;
+    if (statusFilter === 'completed' && !task.completed) return false;
+
+    if (dueDateFilter !== 'all') {
+      if (!task.due_date) return false;
+      const due = new Date(task.due_date);
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const tomorrow = new Date(today);
+      tomorrow.setDate(today.getDate() + 1);
+
+      if (dueDateFilter === 'overdue' && due >= today) return false;
+      if (dueDateFilter === 'today' && due.toDateString() !== today.toDateString()) return false;
+      if (dueDateFilter === 'upcoming' && due < tomorrow) return false;
+    }
+
+    return true;
+  });
+
+  // looks up the project name and icon for a given task
+  const getProjectName = (task: Task) => {
+    const project = projects.find((p) => p.id === task.project_id);
+    return project ? `${project.icon} ${project.name}` : 'Unknown';
+  };
+
+  // navigates to the project and closes the search overlay
+  const handleGoToProject = (task: Task) => {
+    setActiveProject(task.project_id);
+    clearSearch();
+  };
+
+  // syncs the updated task back into results after saving in the detail drawer
+  const handleUpdate = (updated: Task) => {
+    setResults((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
+    setSelectedTask(updated);
+  };
+
+  return (
+    <>
+      <div className="flex-1 max-w-2xl mx-auto w-full px-6 py-6 space-y-6">
+
+        {/* header shows result count or loading state */}
+        <div className="flex items-center gap-3">
+          <Search size={18} className="text-gray-500" />
+          <h2 className="text-white font-semibold">
+            {isLoading
+              ? 'Searching...'
+              : `${filteredResults.length} result${filteredResults.length !== 1 ? 's' : ''} for "${query}"`
+            }
+          </h2>
+        </div>
+
+        {/* filter dropdowns */}
+        <div className="flex flex-wrap gap-3">
+
+          {/* priority filter */}
+          <div className="flex items-center gap-1.5">
+            <Flag size={12} className="text-gray-500" />
+            <select
+              value={priorityFilter}
+              onChange={(e) => setPriorityFilter(e.target.value as PriorityFilter)}
+              className="bg-surface-raised border border-surface-border rounded-lg
+                         px-2.5 py-1.5 text-xs text-gray-300 outline-none
+                         focus:border-brand transition-colors [scheme-dark]"
+            >
+              <option value="all">All Priorities</option>
+              <option value="urgent">Urgent</option>
+              <option value="high">High</option>
+              <option value="normal">Normal</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+
+          {/* status filter */}
+          <div className="flex items-center gap-1.5">
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
+              className="bg-surface-raised border border-surface-border rounded-lg
+                         px-2.5 py-1.5 text-xs text-gray-300 outline-none
+                         focus:border-brand transition-colors [scheme-dark]"
+            >
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+
+          {/* due date filter */}
+          <div className="flex items-center gap-1.5">
+            <Calendar size={12} className="text-gray-500" />
+            <select
+              value={dueDateFilter}
+              onChange={(e) => setDueDateFilter(e.target.value as DueDateFilter)}
+              className="bg-surface-raised border border-surface-border rounded-lg
+                         px-2.5 py-1.5 text-xs text-gray-300 outline-none
+                         focus:border-brand transition-colors [scheme-dark]"
+            >
+              <option value="all">Any Date</option>
+              <option value="overdue">Overdue</option>
+              <option value="today">Due Today</option>
+              <option value="upcoming">Upcoming</option>
+            </select>
+          </div>
+
+          {/* clear filters button only shown when at least one filter is active */}
+          {(priorityFilter !== 'all' || statusFilter !== 'all' || dueDateFilter !== 'all') && (
+            <button
+              onClick={() => {
+                setPriorityFilter('all');
+                setStatusFilter('all');
+                setDueDateFilter('all');
+              }}
+              className="text-xs text-brand hover:text-brand-hover transition-colors"
+            >
+              Clear filters
+            </button>
+          )}
+        </div>
+
+        {/* results area */}
+        {isLoading ? (
+          <div className="flex justify-center py-12">
+            <div className="w-6 h-6 border-2 border-brand border-t-transparent
+                            rounded-full animate-spin" />
+          </div>
+        ) : filteredResults.length === 0 ? (
+          /* empty state when no results match the query and filters */
+          <div className="text-center py-12 space-y-2">
+            <p className="text-4xl">🔍</p>
+            <p className="text-gray-400 font-medium">No results found</p>
+            <p className="text-gray-600 text-sm">
+              Try a different search term or adjust your filters
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {filteredResults.map((task) => {
+              const priority = PRIORITIES[task.priority] ?? PRIORITIES.normal;
+              const isOverdue = task.due_date && !task.completed
+                && new Date(task.due_date) < new Date();
+
+              return (
+                <div
+                  key={task.id}
+                  className="bg-surface-raised border border-surface-border
+                             rounded-xl p-4 hover:border-brand/40 transition-all
+                             cursor-pointer group"
+                  onClick={() => setSelectedTask(task)}
+                >
+                  <div className="flex items-start gap-3">
+
+                    {/* priority dot */}
+                    <span
+                      className="w-2 h-2 rounded-full shrink-0 mt-1.5"
+                      style={{ backgroundColor: priority.color }}
+                    />
+
+                    <div className="flex-1 min-w-0">
+
+                      {/* task title with strikethrough if completed */}
+                      <p className={`text-sm font-medium
+                                     ${task.completed
+                                       ? 'line-through text-gray-600'
+                                       : 'text-gray-200'
+                                     }`}>
+                        {task.title}
+                      </p>
+
+                      {/* description snippet truncated to one line */}
+                      {task.description && (
+                        <p className="text-xs text-gray-600 mt-0.5 truncate">
+                          {task.description}
+                        </p>
+                      )}
+
+                      {/* meta row with project link priority badge and due date */}
+                      <div className="flex items-center gap-3 mt-2">
+
+                        {/* clicking the project name navigates there and closes search */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleGoToProject(task);
+                          }}
+                          className="text-xs text-brand hover:text-brand-hover transition-colors"
+                        >
+                          {getProjectName(task)}
+                        </button>
+
+                        {/* priority badge */}
+                        <span
+                          className="text-xs px-1.5 py-0.5 rounded-md"
+                          style={{
+                            backgroundColor: priority.color + '20',
+                            color: priority.color,
+                          }}
+                        >
+                          {priority.label}
+                        </span>
+
+                        {/* due date turns red if overdue */}
+                        {task.due_date && (
+                          <span className={`text-xs flex items-center gap-1
+                                           ${isOverdue ? 'text-red-400' : 'text-gray-600'}`}>
+                            <Calendar size={10} />
+                            {new Date(task.due_date).toLocaleDateString('en-US', {
+                              month: 'short', day: 'numeric'
+                            })}
+                          </span>
+                        )}
+
+                        {/* green done badge for completed tasks */}
+                        {task.completed && (
+                          <span className="text-xs text-green-600">✓ Done</span>
+                        )}
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+      </div>
+
+      {/* task detail drawer rendered outside the scroll container */}
+      {selectedTask && (
+        <TaskDetailModal
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onUpdate={handleUpdate}
+        />
+      )}
+    </>
+  );
+}
+</file>
+
+<file path="src/pages/SettingsPage.tsx">
+/**
+ * SettingsPage.tsx
+ *
+ * App settings page with three sections: appearance account and data
+ * Appearance has a dark/light mode toggle
+ * Account lets the user change their username or password
+ * Data lets the user export all their tasks as a JSON file
+ * Feedback messages auto clear after 3 seconds so the UI stays clean
+ */
+
+import { useState } from 'react';
+import { Moon, Sun, User, Lock, Download, Check } from 'lucide-react';
+import { useAuthStore } from '../store/authStore';
+import { useThemeStore } from '../store/themeStore';
+import { Task } from '../types';
+import { api } from '../lib/api';
+
+export default function SettingsPage() {
+  const { user, login } = useAuthStore();
+  const { theme, toggleTheme } = useThemeStore();
+
+  // username change form
+  const [newUsername, setNewUsername] = useState('');
+  const [usernameMsg, setUsernameMsg] = useState<{type: 'ok'|'err', text: string} | null>(null);
+
+  // password change form
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [passwordMsg, setPasswordMsg] = useState<{type: 'ok'|'err', text: string} | null>(null);
+
+  // export feedback
+  const [exportMsg, setExportMsg] = useState('');
+
+  // updates the username and refreshes the auth store so the sidebar reflects the change
+  const handleUpdateUsername = async () => {
+    if (!newUsername.trim()) return;
+    try {
+      const res = await api.auth.updateUsername(newUsername.trim());
+      if (res.success) {
+        login({ ...user!, username: newUsername.trim() });
+        setUsernameMsg({ type: 'ok', text: 'Username updated!' });
+        setNewUsername('');
+      } else {
+        setUsernameMsg({ type: 'err', text: res.error || 'Failed to update' });
+      }
+    } catch {
+      setUsernameMsg({ type: 'err', text: 'Something went wrong' });
+    }
+    // auto clear the message after 3 seconds
+    setTimeout(() => setUsernameMsg(null), 3000);
+  };
+
+  // verifies the current password then saves the new one
+  const handleUpdatePassword = async () => {
+    if (!currentPassword || !newPassword) return;
+
+    if (newPassword !== confirmNewPassword) {
+      setPasswordMsg({ type: 'err', text: 'New passwords do not match' });
+      return;
+    }
+    if (newPassword.length < 6) {
+      setPasswordMsg({ type: 'err', text: 'Password must be at least 6 characters' });
+      return;
+    }
+
+    try {
+      const res = await api.auth.updatePassword(currentPassword, newPassword);
+      if (res.success) {
+        setPasswordMsg({ type: 'ok', text: 'Password updated!' });
+        // clear all three fields on success
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmNewPassword('');
+      } else {
+        setPasswordMsg({ type: 'err', text: res.error || 'Failed to update' });
+      }
+    } catch {
+      setPasswordMsg({ type: 'err', text: 'Something went wrong' });
+    }
+    setTimeout(() => setPasswordMsg(null), 3000);
+  };
+
+  // fetches all tasks and triggers a browser download as a JSON file
+  const handleExport = async () => {
+    try {
+      const res = await api.tasks.export();
+      if (res.success && res.data) {
+        const tasks = res.data as Task[];
+
+        // create a blob and trigger a download without needing a server route
+        const blob = new Blob(
+          [JSON.stringify(tasks, null, 2)],
+          { type: 'application/json' }
+        );
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `focusflow-export-${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        setExportMsg(`Exported ${tasks.length} tasks`);
+        setTimeout(() => setExportMsg(''), 3000);
+      }
+    } catch {
+      setExportMsg('Export failed');
+    }
+  };
+
+  return (
+    <div className="flex-1 max-w-xl mx-auto w-full px-6 py-8 space-y-8 animate-fade-in">
+
+      {/* page header */}
+      <div>
+        <h2 className="text-2xl font-bold text-white">Settings</h2>
+        <p className="text-gray-500 text-sm mt-1">Manage your preferences and account</p>
+      </div>
+
+      {/* appearance section */}
+      <SettingsSection title="Appearance" icon={<Sun size={16} />}>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-200">Theme</p>
+            <p className="text-xs text-gray-500 mt-0.5">
+              {theme === 'dark' ? 'Dark mode is on' : 'Light mode is on'}
+            </p>
+          </div>
+
+          {/* toggle switch slides the knob and changes color based on theme */}
+          <button
+            onClick={toggleTheme}
+            className={`relative w-12 h-6 rounded-full transition-colors duration-200
+                        flex items-center
+                        ${theme === 'dark' ? 'bg-brand' : 'bg-gray-300'}`}
+          >
+            <span
+              className={`absolute w-5 h-5 bg-white rounded-full shadow-sm
+                          transition-transform duration-200 flex items-center justify-center
+                          ${theme === 'dark' ? 'translate-x-6' : 'translate-x-1'}`}
+            >
+              {theme === 'dark'
+                ? <Moon size={10} className="text-brand" />
+                : <Sun size={10} className="text-yellow-500" />
+              }
+            </span>
+          </button>
+        </div>
+      </SettingsSection>
+
+      {/* account section */}
+      <SettingsSection title="Account" icon={<User size={16} />}>
+
+        {/* current user info row */}
+        <div className="flex items-center gap-3 pb-4 border-b border-surface-border">
+          <div className="w-10 h-10 bg-brand rounded-full flex items-center justify-center">
+            <span className="text-white font-semibold">
+              {user?.username?.[0]?.toUpperCase()}
+            </span>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-white">{user?.username}</p>
+            <p className="text-xs text-gray-500 font-mono">{user?.id}</p>
+          </div>
+        </div>
+
+        {/* change username form */}
+        <div className="space-y-2">
+          <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+            Change Username
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={newUsername}
+              onChange={(e) => setNewUsername(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleUpdateUsername()}
+              placeholder="New username"
+              className="flex-1 bg-surface-base border border-surface-border rounded-lg
+                         px-3 py-2 text-sm text-white placeholder-gray-600
+                         focus:outline-none focus:border-brand transition-colors"
+            />
+            <button
+              onClick={handleUpdateUsername}
+              disabled={!newUsername.trim()}
+              className="bg-brand hover:bg-brand-hover disabled:opacity-40
+                         text-white text-sm font-medium px-4 py-2 rounded-lg
+                         transition-colors"
+            >
+              Save
+            </button>
+          </div>
+          {usernameMsg && (
+            <p className={`text-xs ${usernameMsg.type === 'ok' ? 'text-green-400' : 'text-red-400'}`}>
+              {usernameMsg.type === 'ok' && <Check size={12} className="inline mr-1" />}
+              {usernameMsg.text}
+            </p>
+          )}
+        </div>
+
+        {/* change password form */}
+        <div className="space-y-2 pt-4 border-t border-surface-border">
+          <label className="text-xs font-medium text-gray-400 uppercase tracking-wider
+                             flex items-center gap-1.5">
+            <Lock size={11} />
+            Change Password
+          </label>
+          <input
+            type="password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            placeholder="Current password"
+            className="w-full bg-surface-base border border-surface-border rounded-lg
+                       px-3 py-2 text-sm text-white placeholder-gray-600
+                       focus:outline-none focus:border-brand transition-colors"
+          />
+          <input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            placeholder="New password"
+            className="w-full bg-surface-base border border-surface-border rounded-lg
+                       px-3 py-2 text-sm text-white placeholder-gray-600
+                       focus:outline-none focus:border-brand transition-colors"
+          />
+          <input
+            type="password"
+            value={confirmNewPassword}
+            onChange={(e) => setConfirmNewPassword(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleUpdatePassword()}
+            placeholder="Confirm new password"
+            className="w-full bg-surface-base border border-surface-border rounded-lg
+                       px-3 py-2 text-sm text-white placeholder-gray-600
+                       focus:outline-none focus:border-brand transition-colors"
+          />
+          <button
+            onClick={handleUpdatePassword}
+            disabled={!currentPassword || !newPassword || !confirmNewPassword}
+            className="w-full bg-brand hover:bg-brand-hover disabled:opacity-40
+                       text-white text-sm font-semibold py-2 rounded-lg
+                       transition-colors"
+          >
+            Update Password
+          </button>
+          {passwordMsg && (
+            <p className={`text-xs ${passwordMsg.type === 'ok' ? 'text-green-400' : 'text-red-400'}`}>
+              {passwordMsg.text}
+            </p>
+          )}
+        </div>
+
+      </SettingsSection>
+
+      {/* data export section */}
+      <SettingsSection title="Data" icon={<Download size={16} />}>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-200">Export Tasks</p>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Download all your tasks as a JSON file
+            </p>
+          </div>
+          <button
+            onClick={handleExport}
+            className="flex items-center gap-2 bg-surface-base hover:bg-surface-border
+                       border border-surface-border text-gray-300 text-sm font-medium
+                       px-4 py-2 rounded-lg transition-colors"
+          >
+            <Download size={14} />
+            Export
+          </button>
+        </div>
+        {exportMsg && (
+          <p className="text-xs text-green-400">✓ {exportMsg}</p>
+        )}
+      </SettingsSection>
+
+      {/* app version info */}
+      <div className="text-center py-4 space-y-1">
+        <p className="text-xs text-gray-700">FocusFlow v0.1.0</p>
+        <p className="text-xs text-gray-700">Built with Next.js + React + PostgreSQL</p>
+      </div>
+
+    </div>
+  );
+}
+
+// reusable card wrapper used for each settings section
+function SettingsSection({
+  title, icon, children
+}: {
+  title: string;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="bg-surface-raised border border-surface-border rounded-2xl p-6 space-y-4">
+      <div className="flex items-center gap-2 pb-3 border-b border-surface-border">
+        <span className="text-gray-400">{icon}</span>
+        <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">
+          {title}
+        </h3>
+      </div>
+      {children}
+    </div>
+  );
+}
+</file>
+
+<file path="src/store/appStore.ts">
+/**
+ * appStore.ts
+ *
+ * Global store for app navigation and project list state
+ * Tracks which view is active in the sidebar and which project is selected
+ * Also holds the full list of projects so the sidebar and pages share the same data
+ * All project mutations update the list in place so the sidebar stays in sync
+ */
+
+import { create } from 'zustand';
+import { Project } from '../types';
+
+type ActiveView = 'inbox' | 'my-day' | 'project' | 'settings';
+
+interface AppState {
+  activeView: ActiveView;
+  activeProjectId: string | null;
+  projects: Project[];
+  setActiveView: (view: ActiveView) => void;
+  setActiveProject: (id: string) => void;
+  setProjects: (projects: Project[]) => void;
+  addProject: (project: Project) => void;
+  updateProject: (id: string, name: string, color: string, icon: string) => void;
+  removeProject: (id: string) => void;
+}
+
+export const useAppStore = create<AppState>((set) => ({
+  activeView: 'my-day',    // default landing view after login
+  activeProjectId: null,   // null means no project is selected
+  projects: [],            // populated by DashboardPage on mount
+
+  // switching views always clears the active project
+  setActiveView: (view) => set({ activeView: view, activeProjectId: null }),
+
+  // switching to a project sets the view to project and stores the id
+  setActiveProject: (id) => set({ activeView: 'project', activeProjectId: id }),
+
+  // replaces the full project list used on initial load
+  setProjects: (projects) => set({ projects }),
+
+  // appends a newly created project to the end of the list
+  addProject: (project) =>
+    set((state) => ({ projects: [...state.projects, project] })),
+
+  // updates the name color and icon of a specific project in place
+  updateProject: (id, name, color, icon) =>
+    set((state) => ({
+      projects: state.projects.map((p) =>
+        p.id === id ? { ...p, name, color, icon } : p
+      ),
+    })),
+
+  // removes the project and navigates away if it was currently active
+  removeProject: (id) =>
+    set((state) => ({
+      projects: state.projects.filter((p) => p.id !== id),
+      activeProjectId: state.activeProjectId === id ? null : state.activeProjectId,
+      activeView: state.activeProjectId === id ? 'my-day' : state.activeView,
+    })),
+}));
+</file>
+
+<file path="src/store/searchStore.ts">
+/**
+ * searchStore.ts
+ *
+ * Global store for the search bar state
+ * Both TopBar and SearchPage read and write from here
+ * so they stay in sync without passing props between them
+ * isSearching drives whether SearchPage is shown instead of the current view
+ */
+
+import { create } from 'zustand';
+
+interface SearchState {
+  query: string;          // the current text in the search bar
+  isSearching: boolean;   // true whenever the query is non-empty
+  setQuery: (query: string) => void;
+  clearSearch: () => void;
+}
+
+export const useSearchStore = create<SearchState>((set) => ({
+  query: '',
+  isSearching: false,
+
+  // updates the query and flips isSearching on whenever there is text
+  setQuery: (query: string) =>
+    set({ query, isSearching: query.trim().length > 0 }),
+
+  // resets both values so the normal view comes back
+  clearSearch: () =>
+    set({ query: '', isSearching: false }),
+}));
+</file>
+
+<file path="src/types.ts">
+/**
+ * types.ts
+ *
+ * Shared TypeScript types used across the entire app
+ * Defining them once here means if the shape of our data changes
+ * we only need to update it in one place
+ */
+
+// the logged in user returned by the session check and login endpoints
+export interface User {
+  id: string;
+  username: string;
+}
+
+// a workspace that contains lists and tasks
+export interface Project {
+  id: string;
+  user_id: string;
+  name: string;
+  color: string;    // hex color used for the dot in the sidebar
+  icon: string;     // emoji icon shown next to the project name
+  created_at: string;
+  archived: boolean;
+}
+
+// a kanban column inside a project like To Do In Progress or Done
+export interface List {
+  id: string;
+  project_id: string;
+  name: string;
+  position: number; // determines the left to right order on the board
+}
+
+// an individual task inside a list
+export interface Task {
+  id: string;
+  list_id: string;
+  project_id: string;
+  user_id: string;
+  title: string;
+  description: string;
+  due_date: string | null;
+  priority: 'urgent' | 'high' | 'normal' | 'low';
+  completed: boolean;
+  completed_at: string | null; // set when the task is checked off cleared when unchecked
+  position: number;
+  created_at: string;
+}
+
+// a label that can be attached to tasks
+export interface Tag {
+  id: string;
+  user_id: string;
+  name: string;
+  color: string;
+}
+
+// the standard shape returned by every API route
+export interface ApiResponse<T> {
+  success: boolean;
+  data: T | null;
+  error: string | null;
+}
+
+// the shape used when creating a new task from the frontend
+export interface CreateTaskInput {
+  list_id: string;
+  project_id: string;
+  user_id: string;
+  title: string;
+  description: string;
+  due_date: string | null;
+  priority: 'urgent' | 'high' | 'normal' | 'low';
+}
+
+// display metadata for each priority level used by task rows and kanban cards
+export const PRIORITIES = {
+  urgent: { label: 'Urgent', color: '#ef4444' }, // red
+  high:   { label: 'High',   color: '#f97316' }, // orange
+  normal: { label: 'Normal', color: '#3b82f6' }, // blue
+  low:    { label: 'Low',    color: '#22c55e' }, // green
+} as const;
+</file>
+
+<file path=".gitignore">
+# .gitignore
+#
+# Tells Git which files and folders to exclude from version control
+# Anything listed here will never be committed or pushed to GitHub
+
+# dependencies - created with npm install
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js build output - generated on every build
+/.next/
+/out/
+
+# production build
+/build
+
+# misc
+.DS_Store # mac metadata files
+*.pem # ssl certificates
+
+# debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# environment variables 
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# vscode - editor settings 
+.vscode/
+</file>
+
+<file path="eslint.config.mjs">
+/**
+ * eslint.config.mjs
+ *
+ * ESLint configuration for the project
+ * Uses the Next.js recommended rule sets for core web vitals and TypeScript
+ * The globalIgnores block excludes build output folders that dont need linting
+ */
+
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
+const eslintConfig = defineConfig([
+  ...nextVitals, // Next.js core web vitals rules
+  ...nextTs,     // Next.js TypeScript rules
+
+  // exclude generated build folders from linting
+  globalIgnores([
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
+]);
+
+export default eslintConfig;
+</file>
+
+<file path="package.json">
+{
+  "name": "focusflow-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "migrate": "node lib/migrate.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "bcryptjs": "^3.0.3",
+    "cookie": "^1.1.1",
+    "dotenv": "^17.4.2",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^1.16.0",
+    "next": "16.2.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "uuid": "^14.0.0",
+    "zustand": "^5.0.13"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie": "^0.6.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+</file>
+
+<file path="src/components/Sidebar.tsx">
+/**
+ * Sidebar.tsx
+ *
+ * Left navigation panel for the app
+ * On desktop it sits as a fixed column on the left side of the screen
+ * On mobile it hides behind a hamburger button and slides in as a drawer
+ * Contains nav links for My Day and Inbox plus the full project list
+ * Projects can be created edited and deleted from here
+ */
+
+import { useState } from 'react';
+import {
+  Sun, Inbox, Plus, Settings,
+  LogOut, ChevronDown, ChevronRight, Trash2, Pencil, Menu, X
+} from 'lucide-react';
+import { useAuthStore } from '../store/authStore';
+import { useAppStore } from '../store/appStore';
+import { Project } from '../types';
+import { api } from '../lib/api';
+import NewProjectModal from './NewProjectModal';
+import EditProjectModal from './EditProjectModal';
+
+export default function Sidebar() {
+  const [projectsExpanded, setProjectsExpanded] = useState(true); // controls the projects section collapse
+  const [showNewProject, setShowNewProject] = useState(false);    // toggles the new project modal
+  const [mobileOpen, setMobileOpen] = useState(false);            // toggles the mobile drawer
+
+  const { user, logout } = useAuthStore();
+  const { activeView, activeProjectId, projects, setActiveView, setActiveProject } = useAppStore();
+
+  // returns true if the given view or project is the currently active one
+  const isActive = (view: string, projectId?: string) => {
+    if (projectId) return activeProjectId === projectId;
+    return activeView === view && !activeProjectId;
+  };
+
+  // runs any nav action then closes the mobile drawer
+  const handleNavClick = (fn: () => void) => {
+    fn();
+    setMobileOpen(false);
+  };
+
+  // the actual sidebar content shared between desktop and mobile drawer
+  const sidebarContent = (
+    <>
+      {/* app logo and name at the top */}
+      <div className="px-4 py-4 border-b border-surface-border">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 bg-brand rounded-lg flex items-center justify-center shrink-0">
+              <span className="text-white text-sm font-bold">F</span>
+            </div>
+            <span className="text-white font-semibold text-sm">FocusFlow</span>
+          </div>
+
+          {/* close button only visible on mobile inside the drawer */}
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="md:hidden text-gray-500 hover:text-white"
+          >
+            <X size={18} />
+          </button>
+        </div>
+      </div>
+
+      {/* main navigation links */}
+      <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-0.5">
+        <NavItem
+          icon={<Sun size={16} />}
+          label="My Day"
+          active={isActive('my-day')}
+          onClick={() => handleNavClick(() => setActiveView('my-day'))}
+        />
+        <NavItem
+          icon={<Inbox size={16} />}
+          label="Inbox"
+          active={isActive('inbox')}
+          onClick={() => handleNavClick(() => setActiveView('inbox'))}
+        />
+
+        {/* projects section with a collapsible toggle */}
+        <div className="pt-4">
+          <button
+            onClick={() => setProjectsExpanded(!projectsExpanded)}
+            className="w-full flex items-center justify-between px-2 py-1
+                       text-xs font-semibold text-gray-500 uppercase tracking-wider
+                       hover:text-gray-300 transition-colors rounded"
+          >
+            <span>Projects</span>
+            {projectsExpanded ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+          </button>
+
+          {projectsExpanded && (
+            <div className="mt-1 space-y-0.5">
+
+              {/* filter out the inbox project since it has its own nav item above */}
+              {projects
+                .filter((p) => p.name !== 'Inbox')
+                .map((project) => (
+                  <ProjectItem
+                    key={project.id}
+                    project={project}
+                    active={isActive('project', project.id)}
+                    onClick={() => handleNavClick(() => setActiveProject(project.id))}
+                  />
+                ))}
+
+              {/* button to open the new project modal */}
+              <button
+                onClick={() => {
+                  setShowNewProject(true);
+                  setMobileOpen(false);
+                }}
+                className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg
+                           text-gray-500 hover:text-gray-300 hover:bg-surface-border
+                           transition-colors text-sm"
+              >
+                <Plus size={14} />
+                <span>New Project</span>
+              </button>
+
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {/* settings link and user row pinned to the bottom */}
+      <div className="px-2 py-3 border-t border-surface-border space-y-0.5">
+        <NavItem
+          icon={<Settings size={16} />}
+          label="Settings"
+          active={isActive('settings')}
+          onClick={() => handleNavClick(() => setActiveView('settings'))}
+        />
+
+        {/* user row shows avatar and username with a hidden logout button on hover */}
+        <div className="flex items-center justify-between px-2 py-1.5 rounded-lg
+                        hover:bg-surface-border transition-colors group">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="w-6 h-6 bg-brand rounded-full flex items-center
+                            justify-center shrink-0">
+              <span className="text-white text-xs font-semibold">
+                {user?.username?.[0]?.toUpperCase()}
+              </span>
+            </div>
+            <span className="text-sm text-gray-300 truncate">{user?.username}</span>
+          </div>
+
+          {/* logout button only appears on hover */}
+          <button
+            onClick={logout}
+            title="Sign out"
+            className="opacity-0 group-hover:opacity-100 text-gray-500
+                       hover:text-red-400 transition-all"
+          >
+            <LogOut size={14} />
+          </button>
+        </div>
+      </div>
+    </>
+  );
+
+  return (
+    <>
+      {/* desktop sidebar - hidden on mobile */}
+      <aside className="hidden md:flex w-60 min-w-60 h-screen bg-surface-raised
+                        border-r border-surface-border flex-col select-none">
+        {sidebarContent}
+      </aside>
+
+      {/* mobile top bar with hamburger button - hidden on desktop */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 h-12
+                      bg-surface-raised border-b border-surface-border
+                      flex items-center px-4 gap-3">
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="text-gray-400 hover:text-white"
+        >
+          <Menu size={20} />
+        </button>
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 bg-brand rounded-md flex items-center justify-center">
+            <span className="text-white text-xs font-bold">F</span>
+          </div>
+          <span className="text-white font-semibold text-sm">FocusFlow</span>
+        </div>
+      </div>
+
+      {/* mobile drawer overlay - only renders when open */}
+      {mobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-50 flex"
+          onClick={(e) => e.target === e.currentTarget && setMobileOpen(false)}
+        >
+          {/* dark backdrop behind the drawer */}
+          <div className="absolute inset-0 bg-black/60" onClick={() => setMobileOpen(false)} />
+
+          {/* the drawer itself slides in from the left */}
+          <aside className="relative w-72 h-full bg-surface-raised border-r
+                            border-surface-border flex flex-col select-none
+                            animate-slide-in-right z-10">
+            {sidebarContent}
+          </aside>
+        </div>
+      )}
+
+      {/* new project modal rendered outside the sidebar so it overlays everything */}
+      {showNewProject && (
+        <NewProjectModal onClose={() => setShowNewProject(false)} />
+      )}
+    </>
+  );
+}
+
+// reusable nav button used for My Day Inbox and Settings
+function NavItem({
+  icon, label, active, onClick
+}: {
+  icon: React.ReactNode;
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg
+                  text-sm transition-colors duration-100 text-left
+                  ${active
+                    ? 'bg-brand/20 text-brand font-medium'
+                    : 'text-gray-400 hover:text-gray-200 hover:bg-surface-border'
+                  }`}
+    >
+      {icon}
+      {label}
+    </button>
+  );
+}
+
+// individual project row with edit and delete actions that appear on hover
+function ProjectItem({
+  project, active, onClick
+}: {
+  project: Project;
+  active: boolean;
+  onClick: () => void;
+}) {
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false); // two-click delete protection
+  const [showEditModal, setShowEditModal] = useState(false);
+  const removeProject = useAppStore((state) => state.removeProject);
+
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // prevent the project from being selected while deleting
+
+    // first click arms the delete button then it auto resets after 3 seconds
+    if (!showConfirmDelete) {
+      setShowConfirmDelete(true);
+      setTimeout(() => setShowConfirmDelete(false), 3000);
+      return;
+    }
+
+    // second click confirms and deletes
+    try {
+      await api.projects.delete(project.id);
+      removeProject(project.id);
+    } catch (err) {
+      console.error('Failed to delete project:', err);
+    }
+  };
+
+  const handleEdit = (e: React.MouseEvent) => {
+    e.stopPropagation(); // prevent the project from being selected while editing
+    setShowEditModal(true);
+  };
+
+  return (
+    <>
+      <div className="group flex items-center gap-1">
+
+        {/* project name button that navigates to the project */}
+        <button
+          onClick={onClick}
+          className={`flex-1 flex items-center gap-2.5 px-2 py-1.5 rounded-lg
+                      text-sm transition-colors duration-100 text-left min-w-0
+                      ${active
+                        ? 'bg-brand/20 text-brand font-medium'
+                        : 'text-gray-400 hover:text-gray-200 hover:bg-surface-border'
+                      }`}
+        >
+          {/* colored dot uses the projects chosen color */}
+          <span
+            className="w-2 h-2 rounded-full shrink-0"
+            style={{ backgroundColor: project.color }}
+          />
+          <span className="truncate">{project.icon} {project.name}</span>
+        </button>
+
+        {/* edit button appears on hover */}
+        <button
+          onClick={handleEdit}
+          title="Edit project"
+          className="opacity-0 group-hover:opacity-100 shrink-0
+                     text-gray-600 hover:text-brand transition-all p-1 rounded"
+        >
+          <Pencil size={11} />
+        </button>
+
+        {/* delete button appears on hover and turns red after the first click */}
+        <button
+          onClick={handleDelete}
+          title={showConfirmDelete ? 'Click again to confirm' : 'Delete project'}
+          className={`opacity-0 group-hover:opacity-100 shrink-0
+                      text-xs p-1 rounded transition-all
+                      ${showConfirmDelete
+                        ? 'text-red-400 opacity-100 bg-red-400/10'
+                        : 'text-gray-600 hover:text-red-400'
+                      }`}
+        >
+          {showConfirmDelete ? '✓?' : <Trash2 size={11} />}
+        </button>
+
+      </div>
+
+      {/* edit modal rendered inline so it can access the project data */}
+      {showEditModal && (
+        <EditProjectModal
+          project={project}
+          onClose={() => setShowEditModal(false)}
+        />
+      )}
+    </>
+  );
+}
+</file>
+
+<file path="src/components/TaskDetailModal.tsx">
+/**
+ * TaskDetailModal.tsx
+ *
+ * Slide-in drawer that opens from the right when a task is clicked
+ * Shows all editable fields for the task including title notes due date and priority
+ * Changes are saved manually via the Save Changes button
+ * The header shows a live saving indicator so the user knows when its working
+ * Clicking the dark backdrop behind the drawer closes it
+ */
+
+import { useState } from 'react';
+import { X, Calendar, Flag } from 'lucide-react';
+import { Task } from '../types';
+import { PRIORITIES } from '../types';
+import { api } from '../lib/api';
+
+interface Props {
+  task: Task;
+  onClose: () => void;
+  onUpdate: (updated: Task) => void; // called after a successful save so the parent can update its list
+}
+
+export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
+  // pre-fill all fields with the tasks current values
+  const [title, setTitle] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
+  const [dueDate, setDueDate] = useState(
+    task.due_date ? task.due_date.split('T')[0] : '' // strip time so the date input works correctly
+  );
+  const [priority, setPriority] = useState(task.priority);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saved, setSaved] = useState(false); // briefly true after a successful save
+
+  // accepts current values as params to avoid stale closure issues
+  // defaults to the state values when called from the save button
+  const handleSave = async (
+    t = title,
+    d = description,
+    dd = dueDate,
+    p = priority
+  ) => {
+    if (!t.trim()) return;
+    setIsSaving(true);
+
+    try {
+      const res = await api.tasks.update({
+        id: task.id,
+        title: t.trim(),
+        description: d,
+        dueDate: dd ? new Date(dd).toISOString() : null,
+        priority: p,
+      });
+
+      if (res.success) {
+        // flash the saved indicator for 1.5 seconds
+        setSaved(true);
+        setTimeout(() => setSaved(false), 1500);
+
+        // tell the parent component about the updated values
+        onUpdate({
+          ...task,
+          title: t.trim(),
+          description: d,
+          due_date: dd ? new Date(dd).toISOString() : null,
+          priority: p,
+        });
+      }
+    } catch (err) {
+      console.error('Failed to save task:', err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    // clicking the backdrop closes the drawer
+    <div
+      className="fixed inset-0 bg-black/40 z-50 flex justify-end"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      {/* drawer panel slides in from the right */}
+      <div className="w-full max-w-md h-full bg-surface-raised border-l
+                      border-surface-border flex flex-col shadow-2xl animate-slide-in-right">
+
+        {/* header shows save status and a close button */}
+        <div className="flex items-center justify-between px-6 py-4
+                        border-b border-surface-border shrink-0">
+          <span className="text-xs text-gray-500">
+            {isSaving ? 'Saving...' : saved ? '✓ Saved' : 'Task Detail'}
+          </span>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-white transition-colors"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        {/* scrollable body with all the editable fields */}
+        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+
+          {/* task title as a large borderless input */}
+          <div>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Task title"
+              className="w-full bg-transparent text-white text-xl font-semibold
+                         outline-none placeholder-gray-600 border-b border-transparent
+                         focus:border-surface-border pb-1 transition-colors"
+            />
+          </div>
+
+          {/* notes textarea for longer descriptions */}
+          <div>
+            <label className="text-xs text-gray-500 uppercase tracking-wider font-medium">
+              Notes
+            </label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Add notes..."
+              rows={4}
+              className="w-full mt-2 bg-surface-base border border-surface-border
+                         rounded-lg px-3.5 py-2.5 text-sm text-gray-300
+                         placeholder-gray-600 outline-none focus:border-brand
+                         transition-colors resize-none"
+            />
+          </div>
+
+          {/* date picker for the due date */}
+          <div>
+            <label className="text-xs text-gray-500 uppercase tracking-wider
+                               font-medium flex items-center gap-1.5">
+              <Calendar size={12} />
+              Due Date
+            </label>
+            <input
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              className="mt-2 bg-surface-base border border-surface-border
+                         rounded-lg px-3.5 py-2.5 text-sm text-gray-300
+                         outline-none focus:border-brand transition-colors
+                         [scheme-dark]"
+            />
+          </div>
+
+          {/* priority selector renders one button per priority level */}
+          <div>
+            <label className="text-xs text-gray-500 uppercase tracking-wider
+                               font-medium flex items-center gap-1.5">
+              <Flag size={12} />
+              Priority
+            </label>
+            <div className="flex gap-2 mt-2">
+              {(Object.entries(PRIORITIES) as [Task['priority'], typeof PRIORITIES[keyof typeof PRIORITIES]][]).map(
+                ([key, val]) => (
+                  <button
+                    key={key}
+                    onClick={() => setPriority(key)}
+                    className={`flex-1 py-1.5 rounded-lg text-xs font-medium
+                                border transition-colors
+                                ${priority === key
+                                  ? 'border-transparent text-white'
+                                  : 'border-surface-border text-gray-500 hover:text-gray-300'
+                                }`}
+                    // active button gets a tinted background matching the priority color
+                    style={priority === key
+                      ? { backgroundColor: val.color + '33', borderColor: val.color, color: val.color }
+                      : {}
+                    }
+                  >
+                    {val.label}
+                  </button>
+                )
+              )}
+            </div>
+          </div>
+
+          {/* save button useful on mobile where there is no keyboard shortcut */}
+          <button
+            onClick={() => handleSave()}
+            disabled={isSaving}
+            className="w-full bg-brand hover:bg-brand-hover disabled:opacity-50
+                       text-white font-semibold py-2.5 rounded-lg
+                       transition-colors text-sm"
+          >
+            {isSaving ? 'Saving...' : saved ? '✓ Saved' : 'Save Changes'}
+          </button>
+
+          {/* read only metadata shown at the bottom */}
+          <div className="text-xs text-gray-600 space-y-1 pt-2 border-t border-surface-border">
+            <p>Created: {new Date(task.created_at).toLocaleDateString()}</p>
+            {task.completed_at && (
+              <p>Completed: {new Date(task.completed_at).toLocaleDateString()}</p>
+            )}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/TaskRow.tsx">
+/**
+ * TaskRow.tsx
+ *
+ * A single task row in the list view
+ * Shows a completion checkbox priority dot title status badge due date and delete button
+ * The status badge is a dropdown that lets the user move the task between lists
+ * The delete button only appears when the row is hovered
+ * Clicking the title opens the task detail drawer
+ */
+
+import { useState } from 'react';
+import { Trash2, Calendar, ChevronDown } from 'lucide-react';
+import { Task, List } from '../types';
+import { PRIORITIES } from '../types';
+
+interface Props {
+  task: Task;
+  lists: List[];                                        // all lists in the project for the status dropdown
+  onToggle: (id: string, completed: boolean) => void;  // marks the task complete or incomplete
+  onDelete: (id: string) => void;                      // removes the task
+  onClick: (task: Task) => void;                       // opens the detail drawer
+  onMove: (taskId: string, newListId: string) => void; // moves the task to a different list
+}
+
+export default function TaskRow({
+  task, lists, onToggle, onDelete, onClick, onMove
+}: Props) {
+  const [isHovered, setIsHovered] = useState(false);       // controls delete button visibility
+  const [showStatusMenu, setShowStatusMenu] = useState(false); // controls the status dropdown
+
+  const priority = PRIORITIES[task.priority] ?? PRIORITIES.normal;
+  const currentList = lists.find((l) => l.id === task.list_id);
+
+  // returns a short human readable string for the due date
+  const formatDueDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    if (date.toDateString() === today.toDateString()) return 'Today';
+    if (date.toDateString() === tomorrow.toDateString()) return 'Tomorrow';
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
+
+  // a task is overdue if it has a past due date and is not yet complete
+  const isOverdue = task.due_date
+    && !task.completed
+    && new Date(task.due_date) < new Date();
+
+  // returns a color for each list name so the status badge is visually distinct
+  const getListColor = (listName: string) => {
+    if (listName === 'To Do') return '#6b7280';
+    if (listName === 'In Progress') return '#f97316';
+    if (listName === 'Done') return '#22c55e';
+    return '#7c6af7';
+  };
+
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setShowStatusMenu(false); // close the dropdown if the user moves away
+      }}
+      className={`flex items-center gap-3 px-4 py-2.5 rounded-lg
+                  transition-colors duration-100 group relative
+                  ${isHovered ? 'bg-surface-raised' : ''}`}
+    >
+      {/* circular checkbox that fills with brand color when complete */}
+      <button
+        onClick={() => onToggle(task.id, !task.completed)}
+        className={`w-4 h-4 rounded-full border-2 shrink-0
+                    flex items-center justify-center transition-colors
+                    ${task.completed
+                      ? 'bg-brand border-brand'
+                      : 'border-gray-600 hover:border-brand'
+                    }`}
+      >
+        {task.completed && (
+          <svg className="w-2.5 h-2.5 text-white" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round"
+                  strokeWidth={3} d="M5 13l4 4L19 7" />
+          </svg>
+        )}
+      </button>
+
+      {/* small colored dot showing the priority level */}
+      <span
+        className="w-1.5 h-1.5 rounded-full shrink-0"
+        style={{ backgroundColor: priority.color }}
+        title={priority.label}
+      />
+
+      {/* task title - clicking opens the detail drawer */}
+      <button
+        onClick={() => onClick(task)}
+        className={`flex-1 text-left text-sm transition-colors
+                    ${task.completed
+                      ? 'line-through text-gray-600'
+                      : 'text-gray-200 hover:text-white'
+                    }`}
+      >
+        {task.title}
+      </button>
+
+      {/* note indicator - only shown when the task has a description */}
+      {task.description && (
+        <span
+          title={task.description}
+          className="text-gray-600 hover:text-gray-400 transition-colors shrink-0 text-xs"
+        >
+          📝
+        </span>
+      )}      
+
+      {/* status badge only shows on incomplete tasks since completed ones cant be moved */}
+      {!task.completed && currentList && (
+        <div className="relative shrink-0">
+
+          {/* clicking the badge opens the dropdown */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowStatusMenu(!showStatusMenu);
+            }}
+            className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-md
+                       border border-surface-border hover:border-gray-500
+                       transition-colors"
+            style={{
+              backgroundColor: getListColor(currentList.name) + '20',
+              color: getListColor(currentList.name),
+            }}
+          >
+            {currentList.name}
+            <ChevronDown size={10} />
+          </button>
+
+          {/* dropdown lists all available lists to move the task into */}
+          {showStatusMenu && (
+            <div className="absolute right-0 top-full mt-1 bg-surface-raised
+                            border border-surface-border rounded-xl shadow-2xl
+                            overflow-hidden z-50 min-w-36">
+              {lists.map((list) => (
+                <button
+                  key={list.id}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (list.id !== task.list_id) {
+                      onMove(task.id, list.id); // only move if its a different list
+                    }
+                    setShowStatusMenu(false);
+                  }}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2.5
+                              text-sm text-left transition-colors hover:bg-surface-border
+                              ${list.id === task.list_id
+                                ? 'opacity-50 cursor-default'
+                                : 'cursor-pointer'
+                              }`}
+                >
+                  <span
+                    className="w-2 h-2 rounded-full shrink-0"
+                    style={{ backgroundColor: getListColor(list.name) }}
+                  />
+                  <span className="text-gray-200">{list.name}</span>
+
+                  {/* label to show which list the task currently lives in */}
+                  {list.id === task.list_id && (
+                    <span className="ml-auto text-xs text-gray-600">current</span>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* due date turns red if the task is past its deadline */}
+      {task.due_date && (
+        <div className={`flex items-center gap-1 text-xs shrink-0
+                         ${isOverdue ? 'text-red-400' : 'text-gray-500'}`}>
+          <Calendar size={11} />
+          <span>{formatDueDate(task.due_date)}</span>
+        </div>
+      )}
+
+      {/* delete button fades in on hover */}
+      <button
+        onClick={() => onDelete(task.id)}
+        className={`text-gray-600 hover:text-red-400 transition-all shrink-0
+                    ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+      >
+        <Trash2 size={14} />
+      </button>
+
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/DashboardPage.tsx">
+/**
+ * DashboardPage.tsx
+ *
+ * Main app shell that renders after the user logs in
+ * Contains the sidebar on the left and the active page content on the right
+ * Decides which page to show based on the active view in the app store
+ * Search takes priority over everything and overlays the current page
+ * The pt-12 top padding on mobile accounts for the fixed top bar
+ */
+
+import { useEffect, useCallback } from 'react';
+import { useAuthStore } from '../store/authStore';
+import { useAppStore } from '../store/appStore';
+import { Project } from '../types';
+import { api } from '../lib/api';
+import Sidebar from '../components/Sidebar';
+import TopBar from '../components/TopBar';
+import InboxPage from './InboxPage';
+import ProjectPage from './ProjectPage';
+import { useSearchStore } from '../store/searchStore';
+import SearchPage from './SearchPage';
+import MyDayPage from './MyDayPage';
+import SettingsPage from './SettingsPage';
+
+export default function DashboardPage() {
+  const user = useAuthStore((state) => state.user);
+  const { activeView, activeProjectId, setProjects } = useAppStore();
+  const isSearching = useSearchStore((state) => state.isSearching);
+
+  // wrapped in useCallback so it can be safely listed as a useEffect dependency
+  const loadProjects = useCallback(async () => {
+    try {
+      const res = await api.projects.get();
+      if (res.success && res.data) {
+        setProjects(res.data as Project[]);
+      }
+    } catch (err) {
+      console.error('Failed to load projects:', err);
+    }
+  }, [setProjects]);
+
+  // load projects once when the user session is available
+  useEffect(() => {
+    if (!user) return;
+    loadProjects();
+  }, [user, loadProjects]);
+
+  // returns the correct page component based on what is active in the sidebar
+  const renderContent = () => {
+    if (isSearching) return <SearchPage />;                          // search overlays everything
+    if (activeView === 'settings') return <SettingsPage />;
+    if (activeView === 'inbox') return <InboxPage />;
+    if (activeView === 'project' && activeProjectId) {
+      return <ProjectPage projectId={activeProjectId} />;
+    }
+    return <MyDayPage />;                                            // default landing view
+  };
+
+  return (
+    <div className="flex h-screen bg-surface-base font-sans overflow-hidden">
+      <Sidebar />
+
+      {/* right side contains the top bar and the scrollable page content */}
+      <div className="flex flex-col flex-1 min-w-0 pt-12 md:pt-0">
+        <TopBar />
+        <main className="flex-1 overflow-y-auto">
+          {renderContent()}
+        </main>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/index.tsx">
+/**
+ * index.tsx
+ *
+ * App entry point that decides whether to show the login screen or the dashboard
+ * On first load it checks for an existing session cookie via checkSession
+ * While that check is running a centered spinner is shown to prevent a flash
+ * of the wrong screen before the session status is known
+ */
+
+import { useEffect } from 'react';
+import Head from 'next/head';
+import { useAuthStore } from '../store/authStore';
+import LoginPage from '../pages/LoginPage';
+import DashboardPage from '../pages/DashboardPage';
+
+export default function Home() {
+  const user = useAuthStore((state) => state.user);
+  const isLoading = useAuthStore((state) => state.isLoading);
+  const checkSession = useAuthStore((state) => state.checkSession);
+
+  // check for an existing session cookie when the app first loads
+  useEffect(() => {
+    async function check() {
+      await checkSession();
+    }
+    check();
+  }, [checkSession]);
+
+  // show a spinner while the session check is in progress
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-surface-base flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-brand border-t-transparent
+                        rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Head>
+        <title>FocusFlow</title>
+      </Head>
+      {/* show the dashboard if logged in otherwise show the login screen */}
+      {user ? <DashboardPage /> : <LoginPage />}
+    </>
+  );
+}
+</file>
+
+<file path="src/store/authStore.ts">
+/**
+ * authStore.ts
+ *
+ * Global store for the logged in user and session state
+ * isLoading stays true until checkSession resolves so the app
+ * can show a spinner instead of flashing the wrong screen on load
+ * The session is stored in an HTTP only cookie managed by the server
+ * so we just ask the API if we have a valid session on startup
+ */
+
+import { create } from 'zustand';
+import { User } from '../types';
+import { api } from '../lib/api';
+
+interface AuthState {
+  user: User | null;
+  isLoading: boolean;                  // true while the initial session check is running
+  login: (user: User) => void;
+  logout: () => void;
+  setLoading: (loading: boolean) => void;
+  checkSession: () => Promise<void>;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
+  user: null,
+  isLoading: true, // start as true so the spinner shows before the session check resolves
+
+  // stores the user object after a successful login or registration
+  login: (user: User) => set({ user }),
+
+  // calls the logout API to clear the cookie then removes the user from state
+  logout: async () => {
+    await api.auth.logout();
+    set({ user: null });
+  },
+
+  // manual loading setter used in edge cases
+  setLoading: (loading: boolean) => set({ isLoading: loading }),
+
+  // checks for an existing session cookie on app load
+  // skips the check on the server since cookies are only available in the browser
+  checkSession: async () => {
+    if (typeof window === 'undefined') {
+      set({ isLoading: false });
+      return;
+    }
+    try {
+      const res = await api.auth.me();
+      if (res.success && res.data) {
+        set({ user: res.data as User }); // restore the session without asking the user to log in again
+      }
+    } catch {
+      // no valid session cookie found - user will see the login screen
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+}));
+</file>
+
+<file path="src/store/themeStore.ts">
+/**
+ * themeStore.ts
+ *
+ * Global store for the dark/light mode preference
+ * The chosen theme is saved to localStorage so it persists across sessions
+ * All localStorage and DOM access is guarded with typeof window checks
+ * so the store is safe to import in server side rendered pages
+ * Call initTheme() once on the client to restore the saved preference on load
+ */
+
+import { create } from 'zustand';
+
+type Theme = 'dark' | 'light';
+
+interface ThemeState {
+  theme: Theme;
+  toggleTheme: () => void;
+  setTheme: (theme: Theme) => void;
+}
+
+// safely reads from localStorage without crashing during SSR
+function getStorage(key: string): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem(key);
+}
+
+// safely writes to localStorage without crashing during SSR
+function setStorage(key: string, value: string) {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(key, value);
+}
+
+// adds or removes the dark/light class on the html element so Tailwind picks it up
+function applyTheme(theme: Theme) {
+  if (typeof window === 'undefined') return;
+  const html = document.documentElement;
+  if (theme === 'dark') {
+    html.classList.add('dark');
+    html.classList.remove('light');
+  } else {
+    html.classList.remove('dark');
+    html.classList.add('light');
+  }
+}
+
+// reads the saved theme from localStorage and defaults to dark if nothing is saved
+function loadTheme(): Theme {
+  const saved = getStorage('focusflow_theme');
+  return saved === 'light' ? 'light' : 'dark';
+}
+
+export const useThemeStore = create<ThemeState>((set, get) => ({
+  theme: 'dark', // default before localStorage is read
+
+  // flips between dark and light and saves the new value
+  toggleTheme: () => {
+    const next = get().theme === 'dark' ? 'light' : 'dark';
+    setStorage('focusflow_theme', next);
+    applyTheme(next);
+    set({ theme: next });
+  },
+
+  // sets a specific theme directly used by initTheme on startup
+  setTheme: (theme: Theme) => {
+    setStorage('focusflow_theme', theme);
+    applyTheme(theme);
+    set({ theme });
+  },
+}));
+
+// call once on the client after the page loads to restore the saved theme
+// this prevents a flash of the wrong theme on first render
+export function initTheme() {
+  if (typeof window === 'undefined') return;
+  const theme = loadTheme();
+  applyTheme(theme);
+  useThemeStore.setState({ theme });
+}
+</file>
+
+<file path="src/styles/globals.css">
+/*
+ * globals.css
+ *
+ * Global styles for the app
+ * Imports the Inter font from Google and the full Tailwind CSS library
+ * The @theme block defines custom design tokens used throughout the app
+ * as Tailwind utility classes like bg-brand or border-surface-border
+ */
+
+/* load the Inter font family with all the weights we use */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* load Tailwind v4 */
+@import "tailwindcss";
+
+/* custom design tokens used as Tailwind utilities across the whole app */
+@theme {
+  /* brand purple used for buttons active states and accents */
+  --color-brand: #7c6af7;
+  --color-brand-hover: #9585f8;
+  --color-brand-muted: #4a3fa0;
+
+  /* surface colors reference CSS variables so light mode overrides take effect */
+  --color-surface-base: #0f0f13;
+  --color-surface-raised: #1a1a24;
+  --color-surface-border: #2a2a38;
+
+  /* Inter is the primary font across the whole app */
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  /* dark mode defaults */
+  html {
+    background-color: #0f0f13;
+    color: #f0f0f5;
+  }
+
+  /* light mode overrides - swap surface variables and base text color */
+  html.light {
+    background-color: #f0f0f5;
+    color: #111118;
+    --color-surface-base: #f0f0f5;
+    --color-surface-raised: #ffffff;
+    --color-surface-border: #e0e0e8;
+  }
+
+  /* smooth scrolling for all scrollable elements */
+  * {
+    scroll-behavior: smooth;
+  }
+
+  /* slim custom scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #0f0f13; }
+  ::-webkit-scrollbar-thumb { background: #2a2a38; border-radius: 9999px; }
+}
+
+/* light mode text overrides - need !important to beat Tailwind utility specificity */
+@layer utilities {
+  /* text-white becomes near-black in light mode */
+  html.light .text-white { color: #111118 !important; }
+
+  /* gray text shades flip to darker equivalents in light mode */
+  html.light .text-gray-200 { color: #1f2937 !important; }
+  html.light .text-gray-300 { color: #374151 !important; }
+  html.light .text-gray-400 { color: #4b5563 !important; }
+  html.light .text-gray-500 { color: #6b7280 !important; }
+  html.light .text-gray-600 { color: #9ca3af !important; }
+  html.light .text-gray-700 { color: #d1d5db !important; }
+
+  /* placeholder text in inputs and textareas */
+  html.light input::placeholder,
+  html.light textarea::placeholder { color: #9ca3af !important; }
+
+  /* input textarea and select backgrounds and text */
+  html.light input,
+  html.light textarea,
+  html.light select {
+    color: #111118 !important;
+    background-color: #ffffff !important;
+    border-color: #e0e0e8 !important;
+  }
+}
+</file>
+
+<file path="tailwind.config.ts">
+/**
+ * tailwind.config.ts
+ *
+ * Tailwind CSS configuration for the app
+ * Extends the default theme with custom colors animations and fonts
+ * The content array tells Tailwind which files to scan for class names
+ * so unused styles get purged from the production build automatically
+ */
+
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  // scan all page and component files for Tailwind class names
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/styles/**/*.css',
+  ],
+
+  // dark mode is toggled by adding the dark class to the html element
+  darkMode: 'class',
+
+  theme: {
+    extend: {
+      colors: {
+        // brand purple used for buttons active states and highlights
+        brand: {
+          DEFAULT: '#7c6af7',
+          hover: '#9585f8',   // slightly lighter for hover states
+          muted: '#4a3fa0',   // darker for subtle backgrounds
+        },
+        // surface colors reference CSS variables so light mode overrides take effect
+        surface: {
+          base: 'var(--color-surface-base)',
+          raised: 'var(--color-surface-raised)',
+          border: 'var(--color-surface-border)',
+        },
+      },
+
+      // Inter is loaded from Google Fonts in globals.css
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
+
+      // custom keyframe animations used throughout the app
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(4px)' },   // slides up slightly while fading in
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'slide-in-right': {
+          '0%': { opacity: '0', transform: 'translateX(20px)' },  // used for the task detail drawer
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        'slide-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },  // used for modals
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+
+      // shorthand animation classes that apply the keyframes above
+      animation: {
+        'fade-in': 'fade-in 0.2s ease-out',
+        'slide-in-right': 'slide-in-right 0.25s ease-out',
+        'slide-in-up': 'slide-in-up 0.2s ease-out',
+      },
+    },
+  },
+
+  plugins: [],
+};
+
+export default config;
+</file>
+
+<file path="src/components/KanbanCard.tsx">
+/**
+ * KanbanCard.tsx
+ *
+ * A single draggable card on the kanban board
+ * Shows the task title priority indicator and due date
+ * While dragging the card fades out so you can see where it will land
+ * Clicking the card opens the task detail drawer
+ */
+
+import { Calendar } from 'lucide-react';
+import { Task } from '../types';
+import { PRIORITIES } from '../types';
+
+interface Props {
+  task: Task;
+  onClick: (task: Task) => void;       // opens the detail drawer
+  onDragStart: (taskId: string) => void; // tells the board which card is moving
+  onDragEnd: () => void;               // resets drag state on the board
+  isDragging: boolean;                 // true while this card is being dragged
+}
+
+export default function KanbanCard({
+  task, onClick, onDragStart, onDragEnd, isDragging
+}: Props) {
+  // look up color and label for the tasks priority level
+  const priority = PRIORITIES[task.priority] ?? PRIORITIES.normal;
+
+  // returns a short human readable date string
+  const formatDueDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const today = new Date();
+    if (date.toDateString() === today.toDateString()) return 'Today';
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
+
+  // a task is overdue if it has a due date in the past and is not yet complete
+  const isOverdue = task.due_date
+    && !task.completed
+    && new Date(task.due_date) < new Date();
+
+  return (
+    <div
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', task.id); // needed as a fallback on some browsers
+        setTimeout(() => onDragStart(task.id), 0); // small delay so the drag ghost renders first
+      }}
+      onDragEnd={onDragEnd}
+      onClick={() => !isDragging && onClick(task)} // dont open the drawer if the user was dragging
+      className={`bg-surface-base border rounded-xl p-3.5
+                  transition-all duration-150 select-none
+                  ${isDragging
+                    ? 'opacity-40 border-brand cursor-grabbing'
+                    : 'border-surface-border hover:border-brand/40 cursor-grab'
+                  }
+                  hover:shadow-lg hover:shadow-black/20`}
+    >
+      {/* thin colored bar at the top indicates priority level */}
+      <div
+        className="w-8 h-0.5 rounded-full mb-3"
+        style={{ backgroundColor: priority.color }}
+      />
+
+      {/* task title with strikethrough if completed */}
+      <p className={`text-sm font-medium leading-snug mb-3
+                     ${task.completed
+                       ? 'line-through text-gray-600'
+                       : 'text-gray-200'
+                     }`}>
+        {task.title}
+      </p>
+
+      {/* footer row with due date on the left and priority badge on the right */}
+      <div className="flex items-center justify-between">
+
+        {/* due date turns red if the task is overdue */}
+        {task.due_date ? (
+          <div className={`flex items-center gap-1 text-xs
+                           ${isOverdue ? 'text-red-400' : 'text-gray-600'}`}>
+            <Calendar size={10} />
+            <span>{formatDueDate(task.due_date)}</span>
+          </div>
+        ) : <span />}
+
+        {/* priority badge uses the priority color with a faint background */}
+        <span
+          className="text-xs px-1.5 py-0.5 rounded-md font-medium"
+          style={{
+            backgroundColor: priority.color + '20',
+            color: priority.color,
+          }}
+        >
+          {priority.label}
+        </span>
+
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/pages/api/auth/login.js">
+/**
+ * login.js
+ *
+ * Authenticates an existing user with their username and password
+ * Looks up the user by username then uses bcrypt to compare the password
+ * against the stored hash without ever decrypting it
+ * On success a signed JWT is stored in an HTTP only session cookie
+ */
+
+import bcrypt from 'bcryptjs';
+import sql from '../../../lib/db.js';
+import { createToken, setSessionCookie } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const { username, password } = req.body;
+
+  try {
+    // look up the user by username
+    const rows = await sql`
+      SELECT id, username, password_hash
+      FROM users WHERE username = ${username.trim()}
+    `;
+
+    // return the same error for both wrong username and wrong password
+    // this prevents leaking whether an account exists
+    if (rows.length === 0) {
+      return res.json({ success: false, error: 'Invalid username or password' });
+    }
+
+    const user = rows[0];
+
+    // bcrypt compare checks the plain password against the stored hash
+    const valid = await bcrypt.compare(password, user.password_hash);
+
+    if (!valid) {
+      return res.json({ success: false, error: 'Invalid username or password' });
+    }
+
+    // create a JWT and set it as an HTTP only cookie so the client stays logged in
+    const token = createToken({ id: user.id, username: user.username });
+    setSessionCookie(res, token);
+
+    return res.json({
+      success: true,
+      data: { id: user.id, username: user.username }
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({ success: false, error: 'Login failed' });
+  }
+}
+</file>
+
+<file path="src/pages/api/auth/logout.js">
+/**
+ * logout.js
+ *
+ * Clears the session cookie to log the user out
+ * Works by overwriting the cookie with an empty value and a max age of zero
+ * which tells the browser to delete it immediately
+ */
+
+import { clearSessionCookie } from '../../../lib/auth.js';
+
+export default function handler(req, res) {
+  clearSessionCookie(res);
+  res.json({ success: true });
+}
+</file>
+
+<file path="src/pages/api/auth/me.js">
+/**
+ * me.js
+ *
+ * Returns the currently logged in user based on their session cookie
+ * Used on app load to check if a valid session exists without asking
+ * the user to log in again
+ * Returns 401 style error if no valid cookie is found
+ */
+
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default function handler(req, res) {
+  const user = getUserFromRequest(req);
+
+  // no valid session cookie means the user is not logged in
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  res.json({ success: true, data: { id: user.id, username: user.username } });
+}
+</file>
+
+<file path="src/pages/api/auth/register.js">
+/**
+ * register.js
+ *
+ * Creates a new user account with a hashed password
+ * After inserting the user an Inbox project is automatically created
+ * so the user has somewhere to drop tasks right away without making a project
+ * On success the user is logged in immediately via a session cookie
+ */
+
+import bcrypt from 'bcryptjs';
+import { v4 as uuid } from 'uuid';
+import sql from '../../../lib/db.js';
+import { createToken, setSessionCookie } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.json({ success: false, error: 'Missing fields' });
+  }
+
+  try {
+    // hash the password with a cost factor of 12 before storing it
+    const passwordHash = await bcrypt.hash(password, 12);
+    const id = uuid();
+
+    await sql`
+      INSERT INTO users (id, username, password_hash)
+      VALUES (${id}, ${username.trim()}, ${passwordHash})
+    `;
+
+    // auto-create an inbox project so the user can capture tasks immediately
+    const inboxId = uuid();
+    const inboxListId = uuid();
+
+    await sql`
+      INSERT INTO projects (id, user_id, name, color, icon)
+      VALUES (${inboxId}, ${id}, 'Inbox', '#6b7280', '📥')
+    `;
+
+    await sql`
+      INSERT INTO lists (id, project_id, name, position)
+      VALUES (${inboxListId}, ${inboxId}, 'Tasks', 0)
+    `;
+
+    // log the user in right away so they dont have to sign in after registering
+    const token = createToken({ id, username: username.trim() });
+    setSessionCookie(res, token);
+
+    return res.json({
+      success: true,
+      data: { id, username: username.trim() }
+    });
+  } catch (err) {
+    // catch duplicate username errors from the unique constraint
+    if (err.message?.includes('unique') || err.message?.includes('duplicate')) {
+      return res.json({ success: false, error: 'Username already taken' });
+    }
+    console.error(err);
+    return res.json({ success: false, error: 'Registration failed' });
+  }
+}
+</file>
+
+<file path="src/pages/api/auth/update-password.js">
+/**
+ * update-password.js
+ *
+ * Updates the logged in users password
+ * Requires the current password to be correct before allowing the change
+ * This prevents someone who finds an unlocked browser from changing the password
+ * The new password is hashed before being stored just like on registration
+ */
+
+import bcrypt from 'bcryptjs';
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { currentPassword, newPassword } = req.body;
+
+  try {
+    // fetch the stored hash so we can verify the current password
+    const rows = await sql`
+      SELECT password_hash FROM users WHERE id = ${user.id}
+    `;
+
+    // reject the request if the current password doesnt match
+    const valid = await bcrypt.compare(currentPassword, rows[0].password_hash);
+    if (!valid) {
+      return res.json({ success: false, error: 'Current password is incorrect' });
+    }
+
+    // hash the new password and save it
+    const newHash = await bcrypt.hash(newPassword, 12);
+    await sql`UPDATE users SET password_hash = ${newHash} WHERE id = ${user.id}`;
+
+    res.json({ success: true, data: true });
+  } catch {
+    res.json({ success: false, error: 'Failed to update password' });
+  }
+}
+</file>
+
+<file path="src/pages/api/auth/update-username.js">
+/**
+ * update-username.js
+ *
+ * Updates the logged in users username
+ * Trims whitespace from the new username before saving
+ * Returns a friendly error if the username is already taken
+ * by another account due to the unique constraint on the users table
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { newUsername } = req.body;
+
+  try {
+    await sql`
+      UPDATE users SET username = ${newUsername.trim()}
+      WHERE id = ${user.id}
+    `;
+
+    res.json({ success: true, data: true });
+  } catch (err) {
+    // the users table has a unique constraint on username so catch that specifically
+    if (err.message?.includes('unique') || err.message?.includes('duplicate')) {
+      return res.json({ success: false, error: 'Username already taken' });
+    }
+    res.json({ success: false, error: 'Failed to update username' });
+  }
+}
+</file>
+
+<file path="src/pages/api/projects/create.js">
+/**
+ * projects/create.js
+ *
+ * Creates a new project for the logged in user
+ * After inserting the project three default kanban columns are created
+ * automatically so the board is ready to use straight away
+ */
+
+import { v4 as uuid } from 'uuid';
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { name, color, icon } = req.body;
+  const id = uuid();
+
+  // insert the project
+  await sql`
+    INSERT INTO projects (id, user_id, name, color, icon)
+    VALUES (${id}, ${user.id}, ${name}, ${color}, ${icon})
+  `;
+
+  // auto-create the three default kanban columns in order
+  const columns = [
+    { name: 'To Do', position: 0 },
+    { name: 'In Progress', position: 1 },
+    { name: 'Done', position: 2 },
+  ];
+
+  for (const col of columns) {
+    await sql`
+      INSERT INTO lists (id, project_id, name, position)
+      VALUES (${uuid()}, ${id}, ${col.name}, ${col.position})
+    `;
+  }
+
+  res.json({ success: true, data: id });
+}
+</file>
+
+<file path="src/pages/api/projects/delete.js">
+/**
+ * projects/delete.js
+ *
+ * Deletes a project and everything inside it
+ * The database CASCADE rules handle deleting all lists tasks and notes
+ * automatically so we only need to delete the project row itself
+ * The user_id check ensures users can only delete their own projects
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { projectId } = req.body;
+
+  // cascade deletes all lists tasks and notes belonging to this project
+  await sql`DELETE FROM projects WHERE id=${projectId} AND user_id=${user.id}`;
+
+  res.json({ success: true, data: true });
+}
+</file>
+
+<file path="src/pages/api/projects/get.js">
+/**
+ * projects/get.js
+ *
+ * Returns all active projects for the logged in user
+ * Archived projects are excluded since they are hidden from the sidebar
+ * Results are ordered by creation date so older projects appear first
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  // only return non-archived projects ordered oldest first
+  const rows = await sql`
+    SELECT id, user_id, name, color, icon, created_at, archived
+    FROM projects WHERE user_id = ${user.id} AND archived = false
+    ORDER BY created_at ASC
+  `;
+
+  res.json({ success: true, data: rows });
+}
+</file>
+
+<file path="src/pages/api/projects/inbox.js">
+/**
+ * projects/inbox.js
+ *
+ * Returns the special Inbox project for the logged in user
+ * Every account gets an Inbox created automatically on registration
+ * It is used for quick task capture without needing to pick a project
+ * Returns null if for some reason the inbox doesnt exist yet
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  // find the inbox project by name since it is always called Inbox
+  const rows = await sql`
+    SELECT id, user_id, name, color, icon, created_at, archived
+    FROM projects WHERE user_id=${user.id} AND name='Inbox'
+    ORDER BY created_at ASC LIMIT 1
+  `;
+
+  // return null instead of an empty array if no inbox exists
+  res.json({ success: true, data: rows[0] || null });
+}
+</file>
+
+<file path="src/pages/api/projects/update.js">
+/**
+ * projects/update.js
+ *
+ * Updates the name color and icon of an existing project
+ * The user_id check ensures users can only edit their own projects
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { projectId, name, color, icon } = req.body;
+
+  // update only the visual fields - id and user_id never change
+  await sql`
+    UPDATE projects SET name=${name}, color=${color}, icon=${icon}
+    WHERE id=${projectId} AND user_id=${user.id}
+  `;
+
+  res.json({ success: true, data: true });
+}
+</file>
+
+<file path="src/pages/api/tasks/create.js">
+/**
+ * tasks/create.js
+ *
+ * Creates a new task inside a specific list and project
+ * Description defaults to empty string and priority defaults to normal
+ * if not provided so the caller only needs to pass a title at minimum
+ * Returns the new task id so the client can build the local task object
+ */
+
+import { v4 as uuid } from 'uuid';
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { listId, projectId, title, description, dueDate, priority } = req.body;
+  const id = uuid();
+
+  await sql`
+    INSERT INTO tasks
+    (id, list_id, project_id, user_id, title, description, due_date, priority)
+    VALUES (
+      ${id}, ${listId}, ${projectId}, ${user.id},
+      ${title}, ${description || ''}, ${dueDate || null}, ${priority || 'normal'}
+    )
+  `;
+
+  // return the new id so the client can add the task to local state immediately
+  res.json({ success: true, data: id });
+}
+</file>
+
+<file path="src/pages/api/tasks/delete.js">
+/**
+ * tasks/delete.js
+ *
+ * Permanently deletes a task
+ * The user_id check ensures users can only delete their own tasks
+ * Any notes or tag associations are removed automatically via cascade
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { id } = req.body;
+
+  // cascade removes any notes or task_tags rows attached to this task
+  await sql`DELETE FROM tasks WHERE id=${id} AND user_id=${user.id}`;
+
+  res.json({ success: true, data: true });
+}
+</file>
+
+<file path="src/pages/api/tasks/export.js">
+/**
+ * tasks/export.js
+ *
+ * Returns all tasks for the logged in user as a flat list
+ * Used by the settings page to let the user download their data as JSON
+ * Ordered by creation date with newest tasks first
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  // fetch every task across all projects for the export
+  const rows = await sql`
+    SELECT id, list_id, project_id, user_id, title, description,
+           due_date, priority, completed, completed_at, position, created_at
+    FROM tasks WHERE user_id = ${user.id}
+    ORDER BY created_at DESC
+  `;
+
+  res.json({ success: true, data: rows });
+}
+</file>
+
+<file path="src/pages/api/tasks/get.js">
+/**
+ * tasks/get.js
+ *
+ * Returns all tasks for a given project ordered by position
+ * Position determines the display order within each list
+ * The projectId is passed as a query param since this is a GET style request
+ * Both completed and incomplete tasks are returned so the client can filter
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { projectId } = req.query;
+
+  // fetch all tasks for the project sorted by their position within each list
+  const rows = await sql`
+    SELECT id, list_id, project_id, user_id, title, description,
+           due_date, priority, completed, completed_at, position, created_at
+    FROM tasks WHERE project_id=${projectId}
+    ORDER BY position ASC
+  `;
+
+  res.json({ success: true, data: rows });
+}
+</file>
+
+<file path="src/pages/api/tasks/move.js">
+/**
+ * tasks/move.js
+ *
+ * Moves a task to a different list (kanban column)
+ * Called when the user changes the status badge on a task row
+ * or drags a card to a different column on the board view
+ * The user_id check ensures users can only move their own tasks
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { taskId, newListId } = req.body;
+
+  // update the list_id to move the task into the new column
+  await sql`
+    UPDATE tasks SET list_id=${newListId}
+    WHERE id=${taskId} AND user_id=${user.id}
+  `;
+
+  res.json({ success: true, data: true });
+}
+</file>
+
+<file path="src/pages/api/tasks/search.js">
+/**
+ * tasks/search.js
+ *
+ * Searches tasks by title and description using a text query
+ * Converts both the query and stored values to lowercase for case insensitive matching
+ * Incomplete tasks are shown before completed ones in the results
+ * Results are capped at 50 to keep the response fast
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { query } = req.query;
+
+  // wrap the query in wildcards so it matches anywhere in the title or description
+  const pattern = `%${query.toLowerCase()}%`;
+
+  const rows = await sql`
+    SELECT id, list_id, project_id, user_id, title, description,
+           due_date, priority, completed, completed_at, position, created_at
+    FROM tasks
+    WHERE user_id=${user.id}
+      AND (LOWER(title) LIKE ${pattern} OR LOWER(description) LIKE ${pattern})
+    ORDER BY completed ASC, created_at DESC
+    LIMIT 50
+  `;
+
+  res.json({ success: true, data: rows });
+}
+</file>
+
+<file path="src/pages/api/tasks/today.js">
+/**
+ * tasks/today.js
+ *
+ * Returns all incomplete tasks due today across every project
+ * Used by the My Day view to show the users daily focus list
+ * Results are sorted by priority first then creation date
+ * so urgent tasks always appear at the top
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  // cast due_date to date to ignore the time portion when comparing to today
+  const rows = await sql`
+    SELECT id, list_id, project_id, user_id, title, description,
+           due_date, priority, completed, completed_at, position, created_at
+    FROM tasks
+    WHERE user_id=${user.id}
+      AND completed=false
+      AND due_date::date = CURRENT_DATE
+    ORDER BY priority ASC, created_at ASC
+  `;
+
+  res.json({ success: true, data: rows });
+}
+</file>
+
+<file path="src/pages/api/tasks/toggle.js">
+/**
+ * tasks/toggle.js
+ *
+ * Marks a task as complete or incomplete
+ * Sets completed_at to the current timestamp when completing
+ * and clears it back to null when marking incomplete again
+ * The user_id check ensures users can only toggle their own tasks
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { id, completed } = req.body;
+
+  // store the completion timestamp when checking off a task
+  // clear it when the task is marked incomplete again
+  await sql`
+    UPDATE tasks
+    SET completed=${completed},
+        completed_at=${completed ? new Date().toISOString() : null}
+    WHERE id=${id} AND user_id=${user.id}
+  `;
+
+  res.json({ success: true, data: true });
+}
+</file>
+
+<file path="src/pages/api/tasks/update.js">
+/**
+ * tasks/update.js
+ *
+ * Updates the editable fields of a task
+ * Called from the task detail drawer whenever the user saves changes
+ * Due date can be cleared by passing null
+ * The user_id check ensures users can only edit their own tasks
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { id, title, description, dueDate, priority } = req.body;
+
+  try {
+    await sql`
+      UPDATE tasks
+      SET title=${title}, description=${description},
+          due_date=${dueDate || null}, priority=${priority}
+      WHERE id=${id} AND user_id=${user.id}
+    `;
+
+    res.json({ success: true, data: true });
+  } catch (err) {
+    console.error('Update task error:', err);
+    res.json({ success: false, error: err.message });
+  }
+}
+</file>
+
+<file path="src/pages/_document.tsx">
+/**
+ * _document.tsx
+ *
+ * Custom Next.js document that adds global head tags to every page
+ * Sets up the favicon PWA manifest and iOS home screen metadata
+ * This file only runs on the server so it is the right place for
+ * static meta tags that never change between pages
+ */
+
+import { Html, Head, Main, NextScript } from 'next/document';
+
+export default function Document() {
+  return (
+    <Html lang="en">
+      <Head>
+
+        {/* favicon shown in the browser tab */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
+        <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+
+        {/* PWA manifest makes the app installable from the browser */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#7c6af7" />
+
+        {/* iOS specific tags for adding to the home screen */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="FocusFlow" />
+        <link rel="apple-touch-icon" href="/android-chrome-192x192.png" />
+
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
+</file>
+
+<file path="README.md">
+# FocusFlow PWA
+FocusFlow is a personal task manager that runs in the browser and installs on your phone like a native app. Create projects organize tasks into kanban boards set due dates and priorities while everything syncs across devices automatically.
+
+## Tech Stack Summary
+```
+Framework:    Next.js 16 (Pages Router)
+Language:     TypeScript (frontend) + JavaScript (API routes)
+Styling:      Tailwind CSS v4
+State:        Zustand
+Database:     Neon PostgreSQL (serverless)
+Auth:         bcrypt + JWT HTTP-only cookies
+Hosting:      Vercel 
+PWA:          Web App Manifest + meta tags
+Mobile:       Responsive sidebar + installable PWA
+```
+
+## Folder Structure
+```
+focusflow-web/
+├── public/                           PWA icons and favicons for the browser tab
+│   ├── manifest.json                 PWA config (makes it installable)
+│   ├── android-chrome-192x192.png    app icon (phone home screen)
+│   └── android-chrome-512x512.png    app icon (large)
+│
+├── src/
+│   ├── components/                   reusable UI pieces used across multiple pages
+│   │   ├── Sidebar.tsx               desktop sidebar + mobile drawer
+│   │   ├── TopBar.tsx                search bar + page title
+│   │   ├── TaskRow.tsx               single task in list view
+│   │   ├── TaskDetailModal.tsx       edit task drawer
+│   │   ├── AddTaskBar.tsx            quick add task input
+│   │   ├── KanbanBoard.tsx           drag and drop board
+│   │   ├── KanbanCard.tsx            single kanban card
+│   │   ├── NewProjectModal.tsx       create project dialog
+│   │   └── EditProjectModal.tsx      edit project dialog
+│   │
+│   ├── pages/                        one file per screen in the app
+│   │   ├── index.tsx                 entry point (login vs dashboard)
+│   │   ├── _app.tsx                  loads global CSS
+│   │   ├── _document.tsx             PWA manifest + meta tags
+│   │   ├── LoginPage.tsx             login and registration screen
+│   │   ├── DashboardPage.tsx         main app shell with sidebar
+│   │   ├── ProjectPage.tsx           list and board view for a project
+│   │   ├── InboxPage.tsx             quick task capture
+│   │   ├── MyDayPage.tsx             tasks due today across all projects
+│   │   ├── SearchPage.tsx            live search with filters
+│   │   ├── SettingsPage.tsx          theme account and data export
+│   │   └── api/                      serverless API endpoints
+│   │       ├── auth/                 register login logout me update-username update-password
+│   │       ├── projects/             get create update delete inbox
+│   │       ├── lists/                get
+│   │       └── tasks/                get create update toggle delete move search today export
+│   │
+│   ├── store/                        global state (Zustand)
+│   │   ├── authStore.ts              login/logout/session
+│   │   ├── appStore.ts               active view and projects list
+│   │   ├── searchStore.ts            search query
+│   │   └── themeStore.ts             dark/light mode
+│   │
+│   ├── lib/
+│   │   ├── api.ts                    all fetch() calls to API routes
+│   │   ├── db.js                     Neon database connection
+│   │   └── auth.js                   JWT token helpers
+│   │
+│   ├── styles/
+│   │   └── globals.css               Tailwind + global styles
+│   │
+│   └── types.ts                      shared TypeScript types
+│
+├── .env.local                        secret keys 
+├── next.config.ts                    Next.js config
+├── tailwind.config.ts                design system - colors fonts animations
+└── package.json                      dependencies and build scripts
+```
+
+## Database Structure
+Hosted on **Neon** 
+```
+users         → accounts (username + hashed password)
+projects      → projects/workspaces
+lists         → kanban columns (To Do In Progress Done)
+tasks         → individual tasks
+tags          → labels for tasks
+task_tags     → connects tasks to tags (many-to-many)
+notes         → comments on tasks
+```
+
+The **Inbox** is a special project auto-created on registration.
+
+---
+## How Auth Works
+1. Register → password hashed with bcrypt (never stored plain)
+2. Login → bcrypt compares password to stored hash
+3. On success → JWT token created and stored in a secure HTTP-only cookie
+4. Every API request → server reads the cookie and verifies the JWT
+5. Logout → cookie is cleared
+6. Session lasts 30 days automatically
+---
+
+## Commands
+
+### Run in development mode
+```powershell
+npm run dev
+```
+Opens at http://localhost:3000
+
+### Build for production (test before deploying)
+```powershell
+npm run build
+```
+
+### Run the database migration (creates tables)
+```powershell
+npm run migrate
+```
+Only needed once or for added tables.
+
+### Deploy to production
+```powershell
+git add .
+git commit -m ""
+git push
+```
+Vercel auto-deploys when pushed to `main` branch.
+
+---
+
+## How to Install on Phone
+
+### iPhone (Safari only - Chrome won't work for PWA on iOS)
+1. Open **Safari**
+2. Go to the Vercel URL
+3. Tap **Share** and **"Add to Home Screen"**
+4. Opens full screen like a native app
+
+### Android (Chrome)
+1. Open **Chrome**
+2. Go to the Vercel URL
+3. Tap the **three dots menu** (top right)
+4. Tap **"Add to Home Screen"** or **"Install App"**
+5. FocusFlow icon appears on home screen
+
+---
+##  Environment Variables
+| `POSTGRES_URL` | Neon database connection string |
+| `JWT_SECRET` | secret key for signing login tokens |
+
+To get a new `POSTGRES_URL`:
+1. Go to **neon.tech** → database → Dashboard
+2. Copy the connection string
+3. Make sure it ends with `?sslmode=require`
+---
+</file>
+
+<file path="src/pages/api/lists/get.js">
+/**
+ * lists/get.js
+ *
+ * Returns all lists for a given project ordered by position
+ * Lists are the kanban columns like To Do In Progress and Done
+ * The projectId is passed as a query param since this is a GET style request
+ */
+
+import sql from '../../../lib/db.js';
+import { getUserFromRequest } from '../../../lib/auth.js';
+
+export default async function handler(req, res) {
+  const user = getUserFromRequest(req);
+  if (!user) return res.json({ success: false, error: 'Not authenticated' });
+
+  const { projectId } = req.query;
+
+  // fetch all lists for the project sorted by their display order
+  const rows = await sql`
+    SELECT id, project_id, name, position
+    FROM lists WHERE project_id=${projectId}
+    ORDER BY position ASC
+  `;
+
+  res.json({ success: true, data: rows });
+}
+</file>
+
+</files>
