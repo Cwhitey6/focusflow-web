@@ -105,6 +105,12 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSave();
+                  onClose();
+                }
+              }}
               placeholder="Task title"
               className="w-full bg-transparent text-white text-xl font-semibold
                          outline-none placeholder-gray-600 border-b border-transparent
@@ -120,6 +126,12 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSave();
+                  onClose();
+                }
+              }}
               placeholder="Add notes..."
               rows={4}
               className="w-full mt-2 bg-surface-base border border-surface-border
