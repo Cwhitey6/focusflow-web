@@ -78,6 +78,8 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.metaKey) {
         if (document.activeElement?.tagName === 'TEXTAREA') return;
+        e.preventDefault();
+        e.stopPropagation();
         handleSave();
         onClose();
       }
