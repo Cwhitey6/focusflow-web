@@ -8,7 +8,7 @@
  * Reloads whenever the projectId prop changes so switching projects works correctly
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { List, LayoutGrid, CheckSquare } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { Task, List as ListType } from '../types';
@@ -33,6 +33,19 @@ export default function ProjectPage({ projectId }: Props) {
   const [showCompleted, setShowCompleted] = useState(false); // controls the completed section visibility
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>('list');
+
+  const lastClosedAt = useRef<number>(0);
+
+  const handleTaskClick = (task: Task) => {
+    // ignore clicks that happen within 300ms of the modal closing
+    if (Date.now() - lastClosedAt.current < 300) return;
+    setSelectedTask(task);
+  };
+
+  const handleModalClose = () => {
+    lastClosedAt.current = Date.now();
+    setSelectedTask(null);
+  };
 
   // reload tasks and lists whenever the active project changes
   useEffect(() => {
@@ -227,7 +240,7 @@ export default function ProjectPage({ projectId }: Props) {
                             lists={lists}
                             onToggle={handleToggle}
                             onDelete={handleDelete}
-                            onClick={setSelectedTask}
+                            onClick={handleTaskClick}
                             onMove={handleTaskMove}
                           />
                         ))
@@ -284,7 +297,7 @@ export default function ProjectPage({ projectId }: Props) {
                           lists={lists}
                           onToggle={handleToggle}
                           onDelete={handleDelete}
-                          onClick={setSelectedTask}
+                          onClick={handleTaskClick}
                           onMove={handleTaskMove}
                         />
                       ))}
@@ -303,7 +316,7 @@ export default function ProjectPage({ projectId }: Props) {
       {selectedTask && (
         <TaskDetailModal
           task={selectedTask}
-          onClose={() => setSelectedTask(null)}
+          onClose={handleModalClose}
           onUpdate={handleUpdate}
         />
       )}
