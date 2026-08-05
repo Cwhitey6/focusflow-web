@@ -8,7 +8,7 @@
  * Clicking the dark backdrop behind the drawer closes it
  */
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { X, Calendar, Flag } from 'lucide-react';
 import { Task } from '../types';
 import { PRIORITIES } from '../types';
@@ -72,23 +72,6 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
     }
   };
 
-  // global Enter key listener so it works no matter which field is focused
-  // skips if the user is inside the textarea since Enter should add a new line there
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.metaKey) {
-        if (document.activeElement?.tagName === 'TEXTAREA') return;
-        e.preventDefault();
-        e.stopPropagation();
-        handleSave();
-        onClose();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, description, dueDate, priority]);
-
   return (
     // clicking the backdrop closes the drawer
     <div
@@ -122,10 +105,18 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleSave(title, description, dueDate, priority);
+                  setTimeout(() => onClose(), 0);
+                }
+              }}
               placeholder="Task title"
               className="w-full bg-transparent text-white text-xl font-semibold
-                         outline-none placeholder-gray-600 border-b border-transparent
-                         focus:border-surface-border pb-1 transition-colors"
+                        outline-none placeholder-gray-600 border-b border-transparent
+                        focus:border-surface-border pb-1 transition-colors"
             />
           </div>
 
