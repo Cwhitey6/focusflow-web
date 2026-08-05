@@ -3,12 +3,12 @@
  *
  * Slide-in drawer that opens from the right when a task is clicked
  * Shows all editable fields for the task including title notes due date and priority
- * Changes are saved manually via the Save Changes button
+ * Changes are saved manually via the Save Changes button or by pressing Enter
  * The header shows a live saving indicator so the user knows when its working
  * Clicking the dark backdrop behind the drawer closes it
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Calendar, Flag } from 'lucide-react';
 import { Task } from '../types';
 import { PRIORITIES } from '../types';
@@ -72,6 +72,21 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
     }
   };
 
+  // global Enter key listener so it works no matter which field is focused
+  // skips if the user is inside the textarea since Enter should add a new line there
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.metaKey) {
+        if (document.activeElement?.tagName === 'TEXTAREA') return;
+        handleSave();
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [title, description, dueDate, priority]);
+
   return (
     // clicking the backdrop closes the drawer
     <div
@@ -105,12 +120,6 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleSave();
-                  onClose();
-                }
-              }}
               placeholder="Task title"
               className="w-full bg-transparent text-white text-xl font-semibold
                          outline-none placeholder-gray-600 border-b border-transparent
@@ -118,7 +127,7 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
             />
           </div>
 
-          {/* notes textarea for longer descriptions */}
+          {/* notes textarea - Enter adds a new line here so we skip the global handler */}
           <div>
             <label className="text-xs text-gray-500 uppercase tracking-wider font-medium">
               Notes
@@ -126,12 +135,6 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleSave();
-                  onClose();
-                }
-              }}
               placeholder="Add notes..."
               rows={4}
               className="w-full mt-2 bg-surface-base border border-surface-border
@@ -155,7 +158,7 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
               className="mt-2 bg-surface-base border border-surface-border
                          rounded-lg px-3.5 py-2.5 text-sm text-gray-300
                          outline-none focus:border-brand transition-colors
-                         [scheme-dark]"
+                         [color-scheme:dark]"
             />
           </div>
 
