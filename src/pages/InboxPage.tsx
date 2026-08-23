@@ -15,6 +15,7 @@ import { api } from '../lib/api';
 import TaskRow from '../components/TaskRow';
 import AddTaskBar from '../components/AddTaskBar';
 import TaskDetailModal from '../components/TaskDetailModal';
+import { useAppStore } from '../store/appStore';
 
 export default function InboxPage() {
   const user = useAuthStore((state) => state.user);
@@ -25,6 +26,13 @@ export default function InboxPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { setTaskCount } = useAppStore();
+
+  useEffect(() => {
+    const active = tasks.filter((t) => !t.completed).length;
+    if (inboxProject) setTaskCount(inboxProject.id, active);
+  }, [tasks, inboxProject, setTaskCount]);
 
   useEffect(() => {
   async function load() {

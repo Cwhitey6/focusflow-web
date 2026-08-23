@@ -17,6 +17,7 @@ import TaskRow from '../components/TaskRow';
 import AddTaskBar from '../components/AddTaskBar';
 import TaskDetailModal from '../components/TaskDetailModal';
 import KanbanBoard from '../components/KanbanBoard';
+import { useAppStore } from '../store/appStore';
 
 interface Props {
   projectId: string;
@@ -27,12 +28,21 @@ type ViewMode = 'list' | 'board';
 export default function ProjectPage({ projectId }: Props) {
   const user = useAuthStore((state) => state.user);
 
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [lists, setLists] = useState<ListType[]>([]);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [showCompleted, setShowCompleted] = useState(false); // controls the completed section visibility
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>('list');
+
+  const { setTaskCount } = useAppStore();
+
+  // update the sidebar badge when tasks load
+  useEffect(() => {
+    const active = tasks.filter((t) => !t.completed).length;
+    setTaskCount(projectId, active);
+  }, [tasks, projectId, setTaskCount]);
 
   const lastClosedAt = useRef<number>(0);
 

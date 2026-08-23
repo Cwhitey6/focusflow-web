@@ -5,6 +5,7 @@
  * Tracks which view is active in the sidebar and which project is selected
  * Also holds the full list of projects so the sidebar and pages share the same data
  * All project mutations update the list in place so the sidebar stays in sync
+ * taskCounts tracks active task counts per project for the sidebar badges
  */
 
 import { create } from 'zustand';
@@ -16,18 +17,21 @@ interface AppState {
   activeView: ActiveView;
   activeProjectId: string | null;
   projects: Project[];
+  taskCounts: Record<string, number>;
   setActiveView: (view: ActiveView) => void;
   setActiveProject: (id: string) => void;
   setProjects: (projects: Project[]) => void;
   addProject: (project: Project) => void;
   updateProject: (id: string, name: string, color: string, icon: string) => void;
   removeProject: (id: string) => void;
+  setTaskCount: (projectId: string, count: number) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
   activeView: 'my-day',    // default landing view after login
   activeProjectId: null,   // null means no project is selected
   projects: [],            // populated by DashboardPage on mount
+  taskCounts: {},          // keyed by project id updated when a project page loads
 
   // switching views always clears the active project
   setActiveView: (view) => set({ activeView: view, activeProjectId: null }),
@@ -56,5 +60,11 @@ export const useAppStore = create<AppState>((set) => ({
       projects: state.projects.filter((p) => p.id !== id),
       activeProjectId: state.activeProjectId === id ? null : state.activeProjectId,
       activeView: state.activeProjectId === id ? 'my-day' : state.activeView,
+    })),
+
+  // updates the active task count for a single project used by the sidebar badge
+  setTaskCount: (projectId, count) =>
+    set((state) => ({
+      taskCounts: { ...state.taskCounts, [projectId]: count },
     })),
 }));

@@ -88,6 +88,13 @@ export const api = {
 
     // returns the special inbox project that is auto-created on registration
     inbox: () => request('/api/projects/inbox'),
+
+    // saves the new project order after a drag
+    reorder: (projectIds: string[]) =>
+      request('/api/projects/reorder', {
+        method: 'POST',
+        body: JSON.stringify({ projectIds }),
+      }),
   },
 
   // list routes manage the kanban columns inside a project

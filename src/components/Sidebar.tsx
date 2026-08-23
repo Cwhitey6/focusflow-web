@@ -4,11 +4,10 @@
  * Left navigation panel for the app
  * On desktop it sits as a fixed column on the left side of the screen
  * On mobile it hides behind a hamburger button and slides in as a drawer
- * Contains nav links for My Day and Inbox plus the full project list
- * Projects can be created edited and deleted from here
+ * Projects are draggable to reorder and show a badge with active task count
  */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   Sun, Inbox, Plus, Settings,
   LogOut, ChevronDown, ChevronRight, Trash2, Pencil, Menu, X
@@ -21,39 +20,63 @@ import NewProjectModal from './NewProjectModal';
 import EditProjectModal from './EditProjectModal';
 
 export default function Sidebar() {
-  const [projectsExpanded, setProjectsExpanded] = useState(true); // controls the projects section collapse
-  const [showNewProject, setShowNewProject] = useState(false);    // toggles the new project modal
-  const [mobileOpen, setMobileOpen] = useState(false);            // toggles the mobile drawer
+  const [projectsExpanded, setProjectsExpanded] = useState(true);
+  const [showNewProject, setShowNewProject] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // drag state
+  const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [dragOverId, setDragOverId] = useState<string | null>(null);
 
   const { user, logout } = useAuthStore();
-  const { activeView, activeProjectId, projects, setActiveView, setActiveProject } = useAppStore();
+  const { activeView, activeProjectId, projects, setActiveView, setActiveProject, setProjects, taskCounts } = useAppStore();
 
-  // returns true if the given view or project is the currently active one
   const isActive = (view: string, projectId?: string) => {
     if (projectId) return activeProjectId === projectId;
     return activeView === view && !activeProjectId;
   };
 
-  // runs any nav action then closes the mobile drawer
   const handleNavClick = (fn: () => void) => {
     fn();
     setMobileOpen(false);
   };
 
-  // the actual sidebar content shared between desktop and mobile drawer
+  // reorder projects locally and save to the database
+  const handleDrop = async (targetId: string) => {
+    if (!draggingId || draggingId === targetId) return;
+
+    const filtered = projects.filter((p) => p.name !== 'Inbox');
+    const from = filtered.findIndex((p) => p.id === draggingId);
+    const to = filtered.findIndex((p) => p.id === targetId);
+    if (from === -1 || to === -1) return;
+
+    const reordered = [...filtered];
+    const [moved] = reordered.splice(from, 1);
+    reordered.splice(to, 0, moved);
+
+    // keep inbox at the front of the full list
+    const inbox = projects.find((p) => p.name === 'Inbox');
+    const newList = inbox ? [inbox, ...reordered] : reordered;
+    setProjects(newList);
+
+    // save new order to the database
+    await api.projects.reorder(reordered.map((p) => p.id));
+
+    setDraggingId(null);
+    setDragOverId(null);
+  };
+
   const sidebarContent = (
     <>
       {/* app logo and name at the top */}
       <div className="px-4 py-4 border-b border-surface-border">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 shrink-0">
             <div className="w-7 h-7 bg-brand rounded-lg flex items-center justify-center shrink-0">
               <span className="text-white text-sm font-bold">F</span>
             </div>
             <span className="text-white font-semibold text-sm">FocusFlow</span>
           </div>
-
-          {/* close button only visible on mobile inside the drawer */}
           <button
             onClick={() => setMobileOpen(false)}
             className="md:hidden text-gray-500 hover:text-white"
@@ -78,7 +101,7 @@ export default function Sidebar() {
           onClick={() => handleNavClick(() => setActiveView('inbox'))}
         />
 
-        {/* projects section with a collapsible toggle */}
+        {/* collapsible projects section */}
         <div className="pt-4">
           <button
             onClick={() => setProjectsExpanded(!projectsExpanded)}
@@ -92,8 +115,6 @@ export default function Sidebar() {
 
           {projectsExpanded && (
             <div className="mt-1 space-y-0.5">
-
-              {/* filter out the inbox project since it has its own nav item above */}
               {projects
                 .filter((p) => p.name !== 'Inbox')
                 .map((project) => (
@@ -101,11 +122,20 @@ export default function Sidebar() {
                     key={project.id}
                     project={project}
                     active={isActive('project', project.id)}
+                    taskCount={taskCounts[project.id] ?? null}
+                    isDragging={draggingId === project.id}
+                    isDragOver={dragOverId === project.id}
                     onClick={() => handleNavClick(() => setActiveProject(project.id))}
+                    onDragStart={() => setDraggingId(project.id)}
+                    onDragOver={() => setDragOverId(project.id)}
+                    onDrop={() => handleDrop(project.id)}
+                    onDragEnd={() => {
+                      setDraggingId(null);
+                      setDragOverId(null);
+                    }}
                   />
                 ))}
 
-              {/* button to open the new project modal */}
               <button
                 onClick={() => {
                   setShowNewProject(true);
@@ -118,13 +148,12 @@ export default function Sidebar() {
                 <Plus size={14} />
                 <span>New Project</span>
               </button>
-
             </div>
           )}
         </div>
       </nav>
 
-      {/* settings link and user row pinned to the bottom */}
+      {/* settings and user row at the bottom */}
       <div className="px-2 py-3 border-t border-surface-border space-y-0.5">
         <NavItem
           icon={<Settings size={16} />}
@@ -132,8 +161,6 @@ export default function Sidebar() {
           active={isActive('settings')}
           onClick={() => handleNavClick(() => setActiveView('settings'))}
         />
-
-        {/* user row shows avatar and username with a hidden logout button on hover */}
         <div className="flex items-center justify-between px-2 py-1.5 rounded-lg
                         hover:bg-surface-border transition-colors group">
           <div className="flex items-center gap-2 min-w-0">
@@ -145,8 +172,6 @@ export default function Sidebar() {
             </div>
             <span className="text-sm text-gray-300 truncate">{user?.username}</span>
           </div>
-
-          {/* logout button only appears on hover */}
           <button
             onClick={logout}
             title="Sign out"
@@ -162,13 +187,13 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* desktop sidebar - hidden on mobile */}
+      {/* desktop sidebar */}
       <aside className="hidden md:flex w-60 min-w-60 h-screen bg-surface-raised
                         border-r border-surface-border flex-col select-none">
         {sidebarContent}
       </aside>
 
-      {/* mobile top bar with hamburger button - hidden on desktop */}
+      {/* mobile top bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 h-12
                       bg-surface-raised border-b border-surface-border
                       flex items-center px-4 gap-3">
@@ -186,16 +211,13 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* mobile drawer overlay - only renders when open */}
+      {/* mobile drawer */}
       {mobileOpen && (
         <div
           className="md:hidden fixed inset-0 z-50 flex"
           onClick={(e) => e.target === e.currentTarget && setMobileOpen(false)}
         >
-          {/* dark backdrop behind the drawer */}
           <div className="absolute inset-0 bg-black/60" onClick={() => setMobileOpen(false)} />
-
-          {/* the drawer itself slides in from the left */}
           <aside className="relative w-72 h-full bg-surface-raised border-r
                             border-surface-border flex flex-col select-none
                             animate-slide-in-right z-10">
@@ -204,7 +226,6 @@ export default function Sidebar() {
         </div>
       )}
 
-      {/* new project modal rendered outside the sidebar so it overlays everything */}
       {showNewProject && (
         <NewProjectModal onClose={() => setShowNewProject(false)} />
       )}
@@ -212,7 +233,7 @@ export default function Sidebar() {
   );
 }
 
-// reusable nav button used for My Day Inbox and Settings
+// reusable nav button for My Day Inbox and Settings
 function NavItem({
   icon, label, active, onClick
 }: {
@@ -237,29 +258,33 @@ function NavItem({
   );
 }
 
-// individual project row with edit and delete actions that appear on hover
+// draggable project row with task count badge edit and delete
 function ProjectItem({
-  project, active, onClick
+  project, active, taskCount, isDragging, isDragOver,
+  onClick, onDragStart, onDragOver, onDrop, onDragEnd
 }: {
   project: Project;
   active: boolean;
+  taskCount: number | null;
+  isDragging: boolean;
+  isDragOver: boolean;
   onClick: () => void;
+  onDragStart: () => void;
+  onDragOver: () => void;
+  onDrop: () => void;
+  onDragEnd: () => void;
 }) {
-  const [showConfirmDelete, setShowConfirmDelete] = useState(false); // two-click delete protection
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const removeProject = useAppStore((state) => state.removeProject);
 
   const handleDelete = async (e: React.MouseEvent) => {
-    e.stopPropagation(); // prevent the project from being selected while deleting
-
-    // first click arms the delete button then it auto resets after 3 seconds
+    e.stopPropagation();
     if (!showConfirmDelete) {
       setShowConfirmDelete(true);
       setTimeout(() => setShowConfirmDelete(false), 3000);
       return;
     }
-
-    // second click confirms and deletes
     try {
       await api.projects.delete(project.id);
       removeProject(project.id);
@@ -269,33 +294,63 @@ function ProjectItem({
   };
 
   const handleEdit = (e: React.MouseEvent) => {
-    e.stopPropagation(); // prevent the project from being selected while editing
+    e.stopPropagation();
     setShowEditModal(true);
   };
 
   return (
     <>
-      <div className="group flex items-center gap-1">
+      <div
+        draggable
+        onDragStart={(e) => {
+          e.dataTransfer.effectAllowed = 'move';
+          setTimeout(() => onDragStart(), 0);
+        }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          onDragOver();
+        }}
+        onDrop={(e) => {
+          e.preventDefault();
+          onDrop();
+        }}
+        onDragEnd={onDragEnd}
+        className={`group flex items-center gap-1 rounded-lg transition-all
+                    ${isDragOver ? 'bg-brand/10 border border-brand/30' : ''}
+                    ${isDragging ? 'opacity-40' : ''}`}
+      >
+        {/* drag handle - only visible on hover */}
+        <span className="opacity-0 group-hover:opacity-100 text-gray-700
+                         cursor-grab px-0.5 shrink-0 transition-opacity">
+          ⠿
+        </span>
 
-        {/* project name button that navigates to the project */}
+        {/* project name button */}
         <button
           onClick={onClick}
-          className={`flex-1 flex items-center gap-2.5 px-2 py-1.5 rounded-lg
+          className={`flex-1 flex items-center gap-2 px-1 py-1.5 rounded-lg
                       text-sm transition-colors duration-100 text-left min-w-0
                       ${active
-                        ? 'bg-brand/20 text-brand font-medium'
-                        : 'text-gray-400 hover:text-gray-200 hover:bg-surface-border'
+                        ? 'text-brand font-medium'
+                        : 'text-gray-400 hover:text-gray-200'
                       }`}
         >
-          {/* colored dot uses the projects chosen color */}
           <span
             className="w-2 h-2 rounded-full shrink-0"
             style={{ backgroundColor: project.color }}
           />
           <span className="truncate">{project.icon} {project.name}</span>
+
+          {/* task count badge - only shown when there are active tasks */}
+          {taskCount !== null && taskCount > 0 && (
+            <span className="ml-auto shrink-0 text-xs bg-brand/20
+                             text-brand px-1.5 py-0.5 rounded-full font-medium">
+              {taskCount}
+            </span>
+          )}
         </button>
 
-        {/* edit button appears on hover */}
+        {/* edit button */}
         <button
           onClick={handleEdit}
           title="Edit project"
@@ -305,7 +360,7 @@ function ProjectItem({
           <Pencil size={11} />
         </button>
 
-        {/* delete button appears on hover and turns red after the first click */}
+        {/* delete button with two click confirmation */}
         <button
           onClick={handleDelete}
           title={showConfirmDelete ? 'Click again to confirm' : 'Delete project'}
@@ -318,10 +373,8 @@ function ProjectItem({
         >
           {showConfirmDelete ? '✓?' : <Trash2 size={11} />}
         </button>
-
       </div>
 
-      {/* edit modal rendered inline so it can access the project data */}
       {showEditModal && (
         <EditProjectModal
           project={project}
