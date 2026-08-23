@@ -288,6 +288,7 @@ export default function ProjectPage({ projectId }: Props) {
                     {showCompleted && (
                       <button
                         onClick={async () => {
+                          if (!window.confirm('Delete all completed tasks? This cannot be undone.')) return;
                           await api.tasks.deleteCompleted(projectId);
                           setTasks((prev) => prev.filter((t) => !t.completed));
                         }}

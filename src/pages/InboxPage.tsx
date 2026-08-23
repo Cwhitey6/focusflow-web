@@ -219,6 +219,7 @@ export default function InboxPage() {
               </p>
               <button
                 onClick={async () => {
+                  if (!window.confirm('Delete all completed tasks? This cannot be undone.')) return;
                   if (!inboxProject) return;
                   await api.tasks.deleteCompleted(inboxProject.id);
                   setTasks((prev) => prev.filter((t) => !t.completed));
