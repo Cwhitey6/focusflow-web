@@ -11,7 +11,7 @@
 import { useEffect, useCallback } from 'react';
 import { useAuthStore } from '../store/authStore';
 import { useAppStore } from '../store/appStore';
-import { Project } from '../types';
+import { Task, Project } from '../types';
 import { api } from '../lib/api';
 import Sidebar from '../components/Sidebar';
 import TopBar from '../components/TopBar';
@@ -22,9 +22,10 @@ import SearchPage from './SearchPage';
 import MyDayPage from './MyDayPage';
 import SettingsPage from './SettingsPage';
 
+
 export default function DashboardPage() {
   const user = useAuthStore((state) => state.user);
-  const { activeView, activeProjectId, setProjects } = useAppStore();
+  const { activeView, activeProjectId, setProjects, setTaskCount } = useAppStore();
   const isSearching = useSearchStore((state) => state.isSearching);
 
   // wrapped in useCallback so it can be safely listed as a useEffect dependency
@@ -32,12 +33,24 @@ export default function DashboardPage() {
     try {
       const res = await api.projects.get();
       if (res.success && res.data) {
-        setProjects(res.data as Project[]);
+        const projects = res.data as Project[];
+        setProjects(projects);
+
+        // load active task counts for all projects so sidebar badges show on startup
+        await Promise.all(
+          projects.map(async (project) => {
+            const tasksRes = await api.tasks.get(project.id);
+            if (tasksRes.success && tasksRes.data) {
+              const active = (tasksRes.data as Task[]).filter((t) => !t.completed).length;
+              setTaskCount(project.id, active);
+            }
+          })
+        );
       }
     } catch (err) {
       console.error('Failed to load projects:', err);
     }
-  }, [setProjects]);
+  }, [setProjects, setTaskCount]);
 
   // load projects once when the user session is available
   useEffect(() => {
