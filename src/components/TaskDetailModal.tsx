@@ -2,7 +2,7 @@
  * TaskDetailModal.tsx
  *
  * Slide-in drawer that opens from the right when a task is clicked
- * Shows all editable fields for the task including title notes due date and priority
+ * Shows all editable fields for the task including title notes due date time and priority
  * Changes are saved manually via the Save Changes button or by pressing Enter
  * The header shows a live saving indicator so the user knows when its working
  * Clicking the dark backdrop behind the drawer closes it
@@ -27,9 +27,20 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
   const [dueDate, setDueDate] = useState(
     task.due_date ? task.due_date.split('T')[0] : '' // strip time so the date input works correctly
   );
+  // extract just the HH:MM part from the stored ISO string if a time exists
+  const [dueTime, setDueTime] = useState(
+    task.due_date ? task.due_date.split('T')[1]?.slice(0, 5) ?? '' : ''
+  );
   const [priority, setPriority] = useState(task.priority);
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false); // briefly true after a successful save
+
+  // combines the date and time inputs into a single ISO string for storage
+  const buildIso = (dd: string, dt: string) => {
+    if (!dd) return null;
+    if (dt) return new Date(`${dd}T${dt}`).toISOString();
+    return new Date(`${dd}T00:00:00`).toISOString();
+  };
 
   // accepts current values as params to avoid stale closure issues
   // defaults to the state values when called from the save button
@@ -37,17 +48,20 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
     t = title,
     d = description,
     dd = dueDate,
+    dt = dueTime,
     p = priority
   ) => {
     if (!t.trim()) return;
     setIsSaving(true);
 
     try {
+      const combined = buildIso(dd, dt);
+
       const res = await api.tasks.update({
         id: task.id,
         title: t.trim(),
         description: d,
-        dueDate: dd ? new Date(dd).toISOString() : null,
+        dueDate: combined,
         priority: p,
       });
 
@@ -61,7 +75,7 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
           ...task,
           title: t.trim(),
           description: d,
-          due_date: dd ? new Date(dd).toISOString() : null,
+          due_date: combined,
           priority: p,
         });
       }
@@ -109,14 +123,14 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
                 if (e.key === 'Enter') {
                   e.preventDefault();
                   e.stopPropagation();
-                  handleSave(title, description, dueDate, priority);
+                  handleSave(title, description, dueDate, dueTime, priority);
                   setTimeout(() => onClose(), 0);
                 }
               }}
               placeholder="Task title"
               className="w-full bg-transparent text-white text-xl font-semibold
-                        outline-none placeholder-gray-600 border-b border-transparent
-                        focus:border-surface-border pb-1 transition-colors"
+                         outline-none placeholder-gray-600 border-b border-transparent
+                         focus:border-surface-border pb-1 transition-colors"
             />
           </div>
 
@@ -137,13 +151,15 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
             />
           </div>
 
-          {/* date picker for the due date */}
+          {/* date and time pickers for the due date */}
           <div>
             <label className="text-xs text-gray-500 uppercase tracking-wider
                                font-medium flex items-center gap-1.5">
               <Calendar size={12} />
               Due Date
             </label>
+
+            {/* date picker */}
             <input
               type="date"
               value={dueDate}
@@ -151,8 +167,21 @@ export default function TaskDetailModal({ task, onClose, onUpdate }: Props) {
               className="mt-2 bg-surface-base border border-surface-border
                          rounded-lg px-3.5 py-2.5 text-sm text-gray-300
                          outline-none focus:border-brand transition-colors
-                         [color-scheme:dark]"
+                         [color-scheme:dark] w-full"
             />
+
+            {/* time picker only shown when a date is selected */}
+            {dueDate && (
+              <input
+                type="time"
+                value={dueTime}
+                onChange={(e) => setDueTime(e.target.value)}
+                className="mt-2 bg-surface-base border border-surface-border
+                           rounded-lg px-3.5 py-2.5 text-sm text-gray-300
+                           outline-none focus:border-brand transition-colors
+                           [color-scheme:dark] w-full"
+              />
+            )}
           </div>
 
           {/* priority selector renders one button per priority level */}

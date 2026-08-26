@@ -33,13 +33,21 @@ export default function TaskRow({
 
   // returns a short human readable string for the due date
   const formatDueDate = (dateStr: string) => {
-    const date = new Date(dateStr);
+    const [year, month, day] = dateStr.split('T')[0].split('-').map(Number);
+    const date = new Date(year, month - 1, day);
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
-    if (date.toDateString() === today.toDateString()) return 'Today';
-    if (date.toDateString() === tomorrow.toDateString()) return 'Tomorrow';
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+    const hasTime = dateStr.includes('T') && !dateStr.endsWith('T00:00:00.000Z');
+    const timeStr = hasTime
+      ? new Date(dateStr).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+      : '';
+
+    if (date.toDateString() === today.toDateString()) return timeStr ? `Today ${timeStr}` : 'Today';
+    if (date.toDateString() === tomorrow.toDateString()) return timeStr ? `Tomorrow ${timeStr}` : 'Tomorrow';
+    const dateLabel = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return timeStr ? `${dateLabel} ${timeStr}` : dateLabel;
   };
 
   // a task is overdue if it has a past due date and is not yet complete

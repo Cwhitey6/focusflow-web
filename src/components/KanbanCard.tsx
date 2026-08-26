@@ -27,9 +27,14 @@ export default function KanbanCard({
 
   // returns a short human readable date string
   const formatDueDate = (dateStr: string) => {
-    const date = new Date(dateStr);
+    // parse as local date to avoid timezone shift
+    const [year, month, day] = dateStr.split('T')[0].split('-').map(Number);
+    const date = new Date(year, month - 1, day);
     const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
     if (date.toDateString() === today.toDateString()) return 'Today';
+    if (date.toDateString() === tomorrow.toDateString()) return 'Tomorrow';
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
