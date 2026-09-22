@@ -4,6 +4,7 @@
  * Quick task capture page for tasks that dont belong to a specific project
  * Loads the special Inbox project that is auto created when the user registers
  * Active tasks are shown at the top and completed tasks are shown below at reduced opacity
+ * Tasks are draggable to reorder within the inbox
  * If the inbox project is missing for some reason an error message is shown instead
  */
 
@@ -27,42 +28,76 @@ export default function InboxPage() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // drag state for reordering tasks
+  const [draggingTaskId, setDraggingTaskId] = useState<string | null>(null);
+  const [dragOverTaskId, setDragOverTaskId] = useState<string | null>(null);
+
   const { setTaskCount } = useAppStore();
 
+  // update the sidebar badge whenever the task list changes
   useEffect(() => {
     const active = tasks.filter((t) => !t.completed).length;
     if (inboxProject) setTaskCount(inboxProject.id, active);
   }, [tasks, inboxProject, setTaskCount]);
 
   useEffect(() => {
-  async function load() {
-    setIsLoading(true);
-    try {
-      const projectRes = await api.projects.inbox();
+    async function load() {
+      setIsLoading(true);
+      try {
+        const projectRes = await api.projects.inbox();
 
-      if (projectRes.success && projectRes.data) {
-        const project = projectRes.data as Project;
-        setInboxProject(project);
+        if (projectRes.success && projectRes.data) {
+          const project = projectRes.data as Project;
+          setInboxProject(project);
 
-        const listsRes = await api.lists.get(project.id);
-        const listsData = (listsRes.data ?? []) as List[];
+          // fetch the lists for the inbox project
+          const listsRes = await api.lists.get(project.id);
+          const listsData = (listsRes.data ?? []) as List[];
 
-        if (listsData.length > 0) {
-          setLists(listsData);
-          setInboxList(listsData[0]);
+          if (listsData.length > 0) {
+            setLists(listsData);
+            setInboxList(listsData[0]); // inbox only has one list called Tasks
 
-          const tasksRes = await api.tasks.get(project.id);
-          setTasks((tasksRes.data ?? []) as Task[]);
+            // fetch all tasks inside the inbox project
+            const tasksRes = await api.tasks.get(project.id);
+            setTasks((tasksRes.data ?? []) as Task[]);
+          }
         }
+      } catch (err) {
+        console.error('Failed to load inbox:', err);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      console.error('Failed to load inbox:', err);
-    } finally {
-      setIsLoading(false);
     }
-  }
-  load();
-}, []);
+    load();
+  }, []);
+
+  // reorders active tasks after a drag and saves to the database
+  const handleTaskReorder = async () => {
+    if (!draggingTaskId || !dragOverTaskId || draggingTaskId === dragOverTaskId) return;
+
+    const active = tasks.filter((t) => !t.completed);
+    const from = active.findIndex((t) => t.id === draggingTaskId);
+    const to = active.findIndex((t) => t.id === dragOverTaskId);
+    if (from === -1 || to === -1) return;
+
+    const reordered = [...active];
+    const [moved] = reordered.splice(from, 1);
+    reordered.splice(to, 0, moved);
+
+    // update positions in local state immediately so the UI feels instant
+    setTasks((prev) => {
+      const completed = prev.filter((t) => t.completed);
+      const updated = reordered.map((t, i) => ({ ...t, position: i }));
+      return [...updated, ...completed];
+    });
+
+    // persist the new order to the database
+    await api.tasks.reorder(reordered.map((t) => t.id));
+
+    setDraggingTaskId(null);
+    setDragOverTaskId(null);
+  };
 
   // adds a new task to the inbox list and updates local state immediately
   const handleAddTask = async (title: string) => {
@@ -184,19 +219,42 @@ export default function InboxPage() {
           </div>
         )}
 
-        {/* active task list */}
+        {/* active task list with drag to reorder */}
         {activeTasks.length > 0 && (
           <div className="space-y-0.5">
             {activeTasks.map((task) => (
-              <TaskRow
+              <div
                 key={task.id}
-                task={task}
-                lists={lists}
-                onToggle={handleToggle}
-                onDelete={handleDelete}
-                onClick={setSelectedTask}
-                onMove={handleMove}
-              />
+                draggable
+                onDragStart={() => setTimeout(() => setDraggingTaskId(task.id), 0)}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setDragOverTaskId(task.id);
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  handleTaskReorder();
+                }}
+                onDragEnd={() => {
+                  setDraggingTaskId(null);
+                  setDragOverTaskId(null);
+                }}
+                className={`rounded-lg transition-all
+                            ${draggingTaskId === task.id ? 'opacity-40' : ''}
+                            ${dragOverTaskId === task.id && draggingTaskId !== task.id
+                              ? 'border-t-2 border-brand'
+                              : ''
+                            }`}
+              >
+                <TaskRow
+                  task={task}
+                  lists={lists}
+                  onToggle={handleToggle}
+                  onDelete={handleDelete}
+                  onClick={setSelectedTask}
+                  onMove={handleMove}
+                />
+              </div>
             ))}
           </div>
         )}
