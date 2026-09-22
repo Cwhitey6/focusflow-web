@@ -22,8 +22,8 @@ export default function InboxPage() {
   const user = useAuthStore((state) => state.user);
 
   const [inboxProject, setInboxProject] = useState<Project | null>(null);
-  const [inboxList, setInboxList] = useState<List | null>(null);   // the single list inside the inbox project
-  const [lists, setLists] = useState<List[]>([]);                  // passed to TaskRow for the status dropdown
+  const [inboxList, setInboxList] = useState<List | null>(null);
+  const [lists, setLists] = useState<List[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -50,15 +50,13 @@ export default function InboxPage() {
           const project = projectRes.data as Project;
           setInboxProject(project);
 
-          // fetch the lists for the inbox project
           const listsRes = await api.lists.get(project.id);
           const listsData = (listsRes.data ?? []) as List[];
 
           if (listsData.length > 0) {
             setLists(listsData);
-            setInboxList(listsData[0]); // inbox only has one list called Tasks
+            setInboxList(listsData[0]);
 
-            // fetch all tasks inside the inbox project
             const tasksRes = await api.tasks.get(project.id);
             setTasks((tasksRes.data ?? []) as Task[]);
           }
@@ -223,9 +221,12 @@ export default function InboxPage() {
         {activeTasks.length > 0 && (
           <div className="space-y-0.5">
             {activeTasks.map((task) => (
+              // draggable wrapper - only becomes draggable on mouse enter
+              // so text inside TaskRow can still be selected normally
               <div
                 key={task.id}
-                draggable
+                onMouseEnter={(e) => (e.currentTarget.draggable = true)}
+                onMouseLeave={(e) => (e.currentTarget.draggable = false)}
                 onDragStart={() => setTimeout(() => setDraggingTaskId(task.id), 0)}
                 onDragOver={(e) => {
                   e.preventDefault();

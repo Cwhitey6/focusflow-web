@@ -254,7 +254,6 @@ export default function ProjectPage({ projectId }: Props) {
             <div className="max-w-2xl mx-auto w-full px-6 py-4 space-y-8">
 
               {lists.map((list) => {
-                // only show incomplete tasks sorted by priority then position
                 const listTasks = activeTasks.filter((t) => t.list_id === list.id);
 
                 return (
@@ -275,10 +274,12 @@ export default function ProjectPage({ projectId }: Props) {
                         <p className="text-xs text-gray-700 px-4 py-2">No tasks yet</p>
                       ) : (
                         listTasks.map((task) => (
-                          // draggable wrapper around each task row
+                          // draggable wrapper - only becomes draggable on mouse enter
+                          // so text inside TaskRow can still be selected normally
                           <div
                             key={task.id}
-                            draggable
+                            onMouseEnter={(e) => (e.currentTarget.draggable = true)}
+                            onMouseLeave={(e) => (e.currentTarget.draggable = false)}
                             onDragStart={() => setTimeout(() => setDraggingTaskId(task.id), 0)}
                             onDragOver={(e) => {
                               e.preventDefault();
