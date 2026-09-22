@@ -174,5 +174,12 @@ export const api = {
         method: 'POST',
         body: JSON.stringify({ projectId }),
       }),
+
+    // saves the new task order after a drag
+    reorder: (taskIds: string[]) =>
+      request('/api/tasks/reorder', {
+        method: 'POST',
+        body: JSON.stringify({ taskIds }),
+      }),
   },
 };

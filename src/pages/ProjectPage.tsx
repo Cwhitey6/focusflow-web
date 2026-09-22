@@ -4,6 +4,7 @@
  * Shows all tasks for a single project in either list view or board view
  * List view groups tasks by their kanban column with an add task bar under each
  * Board view renders the full drag and drop kanban board
+ * Tasks are sorted by priority (urgent first) then by manual drag position
  * Completed tasks are hidden by default and can be revealed with a toggle
  * Reloads whenever the projectId prop changes so switching projects works correctly
  */
@@ -28,26 +29,29 @@ type ViewMode = 'list' | 'board';
 export default function ProjectPage({ projectId }: Props) {
   const user = useAuthStore((state) => state.user);
 
-
   const [tasks, setTasks] = useState<Task[]>([]);
   const [lists, setLists] = useState<ListType[]>([]);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-  const [showCompleted, setShowCompleted] = useState(false); // controls the completed section visibility
+  const [showCompleted, setShowCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>('list');
 
-  const { setTaskCount } = useAppStore();
+  // drag state for reordering tasks in the list view
+  const [draggingTaskId, setDraggingTaskId] = useState<string | null>(null);
+  const [dragOverTaskId, setDragOverTaskId] = useState<string | null>(null);
 
-  // update the sidebar badge when tasks load
+  const { setTaskCount } = useAppStore();
+  const lastClosedAt = useRef<number>(0);
+
+  // update the sidebar badge whenever the task list changes
   useEffect(() => {
     const active = tasks.filter((t) => !t.completed).length;
     setTaskCount(projectId, active);
   }, [tasks, projectId, setTaskCount]);
 
-  const lastClosedAt = useRef<number>(0);
-
+  // ignore clicks that happen within 300ms of the modal closing
+  // this prevents Enter key from immediately reopening the drawer
   const handleTaskClick = (task: Task) => {
-    // ignore clicks that happen within 300ms of the modal closing
     if (Date.now() - lastClosedAt.current < 300) return;
     setSelectedTask(task);
   };
@@ -77,6 +81,33 @@ export default function ProjectPage({ projectId }: Props) {
     }
     load();
   }, [projectId]);
+
+  // reorders tasks within a list after a drag and saves to the database
+  const handleTaskReorder = async (listId: string) => {
+    if (!draggingTaskId || !dragOverTaskId || draggingTaskId === dragOverTaskId) return;
+
+    const listTasks = tasks.filter((t) => t.list_id === listId && !t.completed);
+    const from = listTasks.findIndex((t) => t.id === draggingTaskId);
+    const to = listTasks.findIndex((t) => t.id === dragOverTaskId);
+    if (from === -1 || to === -1) return;
+
+    const reordered = [...listTasks];
+    const [moved] = reordered.splice(from, 1);
+    reordered.splice(to, 0, moved);
+
+    // update positions in local state immediately so the UI feels instant
+    setTasks((prev) => {
+      const others = prev.filter((t) => t.list_id !== listId || t.completed);
+      const updated = reordered.map((t, i) => ({ ...t, position: i }));
+      return [...others, ...updated];
+    });
+
+    // persist the new order to the database
+    await api.tasks.reorder(reordered.map((t) => t.id));
+
+    setDraggingTaskId(null);
+    setDragOverTaskId(null);
+  };
 
   // creates a new task in the given list and adds it to local state immediately
   const handleAddTask = async (listId: string, title: string) => {
@@ -223,7 +254,7 @@ export default function ProjectPage({ projectId }: Props) {
             <div className="max-w-2xl mx-auto w-full px-6 py-4 space-y-8">
 
               {lists.map((list) => {
-                // only show incomplete tasks in each section
+                // only show incomplete tasks sorted by priority then position
                 const listTasks = activeTasks.filter((t) => t.list_id === list.id);
 
                 return (
@@ -244,15 +275,39 @@ export default function ProjectPage({ projectId }: Props) {
                         <p className="text-xs text-gray-700 px-4 py-2">No tasks yet</p>
                       ) : (
                         listTasks.map((task) => (
-                          <TaskRow
+                          // draggable wrapper around each task row
+                          <div
                             key={task.id}
-                            task={task}
-                            lists={lists}
-                            onToggle={handleToggle}
-                            onDelete={handleDelete}
-                            onClick={handleTaskClick}
-                            onMove={handleTaskMove}
-                          />
+                            draggable
+                            onDragStart={() => setTimeout(() => setDraggingTaskId(task.id), 0)}
+                            onDragOver={(e) => {
+                              e.preventDefault();
+                              setDragOverTaskId(task.id);
+                            }}
+                            onDrop={(e) => {
+                              e.preventDefault();
+                              handleTaskReorder(list.id);
+                            }}
+                            onDragEnd={() => {
+                              setDraggingTaskId(null);
+                              setDragOverTaskId(null);
+                            }}
+                            className={`rounded-lg transition-all
+                                        ${draggingTaskId === task.id ? 'opacity-40' : ''}
+                                        ${dragOverTaskId === task.id && draggingTaskId !== task.id
+                                          ? 'border-t-2 border-brand'
+                                          : ''
+                                        }`}
+                          >
+                            <TaskRow
+                              task={task}
+                              lists={lists}
+                              onToggle={handleToggle}
+                              onDelete={handleDelete}
+                              onClick={handleTaskClick}
+                              onMove={handleTaskMove}
+                            />
+                          </div>
                         ))
                       )}
 
@@ -274,8 +329,8 @@ export default function ProjectPage({ projectId }: Props) {
                     <button
                       onClick={() => setShowCompleted(!showCompleted)}
                       className="flex items-center gap-2 text-xs font-semibold
-                                text-gray-500 uppercase tracking-wider
-                                hover:text-gray-300 transition-colors"
+                                 text-gray-500 uppercase tracking-wider
+                                 hover:text-gray-300 transition-colors"
                     >
                       <CheckSquare size={13} />
                       Completed ({completedTasks.length})
@@ -284,7 +339,7 @@ export default function ProjectPage({ projectId }: Props) {
                       </span>
                     </button>
 
-                    {/* clear all button only shown when completed section is open */}
+                    {/* clear all button only shown when the completed section is open */}
                     {showCompleted && (
                       <button
                         onClick={async () => {
