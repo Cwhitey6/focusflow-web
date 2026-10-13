@@ -95,6 +95,13 @@ export const api = {
         method: 'POST',
         body: JSON.stringify({ projectIds }),
       }),
+
+    // moves a project into or out of another project
+    moveToParent: (projectId: string, newParentId: string | null) =>
+      request('/api/projects/move', {
+        method: 'POST',
+        body: JSON.stringify({ projectId, newParentId }),
+      }),
   },
 
   // list routes manage the kanban columns inside a project
@@ -180,13 +187,6 @@ export const api = {
       request('/api/tasks/reorder', {
         method: 'POST',
         body: JSON.stringify({ taskIds }),
-      }),
-
-    // moves a project into or out of another project
-    moveToParent: (projectId: string, newParentId: string | null) =>
-      request('/api/projects/move', {
-        method: 'POST',
-        body: JSON.stringify({ projectId, newParentId }),
       }),
   },
 };

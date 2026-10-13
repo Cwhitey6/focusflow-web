@@ -486,17 +486,7 @@ function ProjectItem({
               </button>
 
               {/* edit child */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  // reuse EditProjectModal by storing which child to edit
-                }}
-                title="Edit project"
-                className="opacity-0 group-hover:opacity-100 shrink-0
-                           text-gray-600 hover:text-brand transition-all p-1 rounded"
-              >
-                <Pencil size={11} />
-              </button>
+              <ChildEditButton project={child} />
 
               {/* delete child */}
               <ChildDeleteButton project={child} />
@@ -548,5 +538,32 @@ function ChildDeleteButton({ project }: { project: Project }) {
     >
       {showConfirm ? '✓?' : <Trash2 size={11} />}
     </button>
+  );
+}
+
+function ChildEditButton({ project }: { project: Project }) {
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  return (
+    <>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowEditModal(true);
+        }}
+        title="Edit project"
+        className="opacity-0 group-hover:opacity-100 shrink-0
+                   text-gray-600 hover:text-brand transition-all p-1 rounded"
+      >
+        <Pencil size={11} />
+      </button>
+
+      {showEditModal && (
+        <EditProjectModal
+          project={project}
+          onClose={() => setShowEditModal(false)}
+        />
+      )}
+    </>
   );
 }
