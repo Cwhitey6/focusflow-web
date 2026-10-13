@@ -66,10 +66,10 @@ export const api = {
     get: () => request('/api/projects/get'),
 
     // creates a new project and auto-generates three kanban columns
-    create: (name: string, color: string, icon: string) =>
+    create: (name: string, color: string, icon: string, parentId: string | null = null) =>
       request('/api/projects/create', {
         method: 'POST',
-        body: JSON.stringify({ name, color, icon }),
+        body: JSON.stringify({ name, color, icon, parentId }),
       }),
 
     // updates the name color and icon of an existing project

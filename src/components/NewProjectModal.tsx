@@ -3,6 +3,7 @@
  *
  * Modal dialog for creating a brand new project
  * The user picks a name color and emoji icon then hits Create
+ * An optional parent project dropdown lets the user nest the project inside another one
  * On success the project is added to the global store so it
  * appears in the sidebar immediately without a page reload
  */
@@ -14,28 +15,33 @@ import { useAppStore } from '../store/appStore';
 import { Project } from '../types';
 import { api } from '../lib/api';
 
-// preset color swatches the user can choose from
 const COLORS = [
   '#7c6af7', '#3b82f6', '#22c55e', '#f97316',
   '#ef4444', '#ec4899', '#a855f7', '#14b8a6',
 ];
 
-// preset emoji icons the user can choose from
 const ICONS = ['📋', '🚀', '💡', '🎯', '📚', '🛠️', '🎨', '💼', '🌟', '🔥'];
 
 interface Props {
   onClose: () => void;
+  defaultParentId?: string | null; // optionally pre-select a parent
 }
 
-export default function NewProjectModal({ onClose }: Props) {
+export default function NewProjectModal({ onClose, defaultParentId = null }: Props) {
   const [name, setName] = useState('');
-  const [color, setColor] = useState(COLORS[0]);  // default to purple
-  const [icon, setIcon] = useState(ICONS[0]);      // default to clipboard
+  const [color, setColor] = useState(COLORS[0]);
+  const [icon, setIcon] = useState(ICONS[0]);
+  const [parentId, setParentId] = useState<string | null>(defaultParentId);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
   const user = useAuthStore((state) => state.user);
-  const addProject = useAppStore((state) => state.addProject);
+  const { projects, addProject } = useAppStore();
+
+  // only top level projects can be parents to keep nesting to one level deep
+  const parentOptions = projects.filter(
+    (p) => p.name !== 'Inbox' && p.parent_id === null
+  );
 
   const handleCreate = async () => {
     if (!name.trim()) {
@@ -47,10 +53,9 @@ export default function NewProjectModal({ onClose }: Props) {
     setError('');
 
     try {
-      const res = await api.projects.create(name.trim(), color, icon);
+      const res = await api.projects.create(name.trim(), color, icon, parentId);
 
       if (res.success && res.data) {
-        // build the full project object so it can be added to local state right away
         const newProject: Project = {
           id: res.data as string,
           user_id: user!.id,
@@ -59,15 +64,14 @@ export default function NewProjectModal({ onClose }: Props) {
           icon,
           created_at: new Date().toISOString(),
           archived: false,
+          parent_id: parentId,
         };
-
-        // push to the store so the sidebar updates without a reload
         addProject(newProject);
         onClose();
       } else {
         setError(res.error || 'Failed to create project');
       }
-    } catch {
+    } catch (err) {
       setError('Something went wrong');
     } finally {
       setIsLoading(false);
@@ -75,7 +79,6 @@ export default function NewProjectModal({ onClose }: Props) {
   };
 
   return (
-    // clicking the backdrop closes the modal
     <div
       className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center
                  justify-center z-50 p-4"
@@ -84,22 +87,18 @@ export default function NewProjectModal({ onClose }: Props) {
       <div className="bg-surface-raised border border-surface-border rounded-2xl
                       w-full max-w-md shadow-2xl animate-slide-in-up">
 
-        {/* header with title and close button */}
+        {/* header */}
         <div className="flex items-center justify-between px-6 py-4
                         border-b border-surface-border">
           <h3 className="text-white font-semibold">New Project</h3>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-white transition-colors"
-          >
+          <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
             <X size={18} />
           </button>
         </div>
 
-        {/* form body */}
         <div className="p-6 space-y-5">
 
-          {/* project name input - autofocused when the modal opens */}
+          {/* project name */}
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Project Name
@@ -118,7 +117,28 @@ export default function NewProjectModal({ onClose }: Props) {
             />
           </div>
 
-          {/* color swatch picker - selected swatch gets a white ring */}
+          {/* optional parent project picker */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Nest Inside Project (optional)
+            </label>
+            <select
+              value={parentId ?? ''}
+              onChange={(e) => setParentId(e.target.value || null)}
+              className="w-full bg-surface-base border border-surface-border rounded-lg
+                         px-3.5 py-2.5 text-sm text-gray-300 outline-none
+                         focus:border-brand transition-colors [color-scheme:dark]"
+            >
+              <option value="">None (top level)</option>
+              {parentOptions.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.icon} {p.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* color picker */}
           <div className="space-y-2">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Color
@@ -139,7 +159,7 @@ export default function NewProjectModal({ onClose }: Props) {
             </div>
           </div>
 
-          {/* emoji icon picker - selected icon gets a brand colored ring */}
+          {/* icon picker */}
           <div className="space-y-2">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Icon
@@ -162,10 +182,10 @@ export default function NewProjectModal({ onClose }: Props) {
             </div>
           </div>
 
-          {/* live preview of how the project will appear in the sidebar */}
+          {/* live preview */}
           <div className="flex items-center gap-3 bg-surface-base rounded-lg px-4 py-3">
             <span
-              className="w-3 h-3 rounded-full shrink-0"
+              className="w-3 h-3 rounded-full flex-shrink-0"
               style={{ backgroundColor: color }}
             />
             <span className="text-white text-sm font-medium">
@@ -173,14 +193,11 @@ export default function NewProjectModal({ onClose }: Props) {
             </span>
           </div>
 
-          {/* error message shown if the api call fails */}
-          {error && (
-            <p className="text-red-400 text-sm">{error}</p>
-          )}
+          {error && <p className="text-red-400 text-sm">{error}</p>}
 
         </div>
 
-        {/* footer with cancel and create buttons */}
+        {/* footer */}
         <div className="flex gap-3 px-6 py-4 border-t border-surface-border">
           <button
             onClick={onClose}

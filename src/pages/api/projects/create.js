@@ -2,6 +2,7 @@
  * projects/create.js
  *
  * Creates a new project for the logged in user
+ * Accepts an optional parentId to nest the project inside another project
  * After inserting the project three default kanban columns are created
  * automatically so the board is ready to use straight away
  */
@@ -16,13 +17,13 @@ export default async function handler(req, res) {
   const user = getUserFromRequest(req);
   if (!user) return res.json({ success: false, error: 'Not authenticated' });
 
-  const { name, color, icon } = req.body;
+  const { name, color, icon, parentId = null } = req.body;
   const id = uuid();
 
-  // insert the project
+  // insert the project with optional parent reference
   await sql`
-    INSERT INTO projects (id, user_id, name, color, icon)
-    VALUES (${id}, ${user.id}, ${name}, ${color}, ${icon})
+    INSERT INTO projects (id, user_id, name, color, icon, parent_id)
+    VALUES (${id}, ${user.id}, ${name}, ${color}, ${icon}, ${parentId})
   `;
 
   // auto-create the three default kanban columns in order

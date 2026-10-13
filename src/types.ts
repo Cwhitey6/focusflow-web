@@ -21,6 +21,7 @@ export interface Project {
   icon: string;     // emoji icon shown next to the project name
   created_at: string;
   archived: boolean;
+  parent_id: string | null; // null would be top level project
 }
 
 // a kanban column inside a project like To Do In Progress or Done
