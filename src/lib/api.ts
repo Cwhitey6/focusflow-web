@@ -181,5 +181,12 @@ export const api = {
         method: 'POST',
         body: JSON.stringify({ taskIds }),
       }),
+
+    // moves a project into or out of another project
+    moveToParent: (projectId: string, newParentId: string | null) =>
+      request('/api/projects/move', {
+        method: 'POST',
+        body: JSON.stringify({ projectId, newParentId }),
+      }),
   },
 };

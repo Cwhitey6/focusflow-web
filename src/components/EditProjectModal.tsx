@@ -2,6 +2,7 @@
  * EditProjectModal.tsx
  *
  * Modal dialog for editing an existing project's name color and icon
+ * Also lets the user move the project into or out of another project
  * Opens when the user clicks the pencil icon next to a project in the sidebar
  * Saves changes to the database and updates the global store on success
  */
@@ -12,31 +13,33 @@ import { useAppStore } from '../store/appStore';
 import { Project } from '../types';
 import { api } from '../lib/api';
 
-// preset color swatches the user can pick from
 const COLORS = [
   '#7c6af7', '#3b82f6', '#22c55e', '#f97316',
   '#ef4444', '#ec4899', '#a855f7', '#14b8a6',
   '#6b7280', '#eab308',
 ];
 
-// preset emoji icons the user can pick from
 const ICONS = ['📋', '🚀', '💡', '🎯', '📚', '🛠️', '🎨', '💼', '🌟', '🔥', '📥', '🗂️'];
 
 interface Props {
-  project: Project;  // the project being edited
+  project: Project;
   onClose: () => void;
 }
 
 export default function EditProjectModal({ project, onClose }: Props) {
-  // pre-fill fields with the project's current values
   const [name, setName] = useState(project.name);
   const [color, setColor] = useState(project.color);
   const [icon, setIcon] = useState(project.icon);
+  const [parentId, setParentId] = useState<string | null>(project.parent_id);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // pull the update action from the global store so the sidebar reflects changes instantly
-  const updateProject = useAppStore((state) => state.updateProject);
+  const { projects, updateProject } = useAppStore();
+
+  // only top level projects can be parents and a project cant be its own parent
+  const parentOptions = projects.filter(
+    (p) => p.name !== 'Inbox' && p.parent_id === null && p.id !== project.id
+  );
 
   const handleSave = async () => {
     if (!name.trim()) {
@@ -48,14 +51,26 @@ export default function EditProjectModal({ project, onClose }: Props) {
     setError('');
 
     try {
+      // save name color and icon
       const res = await api.projects.update(project.id, name.trim(), color, icon);
 
-      if (res.success) {
-        // update the sidebar immediately without needing a page reload
-        updateProject(project.id, name.trim(), color, icon);
-        onClose();
-      } else {
+      if (!res.success) {
         setError(res.error || 'Failed to update project');
+        return;
+      }
+
+      // save parent change if it changed
+      if (parentId !== project.parent_id) {
+        await api.projects.moveToParent(project.id, parentId);
+      }
+
+      // update the sidebar immediately
+      updateProject(project.id, name.trim(), color, icon);
+      onClose();
+
+      // reload the page so the tree restructures correctly after a parent change
+      if (parentId !== project.parent_id) {
+        window.location.reload();
       }
     } catch {
       setError('Something went wrong');
@@ -65,7 +80,6 @@ export default function EditProjectModal({ project, onClose }: Props) {
   };
 
   return (
-    // clicking the backdrop closes the modal
     <div
       className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center
                  justify-center z-50 p-4"
@@ -74,22 +88,18 @@ export default function EditProjectModal({ project, onClose }: Props) {
       <div className="bg-surface-raised border border-surface-border rounded-2xl
                       w-full max-w-md shadow-2xl animate-slide-in-up">
 
-        {/* header with title and close button */}
+        {/* header */}
         <div className="flex items-center justify-between px-6 py-4
                         border-b border-surface-border">
           <h3 className="text-white font-semibold">Edit Project</h3>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-white transition-colors"
-          >
+          <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
             <X size={18} />
           </button>
         </div>
 
-        {/* form body */}
         <div className="p-6 space-y-5">
 
-          {/* project name input - autofocused when modal opens */}
+          {/* project name */}
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Project Name
@@ -107,7 +117,28 @@ export default function EditProjectModal({ project, onClose }: Props) {
             />
           </div>
 
-          {/* color swatch picker - selected swatch gets a white ring */}
+          {/* parent project picker - lets the user move this project */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Nest Inside Project
+            </label>
+            <select
+              value={parentId ?? ''}
+              onChange={(e) => setParentId(e.target.value || null)}
+              className="w-full bg-surface-base border border-surface-border rounded-lg
+                         px-3.5 py-2.5 text-sm text-gray-300 outline-none
+                         focus:border-brand transition-colors [color-scheme:dark]"
+            >
+              <option value="">None (top level)</option>
+              {parentOptions.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.icon} {p.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* color picker */}
           <div className="space-y-2">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Color
@@ -128,7 +159,7 @@ export default function EditProjectModal({ project, onClose }: Props) {
             </div>
           </div>
 
-          {/* emoji icon picker - selected icon gets a brand colored ring */}
+          {/* icon picker */}
           <div className="space-y-2">
             <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">
               Icon
@@ -151,7 +182,7 @@ export default function EditProjectModal({ project, onClose }: Props) {
             </div>
           </div>
 
-          {/* live preview of what the project will look like in the sidebar */}
+          {/* live preview */}
           <div className="flex items-center gap-3 bg-surface-base rounded-lg px-4 py-3">
             <span
               className="w-3 h-3 rounded-full shrink-0"
@@ -162,12 +193,11 @@ export default function EditProjectModal({ project, onClose }: Props) {
             </span>
           </div>
 
-          {/* error message shown if the save fails */}
           {error && <p className="text-red-400 text-sm">{error}</p>}
 
         </div>
 
-        {/* footer with cancel and save buttons */}
+        {/* footer */}
         <div className="flex gap-3 px-6 py-4 border-t border-surface-border">
           <button
             onClick={onClose}
