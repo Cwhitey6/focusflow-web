@@ -38,7 +38,7 @@ export default function EditProjectModal({ project, onClose }: Props) {
 
   // only top level projects can be parents and a project cant be its own parent
   const parentOptions = projects.filter(
-    (p) => p.name !== 'Inbox' && p.parent_id === null && p.id !== project.id
+    (p) => p.name !== 'Inbox' && p.id !== project.id
   );
 
   const handleSave = async () => {

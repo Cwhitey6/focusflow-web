@@ -40,7 +40,7 @@ export default function NewProjectModal({ onClose, defaultParentId = null }: Pro
 
   // only top level projects can be parents to keep nesting to one level deep
   const parentOptions = projects.filter(
-    (p) => p.name !== 'Inbox' && p.parent_id === null
+    (p) => p.name !== 'Inbox'
   );
 
   const handleCreate = async () => {
